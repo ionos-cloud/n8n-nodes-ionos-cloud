@@ -5,7 +5,12 @@ const showForServerResource = {
 };
 
 const showForServerId = {
-	operation: ['get', 'start', 'stop', 'reboot'], 
+	operation: ['get', 'start', 'stop', 'reboot', 'update', 'delete'], 
+	resource: ['server'],
+};
+
+const showForServerCreateOrUpdate = {
+	operation: ['create', 'update'],
 	resource: ['server'],
 };
 
@@ -84,5 +89,99 @@ export const serverDescriptions: INodeProperties[] = [
 				},
 			},
 		},
+	},
+	// Fields for Create and Update
+	{
+		displayName: 'Name',
+		name: 'name',
+		type: 'string',
+		required: true,
+		displayOptions: { show: showForServerCreateOrUpdate },
+		default: '',
+		description: 'The name of the server',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'properties.name',
+			},
+		},
+	},
+	{
+		displayName: 'Cores',
+		name: 'cores',
+		type: 'number',
+		required: true,
+		displayOptions: { show: showForServerCreateOrUpdate },
+		default: 1,
+		typeOptions: { minValue: 1 },
+		description: 'The number of processor cores',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'properties.cores',
+			},
+		},
+	},
+	{
+		displayName: 'RAM (MB)',
+		name: 'ram',
+		type: 'number',
+		required: true,
+		displayOptions: { show: showForServerCreateOrUpdate },
+		default: 1024,
+		typeOptions: { minValue: 256 },
+		description: 'The amount of memory in MB',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'properties.ram',
+			},
+		},
+	},
+	{
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
+		displayOptions: { show: showForServerCreateOrUpdate },
+		options: [
+			{
+				displayName: 'CPU Family',
+				name: 'cpuFamily',
+				type: 'options',
+				options: [
+					{ name: 'AMD EPYC', value: 'AMD_OPTERON' },
+					{ name: 'Intel Skylake', value: 'INTEL_SKYLAKE' },
+					{ name: 'Intel Xeon', value: 'INTEL_XEON' },
+				],
+				default: 'INTEL_XEON',
+				description: 'The CPU family for the server',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.cpuFamily',
+					},
+				},
+			},
+			{
+				displayName: 'Availability Zone',
+				name: 'availabilityZone',
+				type: 'options',
+				options: [
+					{ name: 'Auto', value: 'AUTO' },
+					{ name: 'Zone 1', value: 'ZONE_1' },
+					{ name: 'Zone 2', value: 'ZONE_2' },
+				],
+				default: 'AUTO',
+				description: 'The availability zone for the server',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.availabilityZone',
+					},
+				},
+			},
+		],
 	},
 ];
