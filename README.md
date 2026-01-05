@@ -1,4 +1,4 @@
-# @ionos-cloud/n8n-nodes-cloud-api
+# @ionos-cloud/n8n-nodes-ionos-cloud
 
 This is an n8n community node for connecting with the Cloud API v6 of IONOS cloud.
 

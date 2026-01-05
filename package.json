@@ -1,5 +1,5 @@
 {
-  "name": "@ionos-cloud/n8n-nodes-cloud-api",
+  "name": "@ionos-cloud/n8n-nodes-ionos-cloud",
   "version": "0.1.0",
   "description": "n8n node to interact with Ionos Cloud via Cloud API v6",
   "license": "MIT",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionos-cloud/n8n-nodes-cloud-api.git"
+    "url": "https://github.com/ionos-cloud/n8n-nodes-ionos-cloud.git"
   },
   "publishConfig": {
     "access": "public"
