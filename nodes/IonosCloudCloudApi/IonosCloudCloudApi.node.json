@@ -1,0 +1,18 @@
+{
+	"node": "@ionos-cloud/n8n-nodes-cloud-api",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Development", "Developer Tools"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/org/repo?tab=readme-ov-file"
+			}
+		]
+	}
+}
