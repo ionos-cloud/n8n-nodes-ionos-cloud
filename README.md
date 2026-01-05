@@ -159,13 +159,9 @@ Tested againist n8n version 2.1.5
 * Create new credentials in n8n and select "Ionos Cloud: Cloud API".
 * Provide the API token for authentication.
 
-### Managing VMs
-* Add the "Ionos Cloud (Cloud API v6)" node and select "Server" as Resource
+### Managing resources
+* Add the "Ionos Cloud (Cloud API v6)" node and select the required Resource
 * Choose the respective operation and configure the required fields
-
-### Fetch Contract and Quota details
-* Add the "Ionos Cloud (Cloud API v6)" node and select "Contract" as Resource
-* Choose the "Get Many" operation 
 
 ## Resources
 
