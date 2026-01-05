@@ -5,12 +5,17 @@ This is an n8n community node for connecting with the Cloud API v6 of IONOS clou
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
 [Installation](#installation)
+
 [Operations](#operations)
+
 [Credentials](#credentials)
+
 [Compatibility](#compatibility)
+
 [Usage](#usage)
+
 [Resources](#resources)
-[Version history](#version-history)
+
 
 ## Installation
 
@@ -21,10 +26,10 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 This node supports the following operations for IONOS Cloud API v6:
 or IONOS Cloud API v6:
 
-### Contract Resources
+### Contract Resource
 * **Get Contract**: Retrieve contract information and resource limits
 
-### Server Resources
+### Server Resource
 * **List Servers**: Get all servers in a data center
 * **Get Server**: Retrieve details of a specific server including volumes, NICs etc
 * **Start Server**: Power on a server
