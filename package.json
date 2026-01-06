@@ -29,8 +29,14 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "strict": true,
-    "credentials": ["dist/credentials/IonosCloudCloudApi.credentials.js"],
-    "nodes": ["dist/nodes/IonosCloudCloudApi/IonosCloudCloudApi.node.js"]
+    "credentials": [
+      "dist/credentials/IonosCloudApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/IonosCloudCloudApi/IonosCloudCloudApi.node.js",
+      "dist/nodes/IonosCloudCertificateManager/IonosCloudCertificateManager.node.js",
+      "dist/nodes/IonosCloudDns/IonosCloudDns.node.js"
+    ]
   },
   "devDependencies": {
     "@n8n/node-cli": "*",

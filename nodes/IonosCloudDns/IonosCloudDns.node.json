@@ -1,0 +1,5 @@
+{
+  "name": "n8n-nodes-ionos-cloud-dns",
+  "version": "1.0.0",
+  "description": "n8n node for Ionos Cloud DNS"
+}

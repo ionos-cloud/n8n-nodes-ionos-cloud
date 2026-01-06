@@ -6,10 +6,10 @@ import type {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export class IonosCloudCloudApi implements ICredentialType {
-	name = 'ionosCloudCloudApi';
+export class IonosCloudApi implements ICredentialType {
+	name = 'ionosCloudApi';
 
-	displayName = 'Ionos Cloud: Cloud API';
+	displayName = 'Ionos Cloud API';
 
 	icon: Icon = { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg'};
 

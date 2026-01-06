@@ -24,7 +24,7 @@ export class IonosCloudCloudApi implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Ionos Cloud (Cloud API v6)',
 		name: 'ionosCloudCloudApi',
-		icon: { light: 'file:ionos.dark.svg', dark: 'file:ionos.svg' },
+		icon: { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
@@ -35,7 +35,7 @@ export class IonosCloudCloudApi implements INodeType {
 		usableAsTool: true,
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],
-		credentials: [{ name: "ionosCloudCloudApi", required: true }],
+		credentials: [{ name: 'ionosCloudApi', required: true }],
 		requestDefaults: {
 			baseURL: 'https://api.ionos.com/cloudapi/v6',
 			headers: {
