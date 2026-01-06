@@ -1,21 +1,24 @@
 # @ionos-cloud/n8n-nodes-ionos-cloud
 
-This is an n8n community node for connecting with the Cloud API v6 of IONOS cloud.
+This is an n8n community node package for interacting with IONOS Cloud services.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
-[Installation](#installation)
+## Included Nodes
 
-[Operations](#operations)
+This package provides four separate nodes for different IONOS Cloud services:
 
-[Credentials](#credentials)
+1. **Ionos Cloud (Cloud API v6)** - Core infrastructure management
+2. **Ionos Cloud (Certificate Manager)** - SSL/TLS certificate management  
+3. **Ionos Cloud (Cloud DNS)** - Domain name system management
+4. **Ionos Cloud (CDN)** - Content delivery network management
 
-[Compatibility](#compatibility)
-
-[Usage](#usage)
-
+[Installation](#installation)  
+[Operations](#operations)  
+[Credentials](#credentials)  
+[Compatibility](#compatibility)  
+[Usage](#usage)  
 [Resources](#resources)
-
 
 ## Installation
 
@@ -23,173 +26,203 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ## Operations
 
-This node supports the following operations for IONOS Cloud API v6:
+### Overview
 
-### Account & Global Resources
+| Node | Resources | Operations | Description |
+|------|-----------|------------|-------------|
+| **Cloud API v6** | 20 | 110 | Complete infrastructure management (compute, networking, storage, Kubernetes) |
+| **Certificate Manager** | 3 | 15 | SSL/TLS certificate lifecycle management with ACME support |
+| **Cloud DNS** | 7 | 36 | DNS zones, records (15 types), DNSSEC, zone transfers |
+| **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
+| **Total** | **32** | **168** | |
 
-#### Contract Resource
-* **Get Many**: Retrieve contract information and resource limits
+<details>
+<summary><b>Cloud API v6 - Detailed Operations</b></summary>
 
-#### Location Resource
-* **Get**: Retrieve details of a specific location
-* **Get Many**: List all available locations
+#### Account & Global Resources (9 operations)
+- **Contract** (1): Get Many
+- **Location** (2): Get, Get Many
+- **Image** (2): Get, Get Many  
+- **IP Block** (4): Create, Delete, Get, Get Many
 
-#### Image Resource
-* **Get**: Retrieve details of a specific image
-* **Get Many**: List all available images (OS templates)
+#### Core Infrastructure (10 operations)
+- **Datacenter** (5): Create, Delete, Get, Get Many, Update
+- **LAN** (5): Create, Delete, Get, Get Many, Update
 
-#### IP Block Resource
-* **Create**: Reserve a new IP block
-* **Delete**: Release an IP block
-* **Get**: Retrieve details of a specific IP block
-* **Get Many**: List all reserved IP blocks
+#### Compute Resources (41 operations)
+- **Server** (21): Attach/Detach CDROM/Volume, Create, Delete, Get (+ CDROM/CDROMs/Volume/Volumes/Remote Console/Token), Get Many, Reboot, Resume, Start, Stop, Suspend, Update, Upgrade
+- **Volume** (6): Create, Create Snapshot, Delete, Get, Get Many, Update
+- **Snapshot** (4): Delete, Get, Get Many, Update
+- **NIC** (5): Create, Delete, Get, Get Many, Update
+- **Firewall Rule** (5): Create, Delete, Get, Get Many, Update
 
-### Core Infrastructure
+#### Kubernetes (11 operations)
+- **Kubernetes Cluster** (6): Create, Delete, Get, Get Many, Get Kubeconfig, Update
+- **Node Pool** (5): Create, Delete, Get, Get Many, Update
 
-#### Datacenter Resource
-* **Create**: Create a new datacenter
-* **Delete**: Delete a datacenter
-* **Get**: Retrieve details of a specific datacenter
-* **Get Many**: List all datacenters in your account
-* **Update**: Modify datacenter properties
+#### Networking (34 operations)
+- **Private Cross-Connect** (5): Create, Delete, Get, Get Many, Update
+- **Load Balancer** (9): Attach/Detach NIC, Create, Delete, Get (+ Balanced NIC/NICs), Get Many, Update
+- **Network Load Balancer** (5): Create, Delete, Get, Get Many, Update
+- **Application Load Balancer** (5): Create, Delete, Get, Get Many, Update
+- **Target Group** (5): Create, Delete, Get, Get Many, Update
+- **NAT Gateway** (5): Create, Delete, Get, Get Many, Update
 
-#### LAN Resource
-* **Create**: Create a new LAN in a datacenter
-* **Delete**: Delete a LAN
-* **Get**: Retrieve details of a specific LAN
-* **Get Many**: List all LANs in a datacenter
-* **Update**: Modify LAN properties
+#### Security (5 operations)
+- **Security Group** (5): Create, Delete, Get, Get Many, Update
 
-### Compute Resources
+</details>
 
-#### Server Resource
-* **Create**: Create a new server in a datacenter
-* **Delete**: Delete a server
-* **Get**: Retrieve details of a specific server including volumes, NICs etc
-* **Get Many**: List all servers in a datacenter
-* **Reboot**: Restart a server
-* **Start**: Power on a server
-* **Stop**: Power off a server
-* **Update**: Modify server properties (cores, RAM, etc.)
+<details>
+<summary><b>Certificate Manager - Detailed Operations</b></summary>
 
-#### Volume Resource
-* **Create**: Create a new storage volume
-* **Create Snapshot**: Create a snapshot of a volume
-* **Delete**: Delete a volume
-* **Get**: Retrieve details of a specific volume
-* **Get Many**: List all volumes in a datacenter
-* **Update**: Modify volume properties (size, type, etc.)
+#### Certificate Resource (5 operations)
+Upload and manage SSL/TLS certificates manually with full chain and private key support.
+- Create, Delete, Get, Get Many, Update
 
-#### Snapshot Resource
-* **Delete**: Delete a snapshot
-* **Get**: Retrieve details of a specific snapshot
-* **Get Many**: List all available snapshots
-* **Update**: Modify snapshot properties
+#### AutoCertificate Resource (5 operations)
+Configure automatic certificate renewal via ACME providers (Let's Encrypt, etc.).
+- Create, Delete, Get, Get Many, Update
+- **Key Algorithms**: RSA (2048/4096), ECDSA (256/384)
+- **Features**: Subject Alternative Names (SANs), common name, provider selection
 
-#### NIC (Network Interface) Resource
-* **Create**: Create a new network interface for a server
-* **Delete**: Delete a network interface
-* **Get**: Retrieve details of a specific network interface
-* **Get Many**: List all network interfaces of a server
-* **Update**: Modify network interface properties
+#### Provider Resource (5 operations)
+Configure ACME certificate providers with External Account Binding (EAB) support.
+- Create, Delete, Get, Get Many, Update
 
-#### Firewall Rule Resource
-* **Create**: Create a new firewall rule for a NIC
-* **Delete**: Delete a firewall rule
-* **Get**: Retrieve details of a specific firewall rule
-* **Get Many**: List all firewall rules for a network interface
-* **Update**: Modify firewall rule properties
+</details>
 
-### Kubernetes
+<details>
+<summary><b>Cloud DNS - Detailed Operations</b></summary>
 
-#### Kubernetes Cluster Resource
-* **Create**: Create a new Kubernetes cluster
-* **Delete**: Delete a Kubernetes cluster
-* **Get**: Retrieve properties of a Kubernetes cluster
-* **Get Many**: List all Kubernetes clusters
-* **Get Kubeconfig**: Get the kubeconfig file for a cluster
-* **Update**: Modify Kubernetes cluster properties
+#### Zone Resource (5 operations)
+Manage primary DNS zones.
+- Create, Delete, Get, Get Many, Update
 
-#### Node Pool Resource
-* **Create**: Create a new node pool in a Kubernetes cluster
-* **Delete**: Delete a node pool
-* **Get**: Retrieve details of a specific node pool
-* **Get Many**: List all node pools in a Kubernetes cluster
-* **Update**: Modify node pool properties
+#### Record Resource (5 operations)
+Manage DNS records with 15 supported types: A, AAAA, ALIAS, CAA, CNAME, DS, HTTPS, MX, NS, SMIMEA, SRV, SSHFP, SVCB, TLSA, TXT
+- Create, Delete, Get, Get Many, Update
 
-### Networking
+#### SecondaryZone Resource (7 operations)
+Secondary zones with AXFR (zone transfer) support.
+- Create, Delete, Get, Get Many, Update, AXFR Get, AXFR Start
 
-#### Private Cross-Connect Resource
-* **Create**: Create a new private cross-connect
-* **Delete**: Delete a private cross-connect
-* **Get**: Retrieve details of a specific private cross-connect
-* **Get Many**: List all private cross-connects
-* **Update**: Modify private cross-connect properties
+#### ZoneFile Resource (2 operations)
+Import/export zones in BIND format (RFC 1035).
+- Get (export), Update (import)
 
-#### Load Balancer Resource (Classic)
-* **Create**: Create a new classic load balancer
-* **Delete**: Delete a load balancer
-* **Get**: Retrieve details of a specific load balancer
-* **Get Many**: List all load balancers in a datacenter
-* **Update**: Modify load balancer properties
+#### Quota Resource (1 operation)
+View DNS resource usage and limits.
+- Get
 
-#### Network Load Balancer Resource
-* **Create**: Create a new network load balancer
-* **Delete**: Delete a network load balancer
-* **Get**: Retrieve details of a specific network load balancer
-* **Get Many**: List all network load balancers in a datacenter
-* **Update**: Modify network load balancer properties
+#### DNSSEC Resource (3 operations)
+Enable and manage DNSSEC for zones.
+- Create (enable), Delete (disable), Get
 
-#### Application Load Balancer Resource
-* **Create**: Create a new application load balancer
-* **Delete**: Delete an application load balancer
-* **Get**: Retrieve details of a specific application load balancer
-* **Get Many**: List all application load balancers in a datacenter
-* **Update**: Modify application load balancer properties
+#### ReverseRecord Resource (5 operations)
+Manage reverse DNS (PTR) records for IPv4/IPv6.
+- Create, Delete, Get, Get Many, Update
 
-#### Target Group Resource
-* **Create**: Create a new target group for load balancers
-* **Delete**: Delete a target group
-* **Get**: Retrieve details of a specific target group
-* **Get Many**: List all target groups
-* **Update**: Modify target group properties
+</details>
 
-#### NAT Gateway Resource
-* **Create**: Create a new NAT gateway
-* **Delete**: Delete a NAT gateway
-* **Get**: Retrieve details of a specific NAT gateway
-* **Get Many**: List all NAT gateways in a datacenter
-* **Update**: Modify NAT gateway properties
+<details>
+<summary><b>CDN - Detailed Operations</b></summary>
 
-### Security
+#### Distribution Resource (5 operations)
+Configure CDN distributions with custom routing rules.
+- Create, Delete, Get, Get Many, Update
+- **Features**: Domain routing, SSL/TLS integration, HTTP/HTTPS schemes, geo-restrictions, upstream origins
 
-#### Security Group Resource
-* **Create**: Create a new security group
-* **Delete**: Delete a security group
-* **Get**: Retrieve details of a specific security group
-* **Get Many**: List all security groups in a datacenter
-* **Update**: Modify security group properties
+#### Ip Resource (2 operations)
+Get CDN edge server IPs for origin whitelisting.
+- Get, Get Many
 
+</details>
+
+---
 
 ## Credentials
 
-Nodes supports authentication using the [Cloud API Bearer token](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager)
+All nodes in this package share a single credential type: **Ionos Cloud API**
+
+Authentication uses the [Cloud API Bearer token](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager).
+
+The same token works across all IONOS Cloud services (Cloud API v6, Certificate Manager, DNS, and CDN).
 
 ## Compatibility
 
-Tested againist n8n version 2.1.5
+Tested against n8n version 2.1.5+
 
 ## Usage
 
 ### Authentication
-* Create new credentials in n8n and select "Ionos Cloud: Cloud API".
-* Provide the API token for authentication.
+1. Create new credentials in n8n and select "Ionos Cloud API"
+2. Provide your API token (generated from IONOS Cloud Console)
+3. The same credential works for all four nodes
 
-### Managing resources
-* Add the "Ionos Cloud (Cloud API v6)" node and select the required Resource
-* Choose the respective operation and configure the required fields
+### Using the Nodes
+
+#### Cloud API v6
+* Add the "Ionos Cloud (Cloud API v6)" node to your workflow
+* Select the resource (e.g., Server, Volume, Datacenter)
+* Choose the operation and configure the required fields
+
+#### Certificate Manager
+* Add the "Ionos Cloud (Certificate Manager)" node to your workflow
+* Select the resource (Certificate, AutoCertificate, or Provider)
+* Configure certificate properties, domains, and ACME providers
+
+#### DNS
+* Add the "Ionos Cloud (Cloud DNS)" node to your workflow
+* Select the resource (Zone, Record, SecondaryZone, etc.)
+* Configure DNS zones, records, and DNSSEC settings
+
+#### CDN
+* Add the "Ionos Cloud (CDN)" node to your workflow
+* Select the resource (Distribution or Ip)
+* Configure CDN distributions with routing rules and upstream origins
+
+### Common Patterns
+
+**Automated SSL Certificate Deployment:**
+1. Use Certificate Manager to create an AutoCertificate
+2. Use CDN node to create a Distribution referencing the certificate ID
+3. Automate certificate renewal with n8n scheduling
+
+**Infrastructure Provisioning:**
+1. Use Cloud API v6 to create Datacenter, Server, and Volume
+2. Use DNS node to create Zone and A/AAAA Records pointing to server IPs
+3. Use Certificate Manager to provision SSL certificates for domains
+
+**DNS Management:**
+1. Use DNS Zone resource to create zones
+2. Use Record resource to manage DNS records (A, CNAME, MX, TXT, etc.)
+3. Use DNSSEC resource to enable DNSSEC signing
+4. Use ReverseRecord for PTR records
+
+## API Endpoints
+
+Each node connects to a different IONOS Cloud API endpoint:
+
+- **Cloud API v6**: `https://api.ionos.com/cloudapi/v6/`
+- **Certificate Manager**: `https://certificate-manager.de-fra.ionos.com`
+- **Cloud DNS**: `https://dns.de-fra.ionos.com`
+- **CDN**: `https://cdn.de-fra.ionos.com`
 
 ## Resources
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-* [Ionos Cloud Documentation](https://docs.ionos.com/cloud)
+* [IONOS Cloud Documentation](https://docs.ionos.com/cloud)
+* [Cloud API v6 Documentation](https://api.ionos.com/docs/cloud/v6/)
+* [Certificate Manager API Documentation](https://api.ionos.com/docs/certmanager/v2/)
+* [Cloud DNS API Documentation](https://api.ionos.com/docs/dns/v1/)
+* [CDN API Documentation](https://api.ionos.com/docs/cdn/v1/)
+
+## Version History
+
+**v0.1.0** - Initial release
+- Cloud API v6 node (20 resources, 110 operations)
+- Certificate Manager node (3 resources, 15 operations)
+- DNS node (7 resources, 36 operations)
+- CDN node (2 resources, 7 operations)
+- Total: 168 operations across 32 resources
