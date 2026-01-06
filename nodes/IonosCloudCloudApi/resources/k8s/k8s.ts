@@ -126,6 +126,7 @@ export const k8sDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.gatewayIp',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},
@@ -139,6 +140,7 @@ export const k8sDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.k8sVersion',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

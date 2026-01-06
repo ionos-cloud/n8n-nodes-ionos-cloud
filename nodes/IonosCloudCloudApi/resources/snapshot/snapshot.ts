@@ -96,6 +96,7 @@ export const snapshotDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.name',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},
@@ -109,6 +110,7 @@ export const snapshotDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.description',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

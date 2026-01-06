@@ -1,0 +1,938 @@
+openapi: "3.0.3"
+info:
+  title: IONOS Cloud - CDN Distribution API
+  description: |
+    This API manages CDN distributions.
+  version: 1.2.0
+externalDocs:
+  url: https://docs.ionos.com/cloud/network-services/cdn
+  description: IONOS Cloud - CDN API documentation
+servers:
+- url: "https://cdn.de-fra.ionos.com"
+  description: Frankfurt
+tags:
+- name: Distributions
+  description: |
+    A CDN distribution resource.
+    
+    This tag groups all operations for distributions.
+- name: Ips
+  description: |
+    A CDN edge IP information resource.
+    
+    This tag groups all operations for ips.
+paths:
+  /distributions:
+    get:
+      operationId: distributionsGet
+      summary: Retrieve all Distributions
+      security:
+      - tokenAuth: []
+      description: |
+        This endpoint enables retrieving all Distributions using
+        pagination and optional filters.
+      parameters:
+        - $ref: "#/components/parameters/paginationOffset"
+        - $ref: "#/components/parameters/paginationLimit"
+        - $ref: "#/components/parameters/domain"
+        - $ref: "#/components/parameters/state"
+      tags:
+        - Distributions
+      responses:
+        "200":
+          description: |
+            Returned all requested Distributions successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistributionReadList"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/NotAllowed'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "500":
+          $ref: '#/components/responses/InternalError'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+    post:
+      operationId: distributionsPost
+      summary: Create Distribution
+      security:
+      - tokenAuth: []
+      tags:
+        - Distributions
+      description: |
+        Creates a new Distribution.
+        
+        The full Distribution needs to be provided to create the object.
+        Optional data will be filled with defaults or left empty.
+      requestBody:
+        description: Distribution to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DistributionCreate"
+      responses:
+        "201":
+          description: Distribution successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistributionRead"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/NotAllowed'
+        "415":
+          $ref: '#/components/responses/UnsupportedMediaType'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "500":
+          $ref: '#/components/responses/InternalError'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /distributions/{distributionId}:
+    get:
+      operationId: distributionsFindById
+      summary: Retrieve Distribution
+      security:
+      - tokenAuth: []
+      tags:
+        - Distributions
+      description: Returns the Distribution by ID.
+      parameters:
+        - name: distributionId
+          in: path
+          schema:
+            type: string
+            format: uuid
+          example: "9ba15778-16c4-543c-8775-e52acf4853f5"
+          required: true
+          description: The ID (UUID) of the Distribution.
+      responses:
+        "200":
+          description: Getting Distribution was successful.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistributionRead"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/NotAllowed'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "500":
+          $ref: '#/components/responses/InternalError'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+    put:
+      operationId: distributionsPut
+      summary: Ensure Distribution
+      security:
+      - tokenAuth: []
+      tags:
+        - Distributions
+      description: |
+        Ensures that the Distribution with the provided ID is created or modified.
+        The full Distribution needs to be provided to ensure
+        (either update or create) the Distribution. Non present data will
+        only be filled with defaults or left empty, but not take
+        previous values into consideration.
+      parameters:
+        - name: distributionId
+          in: path
+          schema:
+            type: string
+            format: uuid
+          example: "9ba15778-16c4-543c-8775-e52acf4853f5"
+          required: true
+          description: The ID (UUID) of the Distribution.
+      requestBody:
+        description: update Distribution
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DistributionEnsure"
+      responses:
+        "200":
+          description: Distribution successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistributionRead"
+        "201":
+          description: Distribution successfully ensured.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistributionRead"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/NotAllowed'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "415":
+          $ref: '#/components/responses/UnsupportedMediaType'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "500":
+          $ref: '#/components/responses/InternalError'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+    delete:
+      operationId: distributionsDelete
+      summary: Delete Distribution
+      security:
+      - tokenAuth: []
+      tags:
+        - Distributions
+      description: Deletes the specified Distribution.
+      parameters:
+        - name: distributionId
+          in: path
+          schema:
+            type: string
+            format: uuid
+          example: "9ba15778-16c4-543c-8775-e52acf4853f5"
+          required: true
+          description: The ID (UUID) of the Distribution.
+      responses:
+        "202":
+          description: Deleting Distribution was successful.
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/NotAllowed'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "500":
+          $ref: '#/components/responses/InternalError'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /ips:
+    get:
+      operationId: ipsGet
+      summary: Retrieve all Ips
+      security:
+      - tokenAuth: []
+      description: |
+        This endpoint enables retrieving all Ips using
+        pagination and optional filters.
+      parameters:
+        - $ref: "#/components/parameters/paginationOffset"
+        - $ref: "#/components/parameters/paginationLimit"
+      tags:
+        - Ips
+      responses:
+        "200":
+          description: |
+            Returned all requested Ips successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EdgeServerIpInfoReadList"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/NotAllowed'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "500":
+          $ref: '#/components/responses/InternalError'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /ips/{id}:
+    get:
+      operationId: ipsFindById
+      summary: Retrieve EdgeServerIpInfo
+      security:
+      - tokenAuth: []
+      tags:
+        - Ips
+      description: Returns the EdgeServerIpInfo by ID.
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+          example: "96b6bdc3-57d6-5433-bde8-15929e828ea6"
+          required: true
+          description: The ID (UUID) of the EdgeServerIpInfo.
+      responses:
+        "200":
+          description: Getting EdgeServerIpInfo was successful.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EdgeServerIpInfoRead"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/NotAllowed'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "500":
+          $ref: '#/components/responses/InternalError'
+        "503":
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  parameters:
+    paginationOffset:
+      name: offset
+      in: query
+      description: The first element (of the total list of elements) to include in the response. Use together with limit for pagination.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+        minimum: 0
+      example: 0
+    paginationLimit:
+      name: limit
+      in: query
+      description: The maximum number of elements to return. Use together with offset for pagination.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+        minimum: 1
+        maximum: 1000
+      example: 100
+    domain:
+      name: "filter.domain"
+      in: query
+      description: filters resources by domain.
+      required: false
+      schema:
+        type: string
+        pattern: '^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,63}\.?$'
+        minLength: 2
+        maxLength: 253
+        example: "example.com"
+    state:
+      name: "filter.state"
+      in: query
+      description: filters resources by state.
+      required: false
+      schema:
+        type: string
+        enum:
+          - AVAILABLE
+          - BUSY
+          - FAILED
+          - UNKNOWN
+        example: "AVAILABLE"
+  schemas:
+    DistributionReadList:
+      allOf:
+      - type: object
+        required:
+        - id
+        - type
+        - href
+        properties:
+          id:
+            description: ID of the list of Distribution resources.
+            type: string
+            format: uuid
+            example: 24c578a9-361f-54d4-a326-a3f3070d5a03
+          type:
+            description: The type of the resource.
+            type: string
+            enum:
+            - collection
+          href:
+            description: The URL of the list of Distribution resources.
+            type: string
+            example: /distributions
+          items:
+            description: The list of Distribution resources.
+            type: array
+            items:
+              $ref: '#/components/schemas/DistributionRead'
+      - $ref: '#/components/schemas/Pagination'
+    DistributionRead:
+      type: object
+      required:
+      - id
+      - type
+      - href
+      - metadata
+      - properties
+      properties:
+        id:
+          type: string
+          description: The ID (UUID) of the Distribution.
+          format: uuid
+          example: "9ba15778-16c4-543c-8775-e52acf4853f5"
+        type:
+          description: The type of the resource.
+          type: string
+          enum:
+          - distribution
+        href:
+          description: The URL of the Distribution.
+          type: string
+          example: /distributions/9ba15778-16c4-543c-8775-e52acf4853f5
+        metadata:
+          $ref: '#/components/schemas/DistributionMetadata'
+        properties:
+          $ref: '#/components/schemas/Distribution'
+    DistributionEnsure:
+      type: object
+      required:
+      - properties
+      properties:
+        metadata:
+          description: Metadata
+          additionalProperties: true
+          example: {}
+        properties:
+          $ref: '#/components/schemas/Distribution'
+    DistributionCreate:
+      type: object
+      required:
+      - properties
+      properties:
+        metadata:
+          description: Metadata
+          additionalProperties: true
+          example: {}
+        properties:
+          $ref: '#/components/schemas/Distribution'
+    EdgeServerIpInfoReadList:
+      allOf:
+      - type: object
+        required:
+        - id
+        - type
+        - href
+        properties:
+          id:
+            description: ID of the list of EdgeServerIpInfo resources.
+            type: string
+            format: uuid
+            example: ad9aca4e-2ccd-508b-8c8f-c47e5104375e
+          type:
+            description: The type of the resource.
+            type: string
+            enum:
+            - collection
+          href:
+            description: The URL of the list of EdgeServerIpInfo resources.
+            type: string
+            example: /ips
+          items:
+            description: The list of EdgeServerIpInfo resources.
+            type: array
+            items:
+              $ref: '#/components/schemas/EdgeServerIpInfoRead'
+      - $ref: '#/components/schemas/Pagination'
+    EdgeServerIpInfoRead:
+      type: object
+      required:
+      - id
+      - type
+      - href
+      - metadata
+      - properties
+      properties:
+        id:
+          type: string
+          description: The ID (UUID) of the EdgeServerIpInfo.
+          format: uuid
+          example: "96b6bdc3-57d6-5433-bde8-15929e828ea6"
+        type:
+          description: The type of the resource.
+          type: string
+          enum:
+          - edgeserveripinfo
+        href:
+          description: The URL of the EdgeServerIpInfo.
+          type: string
+          example: /ips/96b6bdc3-57d6-5433-bde8-15929e828ea6
+        metadata:
+          $ref: '#/components/schemas/NoMetadata'
+        properties:
+          $ref: '#/components/schemas/EdgeServerIpInfo'
+    Distribution:
+      type: object
+      description: |
+                A CDN distribution resource.
+      required:
+        - domain
+        - routingRules
+      properties:
+        domain:
+          description: The domain of the distribution.
+          type: string
+          pattern: '^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,63}\.?$'
+          minLength: 2
+          maxLength: 253
+          example: "example.com"
+        certificateId:
+          description: The ID of the certificate to use for the distribution.
+          type: string
+          format: uuid
+          example: "5a029f4a-72e5-11ec-90d6-0242ac120003"
+        routingRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutingRule'
+          description: The routing rules for the distribution.
+          minItems: 1
+          maxItems: 25
+    RoutingRule:
+      type: object
+      required:
+        - prefix
+        - upstream
+        - scheme
+      properties:
+        scheme:
+          type: string
+          description: The scheme of the routing rule.
+          enum:
+            - http
+            - https
+            - http/https
+          example: "http/https"
+        prefix:
+          type: string
+          description: The prefix of the routing rule.
+          pattern: '^(\/[\w\;\:\@\&\=\$\+\.\-]*[\/[\w\;\:\@\&\=\$\+\.\-]*]*)$'
+          example: "/api"
+          minLength: 1
+          maxLength: 128
+        upstream:
+          $ref: '#/components/schemas/Upstream'
+    Upstream:
+      type: object
+      required:
+        - host
+        - caching
+        - waf
+        - rateLimitClass
+        - sniMode
+      properties:
+        host:
+          type: string
+          pattern: '^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,63}\.?$'
+          description: |
+            The upstream host that handles the requests if not already cached.
+            This host will be protected by the WAF if the option is enabled.
+          example: "server.example.com"
+        caching:
+          type: boolean
+          description: |
+            Enable or disable caching.
+            If enabled, the CDN will cache the responses from the upstream host.
+            Subsequent requests for the same resource will be served from the cache.
+          example: true
+        waf:
+          type: boolean
+          description: Enable or disable WAF to protect the upstream host.
+          example: true
+        geoRestrictions:
+          description: |
+            This field manages the list of countries that are allowed or blocked from accessing the resource
+            from the upstream host based on their ISO 3166-1 alpha-2 codes.
+          oneOf:
+            - type: object
+              required:
+                - blockList
+              properties:
+                blockList:
+                  $ref: '#/components/schemas/CountryCodes'
+            - type: object
+              required:
+                - allowList
+              properties:
+                allowList:
+                  $ref: '#/components/schemas/CountryCodes'
+        rateLimitClass:
+          type: string
+          enum:
+            - R1
+            - R5
+            - R10
+            - R25
+            - R50
+            - R100
+            - R250
+            - R500
+          description: Rate limit class that will be applied to limit the number of incoming requests per IP.
+        sniMode:
+          type: string
+          description: |
+            The SNI (Server Name Indication) mode of the upstream host. It supports two modes:
+            - distribution: for outgoing connections to the upstream host, the CDN requires the upstream host to present a valid certificate
+            that matches the configured domain of the CDN distribution.
+            - origin: for outgoing connections to the upstream host, the CDN requires the upstream host to present a valid certificate that
+            matches the configured upstream/origin hostname.
+          enum:
+            - distribution
+            - origin
+    DistributionMetadata:
+      readOnly: true
+      allOf:
+        - $ref: '#/components/schemas/Metadata'
+        - $ref: '#/components/schemas/IpAddresses'
+        - $ref: '#/components/schemas/ResourceState'
+    CountryCodes:
+      type: array
+      items:
+        type: string
+        enum: ["AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO", "AQ", "AR", "AS", "AT", "AU", "AW", "AX", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BM", "BN", "BO", "BQ", "BR", "BS", "BT", "BV", "BW", "BY", "BZ", "CA", "CC", "CD", "CF", "CG", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CU", "CV", "CW", "CX", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "EH", "ER", "ES", "ET", "FI", "FJ", "FK", "FM", "FO", "FR", "GA", "GB", "GD", "GE", "GF", "GG", "GH", "GI", "GL", "GM", "GN", "GP", "GQ", "GR", "GS", "GT", "GU", "GW", "GY", "HK", "HM", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IM", "IN", "IO", "IQ", "IR", "IS", "IT", "JE", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KP", "KR", "KW", "KY", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MF", "MG", "MH", "MK", "ML", "MM", "MN", "MO", "MP", "MQ", "MR", "MS", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NC", "NE", "NF", "NG", "NI", "NL", "NO", "NP", "NR", "NU", "NZ", "OM", "PA", "PE", "PF", "PG", "PH", "PK", "PL", "PM", "PN", "PR", "PS", "PT", "PW", "PY", "QA", "RE", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SD", "SE", "SG", "SH", "SI", "SJ", "SK", "SL", "SM", "SN", "SO", "SR", "SS", "ST", "SV", "SX", "SY", "SZ", "TC", "TD", "TF", "TG", "TH", "TJ", "TK", "TL", "TM", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US", "UY", "UZ", "VA", "VC", "VE", "VG", "VI", "VN", "VU", "WF", "WS", "YE", "YT", "ZA", "ZM", "ZW"]
+      description: |
+        Country codes, the format should be based on ISO 3166-1 alpha-2 codes standard.
+        Those codes are used to either blacklist or whitelist countries in geoIPBlock.
+      example: ["CN", "RU"]
+    IpAddresses:
+      type: object
+      description: |
+        The IP addresses of the distribution.
+        Note that the IP addresses will be included in the response only when
+        the CDN distribution is in the 'AVAILABLE' state.
+      properties:
+        publicEndpointIpv4:
+          type: string
+          format: ipv4
+          description: IP of the distribution. It has to be included on the domain DNS Zone as A record.
+          example: 1.2.3.4
+          readOnly: true
+        publicEndpointIpv6:
+          type: string
+          format: ipv6
+          description: IP of the distribution, it has to be included on the domain DNS Zone as AAAA record.
+          example: 2001:db8::ff00:42:8329
+          readOnly: true
+    ResourceState:
+      type: object
+      description: The current status of the resource.
+      required:
+        - state
+      properties:
+        state:
+          type: string
+          description: Represents one of the possible states of the resource.
+          enum:
+            - AVAILABLE
+            - BUSY
+            - FAILED
+            - UNKNOWN
+          example: AVAILABLE
+          readOnly: true
+        message:
+          type: string
+          description: |
+            A human readable message describing the current state.
+            In case of an error, the message will contain a detailed error message.
+          example: In progress.
+          readOnly: true
+    EdgeServerIpInfo:
+      type: object
+      description: A CDN edge IP information resource.
+      properties:
+        type:
+          type: string
+          description: Represents one of the possible types of IP of CDN edge.
+          enum:
+            - ipv6
+            - ipv4
+          example: ipv4
+          readOnly: true
+        cidr:
+          type: string
+          anyOf:
+            - format: ipv4
+            - format: ipv6
+          description: |
+            the range of ip addresses for the CDN network
+          example: 1.2.3.4
+          readOnly: true
+        description:
+          type: string
+          description: |
+            A short description
+          example: Content Distribution.
+          readOnly: true
+    NoMetadata:
+      type: object
+    Error:
+      description: |
+        The Error object is used to represent an error response from the API.
+      type: object
+      properties:
+        httpStatus:
+          type: integer
+          description: The HTTP status code of the operation.
+          example: 400
+        messages:
+          type: array
+          description: |
+            A list of error messages.
+          items:
+            type: object
+            properties:
+              errorCode:
+                type: string
+                description: |
+                  Application internal error code
+                example: "err-1234"
+              message:
+                type: string
+                description: |
+                  A human readable explanation specific to this occurrence of the
+                  problem.
+                example: "Error message example"
+    Metadata:
+      type: object
+      description: Metadata of the resource.
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+          description: The ISO 8601 creation timestamp.
+          example: "2020-12-10T13:37:50+01:00"
+          readOnly: true
+        createdBy:
+          type: string
+          description: Unique name of the identity that created the resource.
+          example: "ionos:identity:::users/87f9a82e-b28d-49ed-9d04-fba2c0459cd3"
+          readOnly: true
+        createdByUserId:
+          type: string
+          description: Unique id of the identity that created the resource.
+          example: 87f9a82e-b28d-49ed-9d04-fba2c0459cd3
+          readOnly: true
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The ISO 8601 modified timestamp.
+          example: "2020-12-11T13:37:50+01:00"
+          readOnly: true
+        lastModifiedBy:
+          type: string
+          description: Unique name of the identity that last modified the resource.
+          example: "ionos:identity:::users/87f9a82e-b28d-49ed-9d04-fba2c0459cd3"
+          readOnly: true
+        lastModifiedByUserId:
+          type: string
+          description: Unique id of the identity that last modified the resource.
+          example: 87f9a82e-b28d-49ed-9d04-fba2c0459cd3
+          readOnly: true
+        resourceURN:
+          type: string
+          description: Unique name of the resource.
+          example: "ionos:<product>:<location>:<contract>:<resource-path>"
+          readOnly: true
+    Pagination:
+      required:
+      - offset
+      - limit
+      - _links
+      description: |
+        Pagination information. The offset and limit parameters are used to
+        navigate the list of elements. The _links object contains URLs to
+        navigate the different pages.
+      type: object
+      properties:
+        offset:
+          $ref: '#/components/schemas/Offset'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        _links:
+          $ref: '#/components/schemas/Links'
+    
+    Offset:
+      description: |
+        The offset specified in the request (if none was specified, the default
+        offset is 0).
+      type: integer
+      example: 0
+      minimum: 0
+      readOnly: true
+    Limit:
+      description: |
+        The limit specified in the request (if none was specified, use the
+        endpoint's default pagination limit).
+      type: integer
+      example: 42
+      minimum: 0
+      readOnly: true
+    Links:
+      description: |
+        URLs to navigate the different pages. As of now we always only return a
+        single page.
+      type: object
+      properties:
+        prev:
+          description: |
+            URL (with offset and limit parameters) of the previous page; only
+            present if offset is greater than 0.
+          type: string
+          format: uri
+          example: http://PREVIOUS-PAGE-URI
+          readOnly: true
+        self:
+          description: |
+            URL (with offset and limit parameters) of the current page.
+          type: string
+          format: uri
+          example: http://THIS-PAGE-URI
+          readOnly: true
+        next:
+          description: |
+            URL (with offset and limit parameters) of the next page; only
+            present if offset + limit is less than the total number of elements.
+          type: string
+          format: uri
+          example: http://NEXT-PAGE-URI
+          readOnly: true
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        The token can be generated using the 
+        [Authentication API](https://api.ionos.com/docs/authentication/v1/#tag/tokens/operation/tokensGenerate).
+  responses:
+    BadRequest:
+      description: |
+        ### Bad Request
+        The request send to the API was malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: |
+        ### Unauthorized
+        The request is missing authorization information or the authorization information provided are expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotAllowed:
+      description: |
+        ### Not Allowed
+        The user issuing the request does not have the needed permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: |
+        ### Conflict
+        The UUID is already taken by another party, follow the guides to generate UUIDs uniquely.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: |
+        ### Not Found
+        The resource that was requested could not be found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnexpectedError:
+      description: |
+        ### Unexpected Internal Server Error
+        An unexpected internal error occurred. We apologize for the inconvenience!
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: |
+        ### Unprocessable Entity
+        The request was well-formed but was unable to be followed due to semantic errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: |
+        ### Too Many Requests
+        The user has sent too many requests in a given amount of time.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnsupportedMediaType:
+      description: |
+        ### Unsupported Media Type
+        The request has an unsupported media type.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalError:
+      description: |
+        ### Internal Server Error
+        An internal error occurred. We apologize for the inconvenience!
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServiceUnavailable:
+      description: |
+        ### Service Unavailable
+        The server is currently unable to handle the request due to a temporary overloading or maintenance of the server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

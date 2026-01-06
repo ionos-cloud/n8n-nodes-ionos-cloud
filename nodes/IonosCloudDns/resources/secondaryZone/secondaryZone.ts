@@ -188,6 +188,7 @@ export const secondaryZoneDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.description',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

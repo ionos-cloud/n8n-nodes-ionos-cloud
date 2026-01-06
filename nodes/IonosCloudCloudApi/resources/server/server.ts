@@ -147,6 +147,52 @@ export const serverDescriptions: INodeProperties[] = [
 		displayOptions: { show: showForServerCreateOrUpdate },
 		options: [
 			{
+				displayName: 'Availability Zone',
+				name: 'availabilityZone',
+				type: 'options',
+				options: [
+					{ name: 'Auto', value: 'AUTO' },
+					{ name: 'Zone 1', value: 'ZONE_1' },
+					{ name: 'Zone 2', value: 'ZONE_2' },
+				],
+				default: 'AUTO',
+				description: 'The availability zone for the server',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.availabilityZone',
+					},
+				},
+			},
+			{
+				displayName: 'Boot CD-ROM',
+				name: 'bootCdrom',
+				type: 'string',
+				default: '',
+				description: 'UUID of the CD-ROM image to attach for booting',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.bootCdrom',
+						value: '={{ $value || undefined }}',
+					},
+				},
+			},
+			{
+				displayName: 'Boot Volume',
+				name: 'bootVolume',
+				type: 'string',
+				default: '',
+				description: 'UUID of the volume to use for booting the server',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.bootVolume',
+						value: '={{ $value || undefined }}',
+					},
+				},
+			},
+			{
 				displayName: 'CPU Family',
 				name: 'cpuFamily',
 				type: 'options',
@@ -165,20 +211,62 @@ export const serverDescriptions: INodeProperties[] = [
 				},
 			},
 			{
-				displayName: 'Availability Zone',
-				name: 'availabilityZone',
-				type: 'options',
-				options: [
-					{ name: 'Auto', value: 'AUTO' },
-					{ name: 'Zone 1', value: 'ZONE_1' },
-					{ name: 'Zone 2', value: 'ZONE_2' },
-				],
-				default: 'AUTO',
-				description: 'The availability zone for the server',
+				displayName: 'NIC Multi Queue',
+				name: 'nicMultiQueue',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to activate Multi Queue feature on all NICs for improved network performance',
 				routing: {
 					send: {
 						type: 'body',
-						property: 'properties.availabilityZone',
+						property: 'properties.nicMultiQueue',
+					},
+				},
+			},
+			{
+				displayName: 'Placement Group ID',
+				name: 'placementGroupId',
+				type: 'string',
+				default: '',
+				description: 'UUID of the placement group for the server',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.placementGroupId',
+						value: '={{ $value || undefined }}',
+					},
+				},
+			},
+			{
+				displayName: 'Server Type',
+				name: 'type',
+				type: 'options',
+				options: [
+					{ name: 'Enterprise', value: 'ENTERPRISE' },
+					{ name: 'CUBE', value: 'CUBE' },
+					{ name: 'VCPU', value: 'VCPU' },
+					{ name: 'GPU', value: 'GPU' },
+				],
+				default: 'ENTERPRISE',
+				description: 'The type of server to create',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.type',
+					},
+				},
+			},
+			{
+				displayName: 'Template UUID',
+				name: 'templateUuid',
+				type: 'string',
+				default: '',
+				description: 'UUID of the template to use for server creation',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.templateUuid',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

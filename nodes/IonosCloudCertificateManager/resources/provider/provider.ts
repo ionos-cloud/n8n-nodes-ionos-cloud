@@ -159,10 +159,10 @@ export const providerDescriptions: INodeProperties[] = [
 					if (additionalFields.eabKeyId || additionalFields.eabHmacKey) {
 						const body = requestOptions.body as Record<string, unknown>;
 						if (!body.properties) body.properties = {};
-						(body.properties as Record<string, unknown>).externalAccountBinding = {
-								keyId: additionalFields.eabKeyId || '',
-								hmacKey: additionalFields.eabHmacKey || '',
-							};
+						const eab: Record<string, unknown> = {};
+						if (additionalFields.eabKeyId) eab.keyId = additionalFields.eabKeyId;
+						if (additionalFields.eabHmacKey) eab.hmacKey = additionalFields.eabHmacKey;
+						(body.properties as Record<string, unknown>).externalAccountBinding = eab;
 						}
 						return requestOptions;
 					},

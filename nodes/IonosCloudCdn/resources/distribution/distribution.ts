@@ -142,6 +142,7 @@ export const distributionFields: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'properties.certificateId',
+				value: '={{ $value || undefined }}',
 			},
 		},
 	},
@@ -166,16 +167,26 @@ export const distributionFields: INodeProperties[] = [
 				displayName: 'Routing Rule',
 				values: [
 					{
-						displayName: 'Scheme',
-						name: 'scheme',
-						type: 'options',
-						options: [
-							{ name: 'HTTP', value: 'http' },
-							{ name: 'HTTPS', value: 'https' },
-							{ name: 'HTTP/HTTPS', value: 'http/https' },
-						],
-						default: 'http/https',
-						description: 'The protocol scheme',
+						displayName: 'Enable Caching',
+						name: 'upstreamCaching',
+						type: 'boolean',
+						default: true,
+						description: 'Whether to enable caching. If enabled, the CDN will cache responses from the upstream host.',
+					},
+					{
+						displayName: 'Enable WAF',
+						name: 'upstreamWaf',
+						type: 'boolean',
+						default: true,
+						description: 'Whether to enable Web Application Firewall to protect the upstream host',
+					},
+					{
+						displayName: 'Geo Restriction',
+						name: 'upstreamGeoRestriction',
+						type: 'json',
+						default: '',
+						placeholder: '{"allowList": ["US", "DE"]} or {"blockList": ["CN", "RU"]}',
+						description: 'Geo-restriction configuration with ISO 3166-1 alpha-2 country codes',
 					},
 					{
 						displayName: 'Prefix',
@@ -185,21 +196,94 @@ export const distributionFields: INodeProperties[] = [
 						description: 'URL path prefix to match',
 					},
 					{
+						displayName: 'Rate Limit Class',
+						name: 'upstreamRateLimitClass',
+						type: 'options',
+						options: [
+							{
+								name: 'R1	-	1 Request/sec per IP',
+								value: 'R1',
+							},
+							{
+								name: 'R10	-	10 Requests/sec per IP',
+								value: 'R10',
+							},
+							{
+								name: 'R100	-	100 Requests/sec per IP',
+								value: 'R100',
+							},
+							{
+								name: 'R25	-	25 Requests/sec per IP',
+								value: 'R25',
+							},
+							{
+								name: 'R250	-	250 Requests/sec per IP',
+								value: 'R250',
+							},
+							{
+								name: 'R5	-	5 Requests/sec per IP',
+								value: 'R5',
+							},
+							{
+								name: 'R50	-	50 Requests/sec per IP',
+								value: 'R50',
+							},
+							{
+								name: 'R500	-	500 Requests/sec per IP',
+								value: 'R500',
+							},
+					],
+						default: 'R100',
+						description: 'Rate limit class to limit the number of incoming requests per IP',
+					},
+					{
+						displayName: 'Scheme',
+						name: 'scheme',
+						type: 'options',
+						options: [
+							{
+								name: 'HTTP',
+								value: 'http',
+							},
+							{
+								name: 'HTTPS',
+								value: 'https',
+							},
+							{
+								name: 'HTTP/HTTPS',
+								value: 'http/https',
+							},
+					],
+						default: 'http/https',
+						description: 'The protocol scheme',
+					},
+					{
+						displayName: 'SNI Mode',
+						name: 'upstreamSniMode',
+						type: 'options',
+						options: [
+							{
+								name: 'Distribution	-	Match CDN Domain',
+								value: 'distribution',
+							},
+							{
+								name: 'Origin	-	Match Upstream Hostname',
+								value: 'origin',
+							},
+					],
+						default: 'distribution',
+						description: 'SNI (Server Name Indication) mode for SSL/TLS connections to upstream',
+					},
+					{
 						displayName: 'Upstream Host',
 						name: 'upstreamHost',
 						type: 'string',
+							required:	true,
 						default: '',
 						placeholder: 'origin.example.com',
 						description: 'The upstream origin server hostname',
 					},
-					{
-						displayName: 'Upstream GeoRestriction',
-						name: 'upstreamGeoRestriction',
-						type: 'json',
-						default: '',
-						description: 'Geo-restriction configuration as JSON',
-					},
-				],
+			],
 			},
 		],
 		routing: {
@@ -212,21 +296,28 @@ export const distributionFields: INodeProperties[] = [
 							const body = requestOptions.body as Record<string, unknown>;
 							body.properties = body.properties || {};
 							(body.properties as Record<string, unknown>).routingRules = rules.map(rule => {
-								const routingRule: Record<string, unknown> = {
-									scheme: rule.scheme,
-									prefix: rule.prefix,
-									upstream: {
-										host: rule.upstreamHost,
-									},
+								const upstream: Record<string, unknown> = {
+									host: rule.upstreamHost,
+									caching: rule.upstreamCaching !== undefined ? rule.upstreamCaching : true,
+									waf: rule.upstreamWaf !== undefined ? rule.upstreamWaf : true,
+									rateLimitClass: rule.upstreamRateLimitClass || 'R100',
+									sniMode: rule.upstreamSniMode || 'distribution',
 								};
+								
 								if (rule.upstreamGeoRestriction) {
 									try {
-										(routingRule.upstream as Record<string, unknown>).geoRestriction = 
-											JSON.parse(rule.upstreamGeoRestriction as string);
-								} catch {
+										upstream.geoRestrictions = JSON.parse(rule.upstreamGeoRestriction as string);
+									} catch {
 										// If parsing fails, skip geo restriction
 									}
 								}
+								
+								const routingRule: Record<string, unknown> = {
+									scheme: rule.scheme,
+									prefix: rule.prefix,
+									upstream,
+								};
+								
 								return routingRule;
 							});
 						}

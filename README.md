@@ -30,11 +30,11 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 | Node | Resources | Operations | Description |
 |------|-----------|------------|-------------|
-| **Cloud API v6** | 20 | 110 | Complete infrastructure management (compute, networking, storage, Kubernetes) |
+| **Cloud API v6** | 20 | 145 | Complete infrastructure management (compute, networking, storage, Kubernetes) |
 | **Certificate Manager** | 3 | 15 | SSL/TLS certificate lifecycle management with ACME support |
-| **Cloud DNS** | 7 | 36 | DNS zones, records (15 types), DNSSEC, zone transfers |
+| **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
-| **Total** | **32** | **168** | |
+| **Total** | **32** | **195** | |
 
 <details>
 <summary><b>Cloud API v6 - Detailed Operations</b></summary>

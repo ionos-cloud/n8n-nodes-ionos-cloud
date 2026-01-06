@@ -288,6 +288,7 @@ export const nodePoolDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.k8sVersion',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

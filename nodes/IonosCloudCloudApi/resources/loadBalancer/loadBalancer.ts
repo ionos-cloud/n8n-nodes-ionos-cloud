@@ -133,6 +133,7 @@ export const loadBalancerDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.ip',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

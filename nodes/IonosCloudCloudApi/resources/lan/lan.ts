@@ -96,6 +96,48 @@ export const lanDescriptions: INodeProperties[] = [
 		displayOptions: { show: showForLanCreateOrUpdate },
 		options: [
 			{
+				displayName: 'IP Failover',
+				name: 'ipFailover',
+				type: 'json',
+				default: '',
+				placeholder: '[{"ip": "192.0.2.1", "nicUuid": "uuid"}]',
+				description: 'IP failover configuration as JSON array of objects with ip and nicUuid',
+				routing: {
+					send: {
+						preSend: [
+							async function (this, requestOptions) {
+								const ipFailover = this.getNodeParameter('additionalFields.ipFailover', 0) as string;
+								if (ipFailover) {
+									try {
+										const body = requestOptions.body as Record<string, unknown>;
+										if (!body.properties) body.properties = {};
+										(body.properties as Record<string, unknown>).ipFailover = JSON.parse(ipFailover);
+									} catch {
+										// If parsing fails, skip ipFailover
+									}
+								}
+								return requestOptions;
+							},
+						],
+					},
+				},
+			},
+			{
+				displayName: 'IPv6 CIDR Block',
+				name: 'ipv6CidrBlock',
+				type: 'string',
+				default: '',
+				placeholder: 'AUTO or custom /64 block',
+				description: 'IPv6 CIDR block for the LAN. Use "AUTO" to auto-assign, or provide a /64 block.',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.ipv6CidrBlock',
+						value: '={{ $value || undefined }}',
+					},
+				},
+			},
+			{
 				displayName: 'Name',
 				name: 'name',
 				type: 'string',
@@ -105,6 +147,21 @@ export const lanDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.name',
+						value: '={{ $value || undefined }}',
+					},
+				},
+			},
+			{
+				displayName: 'PCC ID',
+				name: 'pcc',
+				type: 'string',
+				default: '',
+				description: 'UUID of the Private Cross-Connect (PCC) the LAN is connected to',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.pcc',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

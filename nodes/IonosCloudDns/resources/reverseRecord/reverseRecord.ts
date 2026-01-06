@@ -150,6 +150,7 @@ export const reverseRecordDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.description',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

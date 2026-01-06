@@ -124,6 +124,7 @@ export const datacenterDescriptions: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'properties.description',
+				value: '={{ $value || undefined }}',
 			},
 		},
 	},

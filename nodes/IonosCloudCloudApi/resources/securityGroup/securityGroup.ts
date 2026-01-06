@@ -120,6 +120,7 @@ export const securityGroupDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.description',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

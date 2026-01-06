@@ -37,14 +37,14 @@ export class IonosCloudCertificateManager implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Auto Certificate',
-						value: 'autoCertificate',
-						description: 'Manage auto-renewable certificates',
-					},
-					{
 						name: 'Certificate',
 						value: 'certificate',
 						description: 'Manage SSL/TLS certificates',
+					},
+					{
+						name: 'Auto Certificate',
+						value: 'autoCertificate',
+						description: 'Manage auto-renewable certificates',
 					},
 					{
 						name: 'Provider',

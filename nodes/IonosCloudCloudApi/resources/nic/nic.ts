@@ -130,6 +130,7 @@ export const nicDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.name',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

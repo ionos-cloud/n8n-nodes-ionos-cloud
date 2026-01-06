@@ -144,6 +144,7 @@ export const firewallRuleDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.name',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},
@@ -185,6 +186,7 @@ export const firewallRuleDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.sourceIp',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},
@@ -198,6 +200,7 @@ export const firewallRuleDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.sourceMac',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},

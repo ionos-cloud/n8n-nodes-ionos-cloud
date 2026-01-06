@@ -195,6 +195,7 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.loggingFormat',
+						value: '={{ $value || undefined }}',
 					},
 				},
 			},
