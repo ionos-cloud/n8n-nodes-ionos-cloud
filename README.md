@@ -6,12 +6,13 @@ This is an n8n community node package for interacting with IONOS Cloud services.
 
 ## Included Nodes
 
-This package provides four separate nodes for different IONOS Cloud services:
+This package provides five separate nodes for different IONOS Cloud services:
 
 1. **Ionos Cloud (Cloud API v6)** - Core infrastructure management
 2. **Ionos Cloud (Certificate Manager)** - SSL/TLS certificate management  
 3. **Ionos Cloud (Cloud DNS)** - Domain name system management
 4. **Ionos Cloud (CDN)** - Content delivery network management
+5. **Ionos Cloud (AI Model Hub)** - AI model inference and RAG capabilities
 
 [Installation](#installation)  
 [Operations](#operations)  
@@ -34,7 +35,8 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Certificate Manager** | 3 | 15 | SSL/TLS certificate lifecycle management with ACME support |
 | **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
-| **Total** | **32** | **195** | |
+| **AI Model Hub** | 3 | 15 | Foundation model inference with RAG capabilities |
+| **Total** | **35** | **210** | |
 
 <details>
 <summary><b>Cloud API v6 - Detailed Operations</b></summary>
@@ -139,6 +141,26 @@ Get CDN edge server IPs for origin whitelisting.
 
 </details>
 
+<details>
+<summary><b>AI Model Hub - Detailed Operations</b></summary>
+
+#### Model Resource (2 operations)
+Browse and invoke foundation models for AI inference.
+- Get Many (list available models), Predict (run inference)
+- **Features**: RAG support via collection queries, custom model options, streaming responses
+
+#### Collection Resource (6 operations)
+Manage vector database collections for document storage and retrieval.
+- Create, Delete, Get, Get Many, Update, Query
+- **Features**: Chunking strategies (sentence/fixed/recursive), embedding models, database types (chromadb/pgvector), semantic search
+
+#### Document Resource (7 operations)
+Manage documents within collections for RAG applications.
+- Add, Delete, Delete All, Get, Get Many, Get Chunks, Update
+- **Features**: Base64 content encoding, metadata management, chunk retrieval, batch operations
+
+</details>
+
 ---
 
 ## Credentials
@@ -147,7 +169,7 @@ All nodes in this package share a single credential type: **Ionos Cloud API**
 
 Authentication uses the [Cloud API Bearer token](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager).
 
-The same token works across all IONOS Cloud services (Cloud API v6, Certificate Manager, DNS, and CDN).
+The same token works across all IONOS Cloud services (Cloud API v6, Certificate Manager, DNS, CDN, and AI Model Hub).
 
 ## Compatibility
 
@@ -158,7 +180,7 @@ Tested against n8n version 2.1.5+
 ### Authentication
 1. Create new credentials in n8n and select "Ionos Cloud API"
 2. Provide your API token (generated from IONOS Cloud Console)
-3. The same credential works for all four nodes
+3. The same credential works for all five nodes
 
 ### Using the Nodes
 
@@ -182,6 +204,11 @@ Tested against n8n version 2.1.5+
 * Select the resource (Distribution or Ip)
 * Configure CDN distributions with routing rules and upstream origins
 
+#### AI Model Hub
+* Add the "Ionos Cloud (AI Model Hub)" node to your workflow
+* Select the resource (Model, Collection, or Document)
+* Use Model for AI inference, Collection for vector storage, Document for RAG applications
+
 ### Common Patterns
 
 **Automated SSL Certificate Deployment:**
@@ -200,6 +227,12 @@ Tested against n8n version 2.1.5+
 3. Use DNSSEC resource to enable DNSSEC signing
 4. Use ReverseRecord for PTR records
 
+**AI-Powered Applications with RAG:**
+1. Use AI Model Hub Collection resource to create a vector database
+2. Use Document resource to add knowledge base documents
+3. Use Model Predict operation with collection query for context-aware responses
+4. Automate document updates and model inference in workflows
+
 ## API Endpoints
 
 Each node connects to a different IONOS Cloud API endpoint:
@@ -208,6 +241,7 @@ Each node connects to a different IONOS Cloud API endpoint:
 - **Certificate Manager**: `https://certificate-manager.de-fra.ionos.com`
 - **Cloud DNS**: `https://dns.de-fra.ionos.com`
 - **CDN**: `https://cdn.de-fra.ionos.com`
+- **AI Model Hub**: `https://inference.de-txl.ionos.com`
 
 ## Resources
 
@@ -217,6 +251,7 @@ Each node connects to a different IONOS Cloud API endpoint:
 * [Certificate Manager API Documentation](https://api.ionos.com/docs/certmanager/v2/)
 * [Cloud DNS API Documentation](https://api.ionos.com/docs/dns/v1/)
 * [CDN API Documentation](https://api.ionos.com/docs/cdn/v1/)
+* [AI Model Hub API Documentation](https://api.ionos.com/docs/inference-modelhub/v1/)
 
 ## Version History
 
@@ -225,4 +260,5 @@ Each node connects to a different IONOS Cloud API endpoint:
 - Certificate Manager node (3 resources, 15 operations)
 - DNS node (7 resources, 36 operations)
 - CDN node (2 resources, 7 operations)
-- Total: 168 operations across 32 resources
+- AI Model Hub node (3 resources, 15 operations)
+- Total: 210 operations across 35 resources
