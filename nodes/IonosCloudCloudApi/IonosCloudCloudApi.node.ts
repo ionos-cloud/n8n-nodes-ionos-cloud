@@ -49,22 +49,16 @@ export class IonosCloudCloudApi implements INodeType {
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
+				// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 				options: [
-					{
-						name: 'Application Load Balancer',
-						value: 'applicationLoadBalancer',
-					},
+					// Account & Global Resources
 					{
 						name: 'Contract',
 						value: 'contract',
 					},
 					{
-						name: 'Datacenter',
-						value: 'datacenter',
-					},
-					{
-						name: 'Firewall Rule',
-						value: 'firewallRule',
+						name: 'Location',
+						value: 'location',
 					},
 					{
 						name: 'Image',
@@ -74,85 +68,104 @@ export class IonosCloudCloudApi implements INodeType {
 						name: 'IP Block',
 						value: 'ipBlock',
 					},
+					// Core Infrastructure
 					{
-						name: 'Kubernetes Cluster',
-						value: 'k8s',
+						name: 'Datacenter',
+						value: 'datacenter',
 					},
 					{
 						name: 'LAN',
 						value: 'lan',
 					},
-					{
-						name: 'Load Balancer',
-						value: 'loadBalancer',
-					},
-					{
-						name: 'Location',
-						value: 'location',
-					},
-					{
-						name: 'NAT Gateway',
-						value: 'natGateway',
-					},
-					{
-						name: 'Network Load Balancer',
-						value: 'networkLoadBalancer',
-					},
-					{
-						name: 'NIC',
-						value: 'nic',
-					},
-					{
-						name: 'Node Pool',
-						value: 'nodePool',
-					},
-					{
-						name: 'Private Cross-Connect',
-						value: 'pcc',
-					},
-					{
-						name: 'Security Group',
-						value: 'securityGroup',
-					},
+					// Compute Resources
 					{
 						name: 'Server',
 						value: 'server',
+					},
+					{
+						name: 'Volume',
+						value: 'volume',
 					},
 					{
 						name: 'Snapshot',
 						value: 'snapshot',
 					},
 					{
+						name: 'NIC',
+						value: 'nic',
+					},
+					{
+						name: 'Firewall Rule',
+						value: 'firewallRule',
+					},
+					// Kubernetes
+					{
+						name: 'Kubernetes Cluster',
+						value: 'k8s',
+					},
+					{
+						name: 'Node Pool',
+						value: 'nodePool',
+					},
+					// Networking
+					{
+						name: 'Private Cross-Connect',
+						value: 'pcc',
+					},
+					{
+						name: 'Load Balancer',
+						value: 'loadBalancer',
+					},
+					{
+						name: 'Network Load Balancer',
+						value: 'networkLoadBalancer',
+					},
+					{
+						name: 'Application Load Balancer',
+						value: 'applicationLoadBalancer',
+					},
+					{
 						name: 'Target Group',
 						value: 'targetGroup',
 					},
 					{
-						name: 'Volume',
-						value: 'volume',
+						name: 'NAT Gateway',
+						value: 'natGateway',
+					},
+					// Security
+					{
+						name: 'Security Group',
+						value: 'securityGroup',
 					},
 				],
 				default: 'datacenter',
 			},
-			...applicationLoadBalancerDescription,
+			// Account & Global
 			...contractDescription,
-			...datacenterDescription,
-			...firewallRuleDescription,
+			...locationDescription,
 			...imageDescription,
 			...ipBlockDescription,
-			...k8sDescription,
+			// Core Infrastructure
+			...datacenterDescription,
 			...lanDescription,
-			...loadBalancerDescription,
-			...locationDescription,
-			...natGatewayDescription,
-			...networkLoadBalancerDescription,
-			...nicDescription,
-			...pccDescription,
-			...nodePoolDescription,
-			...securityGroupDescription,
+			// Compute Resources
 			...serverDescription,
-			...snapshotDescription,
-			...targetGroupDescription,
 			...volumeDescription,
+			...snapshotDescription,
+			...nicDescription,
+			...firewallRuleDescription,
+			// Kubernetes
+			...k8sDescription,
+			...nodePoolDescription,
+			// Networking
+			...pccDescription,
+			...loadBalancerDescription,
+			...networkLoadBalancerDescription,
+			...applicationLoadBalancerDescription,
+			...targetGroupDescription,
+			...natGatewayDescription,
+			// Security
+			...securityGroupDescription,
 		],
 	};
 }
