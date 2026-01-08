@@ -282,15 +282,14 @@ Tested against n8n version 2.1.5+
 
 ## API Endpoints
 
-Each node connects t
-  - Inference API: `https://inference.de-txl.ionos.com` (Model, Collection, Document resources)
-  - OpenAI-compatible API: `https://openai.inference.de-txl.ionos.com` (path: `/v1/*`)nt:
+Each node connects to:
 
 - **Infrastructure**: `https://api.ionos.com/cloudapi/v6/`
 - **Certificate Manager**: `https://certificate-manager.de-fra.ionos.com`
 - **Cloud DNS**: `https://dns.de-fra.ionos.com`
 - **CDN**: `https://cdn.de-fra.ionos.com`
-- **AI Model Hub**: `https://inference.de-txl.ionos.com`
+- **AI Model Hub (Inference API)**: `https://inference.de-txl.ionos.com`
+- **AI Model Hub (OpenAI compatible API)**: `https://inference.de-txl.ionos.com`
 
 ## Resources
 
