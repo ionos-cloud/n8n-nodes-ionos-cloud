@@ -706,18 +706,18 @@ export const openaiDescriptions: INodeProperties[] = [
 				options: [
 					{
 						name: '1024x1024',
-						value: '1024*1024',
+						value: '1024x1024',
 					},
 					{
 						name: '1024x1792',
-						value: '1024*1792',
+						value: '1024x1792',
 					},
 					{
 						name: '1792x1024',
-						value: '1792*1024',
+						value: '1792x1024',
 					},
 				],
-				default: '1024*1024',
+				default: '1024x1024',
 				description: 'Size of the generated image',
 				routing: {
 					send: {
