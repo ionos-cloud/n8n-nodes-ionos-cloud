@@ -289,7 +289,7 @@ Each node connects to:
 - **Cloud DNS**: `https://dns.de-fra.ionos.com`
 - **CDN**: `https://cdn.de-fra.ionos.com`
 - **AI Model Hub (Inference API)**: `https://inference.de-txl.ionos.com`
-- **AI Model Hub (OpenAI compatible API)**: `https://inference.de-txl.ionos.com`
+- **AI Model Hub (OpenAI Compatible API)**: `https://openai.inference.de-txl.ionos.com`
 
 ## Resources
 
