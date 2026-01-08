@@ -33,7 +33,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 4. Agree to the risks of using community nodes
 5. Select **Install**
 
-**Note:** After installation, you need to restart your n8n instance for the new node to be recognized.
+**Note:** After installation, you may need to restart your n8n instance for the new node to be recognized.
 
 ## Operations
 
@@ -265,10 +265,15 @@ Each node connects to a different IONOS Cloud API endpoint:
 
 ## Version History
 
-**v0.1.0** - Initial release
-- Infrastructure node (20 resources, 110 operations)
+**v0.2.1** - Current release
+- Infrastructure node (20 resources, 145 operations)
 - Certificate Manager node (3 resources, 15 operations)
-- DNS node (7 resources, 36 operations)
+- DNS node (7 resources, 28 operations)
 - CDN node (2 resources, 7 operations)
 - AI Model Hub node (3 resources, 15 operations)
 - Total: 210 operations across 35 resources
+- Dynamic User-Agent including package and n8n versions
+- Shared authentication across all nodes
+
+**v0.1.0** - Initial release
+- Core functionality for all 5 IONOS Cloud services

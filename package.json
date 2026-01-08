@@ -5,7 +5,23 @@
   "license": "MIT",
   "homepage": "https://www.ionos.com/cloud",
   "keywords": [
-    "n8n-community-node-package"
+    "n8n-community-node-package",
+    "n8n",
+    "ionos",
+    "ionos-cloud",
+    "cloud",
+    "infrastructure",
+    "iaas",
+    "kubernetes",
+    "dns",
+    "cdn",
+    "certificate",
+    "ssl",
+    "ai",
+    "llm",
+    "rag",
+    "vector-database",
+    "automation"
   ],
   "author": {
     "name": "Rijesh Haridas",
