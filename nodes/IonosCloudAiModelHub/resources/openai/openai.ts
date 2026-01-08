@@ -351,7 +351,7 @@ export const openaiDescriptions: INodeProperties[] = [
 				displayName: 'Top P',
 				name: 'top_p',
 				type: 'number',
-				default: -1,
+				default: 1,
 				description: 'Alternative to sampling with temperature',
 				routing: {
 					send: {
