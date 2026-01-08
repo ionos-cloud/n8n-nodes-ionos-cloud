@@ -668,7 +668,7 @@ export const openaiDescriptions: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'N',
+				displayName: 'Number of Images',
 				name: 'n',
 				type: 'number',
 				default: 1,
