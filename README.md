@@ -170,13 +170,32 @@ Manage documents within collections for RAG applications.
 - **Features**: Base64 content encoding, metadata management, chunk retrieval, batch operations
 
 #### OpenAI Compatible Resource (5 operations)
-Use OpenAI-compatible API for standardized AI interactions.
-- Chat Completion (conversational AI with message history)
-- Completion (simple text completion)
-- Create Embeddings (text to vector embeddings)
-- Generate Image (text-to-image generation)
-- Get Many (list available models in OpenAI format)
-- **Features**: OpenAI API compatibility, chat completions, embeddings, image generation
+Use OpenAI-compatible API endpoints for standardized AI interactions.
+
+**Chat Completion** - Create chat completions with message history
+- Supports system, user, and assistant message roles
+- Parameters: model, messages (required), temperature, top_p, max_tokens, max_completion_tokens, n, stream, stop, presence_penalty, frequency_penalty, logit_bias, response_format, tools, tool_choice, user
+- Compatible with OpenAI chat completion API format
+
+**Completion** - Simple text completion
+- Parameters: model, prompt (required), temperature, top_p, max_tokens, n, stream, stop, presence_penalty, frequency_penalty, logit_bias, user
+- Compatible with OpenAI completion API format
+
+**Create Embeddings** - Generate vector embeddings from text
+- Parameters: model (default: intfloat/e5-large-v2), input (single text or comma-separated multiple texts)
+- Returns embedding vectors for semantic search and similarity
+
+**Generate Image** - Text-to-image generation
+- Parameters: model (default: stabilityai/stable-diffusion-xl-base-1.0), prompt (required), n, size (1024x1024, 1024x1792, 1792x1024), response_format (b64_json), user
+- Generates images from text descriptions
+
+**Get Many** - List available models
+- Returns all models in OpenAI-compatible format
+- Shows model capabilities and availability
+
+**API Endpoint**: `https://openai.inference.de-txl.ionos.com` (path: `/v1/*`)
+
+**Features**: Full OpenAI API compatibility, drop-in replacement for OpenAI in existing workflows, comprehensive parameter support
 
 </details>
 
@@ -225,8 +244,11 @@ Tested against n8n version 2.1.5+
 
 #### AI Model Hub
 * Add the "Ionos Cloud (AI Model Hub)" node to your workflow
-* Select the resource (Model, Collection, or Document)
-* Use Model for AI inference, Collection for vector storage, Document for RAG applications
+* Select the resource (Model, Collection, Document, or OpenAI Compatible)
+* **Model**: AI inference with native IONOS API
+* **Collection**: Vector database management for RAG
+* **Document**: Manage documents in collections
+* **OpenAI Compatible**: Use OpenAI-compatible endpoints (chat, completions, embeddings, images)
 
 ### Common Patterns
 
@@ -247,14 +269,22 @@ Tested against n8n version 2.1.5+
 4. Use ReverseRecord for PTR records
 
 **AI-Powered Applications with RAG:**
-1. Use AI Model Hub Collection resource to create a vector database
+1. Use AI Model Hub Collection resource to create a vector da
+
+**OpenAI-Compatible AI Integration:**
+1. Use OpenAI Compatible Chat Completion for conversational AI
+2. Use Create Embeddings for semantic search and similarity
+3. Use Generate Image for text-to-image generation
+4. Drop-in replacement for OpenAI API in existing n8n workflowstabase
 2. Use Document resource to add knowledge base documents
 3. Use Model Predict operation with collection query for context-aware responses
 4. Automate document updates and model inference in workflows
 
 ## API Endpoints
 
-Each node connects to a different IONOS Cloud API endpoint:
+Each node connects t
+  - Inference API: `https://inference.de-txl.ionos.com` (Model, Collection, Document resources)
+  - OpenAI-compatible API: `https://openai.inference.de-txl.ionos.com` (path: `/v1/*`)nt:
 
 - **Infrastructure**: `https://api.ionos.com/cloudapi/v6/`
 - **Certificate Manager**: `https://certificate-manager.de-fra.ionos.com`
