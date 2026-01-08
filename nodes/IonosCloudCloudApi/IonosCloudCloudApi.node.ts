@@ -1,4 +1,5 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { USER_AGENT } from '../../utils/userAgent';
 import { serverDescription } from './resources/server';
 import { contractDescription } from './resources/contract';
 import { datacenterDescription } from './resources/datacenter';
@@ -41,6 +42,7 @@ export class IonosCloudCloudApi implements INodeType {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
+				'User-Agent': USER_AGENT,
 			},
 		},
 		properties: [

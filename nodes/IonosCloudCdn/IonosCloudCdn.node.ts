@@ -2,6 +2,7 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
+import { USER_AGENT } from '../../utils/userAgent';
 
 import * as distribution from './resources/distribution';
 import * as ips from './resources/ips';
@@ -33,6 +34,7 @@ export class IonosCloudCdn implements INodeType {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
+				'User-Agent': USER_AGENT,
 			},
 		},
 		properties: [

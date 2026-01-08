@@ -1,4 +1,5 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { USER_AGENT } from '../../utils/userAgent';
 import { zoneOperations } from './resources/zone';
 import { zoneDescriptions } from './resources/zone/zone';
 import { recordOperations } from './resources/record';
@@ -35,6 +36,7 @@ export class IonosCloudDns implements INodeType {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
+				'User-Agent': USER_AGENT,
 			},
 		},
 		properties: [

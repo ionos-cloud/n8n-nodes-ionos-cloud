@@ -1,4 +1,5 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { USER_AGENT } from '../../utils/userAgent';
 import { certificateOperations } from './resources/certificate';
 import { certificateDescriptions } from './resources/certificate/certificate';
 import { autoCertificateOperations } from './resources/autoCertificate';
@@ -27,6 +28,7 @@ export class IonosCloudCertificateManager implements INodeType {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
+				'User-Agent': USER_AGENT,
 			},
 		},
 		properties: [

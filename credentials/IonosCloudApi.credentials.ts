@@ -5,6 +5,7 @@ import type {
 	ICredentialType,
 	INodeProperties,
 } from 'n8n-workflow';
+import { USER_AGENT } from '../utils/userAgent';
 
 export class IonosCloudApi implements ICredentialType {
 	name = 'ionosCloudApi';
@@ -33,6 +34,7 @@ export class IonosCloudApi implements ICredentialType {
 		properties: {
 			headers: {
 				Authorization: '=Bearer {{$credentials.accessToken}}',
+				'User-Agent': USER_AGENT,
 			},
 		},
 	};
