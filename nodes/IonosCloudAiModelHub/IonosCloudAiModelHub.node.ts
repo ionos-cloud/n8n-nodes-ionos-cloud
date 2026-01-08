@@ -7,6 +7,7 @@ import { USER_AGENT } from '../../utils/userAgent';
 import * as collection from './resources/collection';
 import * as document from './resources/document';
 import * as model from './resources/model';
+import * as openai from './resources/openai';
 
 export class IonosCloudAiModelHub implements INodeType {
 	usableAsTool = true;
@@ -60,12 +61,18 @@ export class IonosCloudAiModelHub implements INodeType {
 						value: 'model',
 						description: 'Browse and call foundation models',
 					},
+					{
+						name: 'OpenAI Compatible',
+						value: 'openai',
+						description: 'Use OpenAI-compatible API endpoints',
+					},
 				],
 				default: 'collection',
 			},
 			...collection.descriptions,
 			...document.descriptions,
 			...model.descriptions,
+			...openai.descriptions,
 		],
 		usableAsTool: true,
 	};

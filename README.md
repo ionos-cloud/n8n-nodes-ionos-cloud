@@ -45,8 +45,8 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Certificate Manager** | 3 | 15 | SSL/TLS certificate lifecycle management with ACME support |
 | **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
-| **AI Model Hub** | 3 | 15 | Foundation model inference with RAG capabilities |
-| **Total** | **35** | **210** | |
+| **AI Model Hub** | 4 | 20 | Foundation model inference, RAG capabilities, and OpenAI-compatible API |
+| **Total** | **36** | **215** | |
 
 <details>
 <summary><b>Infrastructure - Detailed Operations</b></summary>
@@ -169,6 +169,15 @@ Manage documents within collections for RAG applications.
 - Add, Delete, Delete All, Get, Get Many, Get Chunks, Update
 - **Features**: Base64 content encoding, metadata management, chunk retrieval, batch operations
 
+#### OpenAI Compatible Resource (5 operations)
+Use OpenAI-compatible API for standardized AI interactions.
+- Chat Completion (conversational AI with message history)
+- Completion (simple text completion)
+- Create Embeddings (text to vector embeddings)
+- Generate Image (text-to-image generation)
+- Get Many (list available models in OpenAI format)
+- **Features**: OpenAI API compatibility, chat completions, embeddings, image generation
+
 </details>
 
 ---
@@ -262,18 +271,23 @@ Each node connects to a different IONOS Cloud API endpoint:
 * [Cloud DNS API Documentation](https://api.ionos.com/docs/dns/v1/)
 * [CDN API Documentation](https://api.ionos.com/docs/cdn/v1/)
 * [AI Model Hub API Documentation](https://api.ionos.com/docs/inference-modelhub/v1/)
+* [AI Model Hub OpenAI-compatible API Documentation](https://api.ionos.com/docs/inference-openai/v1/)
 
 ## Version History
 
-**v0.2.1** - Current release
+**v0.2.2** - Current release
 - Infrastructure node (20 resources, 145 operations)
 - Certificate Manager node (3 resources, 15 operations)
 - DNS node (7 resources, 28 operations)
 - CDN node (2 resources, 7 operations)
-- AI Model Hub node (3 resources, 15 operations)
-- Total: 210 operations across 35 resources
+- AI Model Hub node (4 resources, 20 operations)
+  - Added OpenAI-compatible endpoints (chat completions, completions, embeddings, image generation)
+- Total: 215 operations across 36 resources
 - Dynamic User-Agent including package and n8n versions
 - Shared authentication across all nodes
+
+**v0.2.1** - Previous release
+- Initial 5-node release with 210 operations
 
 **v0.1.0** - Initial release
 - Core functionality for all 5 IONOS Cloud services
