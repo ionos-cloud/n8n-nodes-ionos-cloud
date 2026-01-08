@@ -25,6 +25,16 @@ This package provides five separate nodes for different IONOS Cloud services:
 
 Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
+### Quick Installation
+
+1. Go to **Settings > Community Nodes**
+2. Select **Install**
+3. Enter `@ionos-cloud/n8n-nodes-ionos-cloud` in **Enter npm package name**
+4. Agree to the risks of using community nodes
+5. Select **Install**
+
+**Note:** After installation, you need to restart your n8n instance for the new node to be recognized.
+
 ## Operations
 
 ### Overview
