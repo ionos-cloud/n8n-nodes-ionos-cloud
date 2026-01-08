@@ -1,10 +1,12 @@
 {
   "name": "@ionos-cloud/n8n-nodes-ionos-cloud",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "n8n node to interact with Ionos Cloud via Cloud API v6",
   "license": "MIT",
   "homepage": "https://www.ionos.com/cloud",
-  "keywords": ["n8n-community-node-package"],
+  "keywords": [
+    "n8n-community-node-package"
+  ],
   "author": {
     "name": "Rijesh Haridas",
     "email": "rijesh.haridas@cloud.ionos.com"
@@ -25,7 +27,9 @@
     "release": "n8n-node release",
     "prepublishOnly": "n8n-node prerelease"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "strict": true,
@@ -47,5 +51,7 @@
     "release-it": "^19.0.4",
     "typescript": "5.9.2"
   },
-  "peerDependencies": { "n8n-workflow": "*" }
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
 }
