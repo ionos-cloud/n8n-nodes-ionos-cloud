@@ -8,7 +8,7 @@ This is an n8n community node package for interacting with IONOS Cloud services.
 
 This package provides five separate nodes for different IONOS Cloud services:
 
-1. **Ionos Cloud (Cloud API v6)** - Core infrastructure management
+1. **Ionos Cloud (Infrastructure)** - Core infrastructure management
 2. **Ionos Cloud (Certificate Manager)** - SSL/TLS certificate management  
 3. **Ionos Cloud (Cloud DNS)** - Domain name system management
 4. **Ionos Cloud (CDN)** - Content delivery network management
@@ -31,7 +31,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 | Node | Resources | Operations | Description |
 |------|-----------|------------|-------------|
-| **Cloud API v6** | 20 | 145 | Complete infrastructure management (compute, networking, storage, Kubernetes) |
+| **Infrastructure** | 20 | 145 | Complete infrastructure management (compute, networking, storage, Kubernetes) |
 | **Certificate Manager** | 3 | 15 | SSL/TLS certificate lifecycle management with ACME support |
 | **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
@@ -39,7 +39,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Total** | **35** | **210** | |
 
 <details>
-<summary><b>Cloud API v6 - Detailed Operations</b></summary>
+<summary><b>Infrastructure - Detailed Operations</b></summary>
 
 #### Account & Global Resources (9 operations)
 - **Contract** (1): Get Many
@@ -169,7 +169,7 @@ All nodes in this package share a single credential type: **Ionos Cloud API**
 
 Authentication uses the [Cloud API Bearer token](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager).
 
-The same token works across all IONOS Cloud services (Cloud API v6, Certificate Manager, DNS, CDN, and AI Model Hub).
+The same token works across all IONOS Cloud services (Infrastructure, Certificate Manager, DNS, CDN, and AI Model Hub).
 
 ## Compatibility
 
@@ -184,8 +184,8 @@ Tested against n8n version 2.1.5+
 
 ### Using the Nodes
 
-#### Cloud API v6
-* Add the "Ionos Cloud (Cloud API v6)" node to your workflow
+#### Infrastructure
+* Add the "Ionos Cloud (Infrastructure)" node to your workflow
 * Select the resource (e.g., Server, Volume, Datacenter)
 * Choose the operation and configure the required fields
 
@@ -217,7 +217,7 @@ Tested against n8n version 2.1.5+
 3. Automate certificate renewal with n8n scheduling
 
 **Infrastructure Provisioning:**
-1. Use Cloud API v6 to create Datacenter, Server, and Volume
+1. Use Infrastructure node to create Datacenter, Server, and Volume
 2. Use DNS node to create Zone and A/AAAA Records pointing to server IPs
 3. Use Certificate Manager to provision SSL certificates for domains
 
@@ -237,7 +237,7 @@ Tested against n8n version 2.1.5+
 
 Each node connects to a different IONOS Cloud API endpoint:
 
-- **Cloud API v6**: `https://api.ionos.com/cloudapi/v6/`
+- **Infrastructure**: `https://api.ionos.com/cloudapi/v6/`
 - **Certificate Manager**: `https://certificate-manager.de-fra.ionos.com`
 - **Cloud DNS**: `https://dns.de-fra.ionos.com`
 - **CDN**: `https://cdn.de-fra.ionos.com`
@@ -247,7 +247,7 @@ Each node connects to a different IONOS Cloud API endpoint:
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
 * [IONOS Cloud Documentation](https://docs.ionos.com/cloud)
-* [Cloud API v6 Documentation](https://api.ionos.com/docs/cloud/v6/)
+* [Infrastructure API Documentation](https://api.ionos.com/docs/cloud/v6/)
 * [Certificate Manager API Documentation](https://api.ionos.com/docs/certmanager/v2/)
 * [Cloud DNS API Documentation](https://api.ionos.com/docs/dns/v1/)
 * [CDN API Documentation](https://api.ionos.com/docs/cdn/v1/)
@@ -256,7 +256,7 @@ Each node connects to a different IONOS Cloud API endpoint:
 ## Version History
 
 **v0.1.0** - Initial release
-- Cloud API v6 node (20 resources, 110 operations)
+- Infrastructure node (20 resources, 110 operations)
 - Certificate Manager node (3 resources, 15 operations)
 - DNS node (7 resources, 36 operations)
 - CDN node (2 resources, 7 operations)

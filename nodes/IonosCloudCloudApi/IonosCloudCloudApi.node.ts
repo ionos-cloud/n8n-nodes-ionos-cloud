@@ -23,15 +23,15 @@ import { targetGroupDescription } from './resources/targetGroup';
 
 export class IonosCloudCloudApi implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Ionos Cloud (Cloud API v6)',
+		displayName: 'Ionos Cloud (Infrastructure)',
 		name: 'ionosCloudCloudApi',
 		icon: { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Interact with Ionos Cloud via Cloud API v6',
+		description: 'Manage IONOS Cloud infrastructure resources',
 		defaults: {
-			name: 'Ionos Cloud (Cloud API v6)',
+			name: 'Ionos Cloud (Infrastructure)',
 		},
 		usableAsTool: true,
 		inputs: [NodeConnectionTypes.Main],
