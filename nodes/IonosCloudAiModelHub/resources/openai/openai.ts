@@ -243,7 +243,7 @@ export const openaiDescriptions: INodeProperties[] = [
 				},
 			},
 			{
-				displayName: 'N',
+				displayName: 'Number of Completions',
 				name: 'n',
 				type: 'number',
 				default: 1,
