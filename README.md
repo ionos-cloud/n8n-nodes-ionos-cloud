@@ -46,7 +46,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
 | **AI Model Hub** | 4 | 20 | Foundation model inference, RAG capabilities, and OpenAI-compatible API |
-| **Total** | **36** | **215** | |
+
 
 <details>
 <summary><b>Infrastructure - Detailed Operations</b></summary>
@@ -269,7 +269,7 @@ Tested against n8n version 2.1.5+
 4. Use ReverseRecord for PTR records
 
 **AI-Powered Applications with RAG:**
-1. Use AI Model Hub Collection resource to create a vector da
+1. Use AI Model Hub Collection resource to create a vector database
 
 **OpenAI-Compatible AI Integration:**
 1. Use OpenAI Compatible Chat Completion for conversational AI
@@ -302,22 +302,3 @@ Each node connects t
 * [CDN API Documentation](https://api.ionos.com/docs/cdn/v1/)
 * [AI Model Hub API Documentation](https://api.ionos.com/docs/inference-modelhub/v1/)
 * [AI Model Hub OpenAI-compatible API Documentation](https://api.ionos.com/docs/inference-openai/v1/)
-
-## Version History
-
-**v0.2.2** - Current release
-- Infrastructure node (20 resources, 145 operations)
-- Certificate Manager node (3 resources, 15 operations)
-- DNS node (7 resources, 28 operations)
-- CDN node (2 resources, 7 operations)
-- AI Model Hub node (4 resources, 20 operations)
-  - Added OpenAI-compatible endpoints (chat completions, completions, embeddings, image generation)
-- Total: 215 operations across 36 resources
-- Dynamic User-Agent including package and n8n versions
-- Shared authentication across all nodes
-
-**v0.2.1** - Previous release
-- Initial 5-node release with 210 operations
-
-**v0.1.0** - Initial release
-- Core functionality for all 5 IONOS Cloud services
