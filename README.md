@@ -45,7 +45,7 @@ This package provides five separate nodes for different IONOS Cloud services:
 Before you begin, you will need:
 
 1. A [IONOS Cloud account](https://www.ionos.com/enterprise-cloud/signup)
-2. A Cloud API Bearer token (generate from [IONOS Cloud Console](https://dcd.ionos.com/) → DCD → User → Tokens)
+2. A Cloud API Bearer token ([learn how to generate tokens](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager))
 3. n8n installed (version 2.1.5 or higher)
 
 ### Installation
