@@ -8,8 +8,9 @@
 [![License](https://img.shields.io/npm/l/@ionos-cloud/n8n-nodes-ionos-cloud.svg)](https://github.com/ionos-cloud/n8n-nodes-ionos-cloud/blob/master/LICENSE)
 [![npm downloads](https://img.shields.io/npm/dm/@ionos-cloud/n8n-nodes-ionos-cloud.svg)](https://www.npmjs.com/package/@ionos-cloud/n8n-nodes-ionos-cloud)
 [![n8n](https://img.shields.io/badge/n8n-community-blue.svg)](https://n8n.io)
+![Official](https://img.shields.io/badge/IONOS%20Cloud-Official-00BFFF.svg)
 
-**Production-ready n8n community nodes for IONOS Cloud services**
+**Official IONOS Cloud n8n community nodes — Production-ready**
 
 Automate your cloud infrastructure, DNS, CDN, certificates, and AI workflows with [n8n](https://n8n.io/)
 
@@ -21,9 +22,9 @@ Automate your cloud infrastructure, DNS, CDN, certificates, and AI workflows wit
 
 ## Overview
 
-This is an n8n community node package for interacting with IONOS Cloud services. [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
+This is the **official** n8n community node package for IONOS Cloud, developed and maintained by the IONOS Cloud team. [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
-The package provides integration with key IONOS Cloud services, enabling you to automate infrastructure provisioning, certificate management, DNS operations, CDN distribution, and AI-powered workflows directly from n8n.
+The package provides comprehensive integration with key IONOS Cloud services, enabling you to automate infrastructure provisioning, certificate management, DNS operations, CDN distribution, and AI-powered workflows directly from n8n.
 
 ## Included Nodes
 
