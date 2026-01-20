@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./credentials/ionos.svg" alt="IONOS Cloud" height="80" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://n8n.io/brandguidelines/logo-dark.svg" alt="n8n" height="80" />
+<img src="./credentials/ionos.svg" alt="IONOS Cloud" height="80" />&nbsp;&nbsp;&nbsp;&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="https://n8n.io/brandguidelines/logo-white.svg"><source media="(prefers-color-scheme: light)" srcset="https://n8n.io/brandguidelines/logo-dark.svg"><img src="https://n8n.io/brandguidelines/logo-dark.svg" alt="n8n" height="80" /></picture>
 
 # n8n Nodes for IONOS Cloud
 
