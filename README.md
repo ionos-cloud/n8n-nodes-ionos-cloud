@@ -1,6 +1,6 @@
 <div align="center">
 
-![IONOS Cloud](./credentials/ionos.svg)
+<img src="./credentials/ionos.svg" alt="IONOS Cloud" height="80" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://n8n.io/n8n-logo.png" alt="n8n" height="80" />
 
 # n8n Nodes for IONOS Cloud
 
