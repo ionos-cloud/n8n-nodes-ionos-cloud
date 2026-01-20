@@ -23,7 +23,7 @@ Automate your cloud infrastructure, DNS, CDN, certificates, and AI workflows wit
 
 This is an n8n community node package for interacting with IONOS Cloud services. [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
-The package provides comprehensive integration with IONOS Cloud's full product suite, enabling you to automate infrastructure provisioning, certificate management, DNS operations, CDN distribution, and AI-powered workflows directly from n8n.
+The package provides integration with key IONOS Cloud services, enabling you to automate infrastructure provisioning, certificate management, DNS operations, CDN distribution, and AI-powered workflows directly from n8n.
 
 ## Included Nodes
 
@@ -73,7 +73,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
 | **AI Model Hub** | 4 | 20 | Foundation model inference, RAG capabilities, and OpenAI-compatible API |
 
-> **✨ v1.0.0 - Production Ready**: This package is now stable and production-ready with comprehensive testing and support for all IONOS Cloud services.
+> **✨ v1.0.0 - Production Ready**: This package is now stable and production-ready with comprehensive testing and support for the included IONOS Cloud services.
 
 
 <details>
@@ -235,7 +235,7 @@ All nodes in this package share a single credential type: **Ionos Cloud API**
 
 Authentication uses the [Cloud API Bearer token](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager).
 
-The same token works across all IONOS Cloud services (Infrastructure, Certificate Manager, DNS, CDN, and AI Model Hub).
+The same token works across these IONOS Cloud services (Infrastructure, Certificate Manager, DNS, CDN, and AI Model Hub).
 
 ## Compatibility
 
