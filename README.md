@@ -358,7 +358,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📖 [Documentation](https://docs.ionos.com/cloud)
 - 💬 [GitHub Issues](https://github.com/ionos-cloud/n8n-nodes-ionos-cloud/issues)
 - 🌐 [IONOS Cloud](https://www.ionos.com/cloud)
-- 📧 [Support](https://www.ionos.com/help)
+- 📧 [Support](https://docs.ionos.com/cloud/support/general-information/contact-information)
 
 ---
 
