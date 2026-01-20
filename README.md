@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./credentials/ionos.svg" alt="IONOS Cloud" height="80" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://n8n.io/n8n-logo.png" alt="n8n" height="80" />
+<img src="./credentials/ionos.svg" alt="IONOS Cloud" height="80" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://n8n.io/brandguidelines/logo-dark.svg" alt="n8n" height="80" />
 
 # n8n Nodes for IONOS Cloud
 
@@ -10,7 +10,7 @@
 [![n8n](https://img.shields.io/badge/n8n-community-blue.svg)](https://n8n.io)
 ![Official](https://img.shields.io/badge/IONOS%20Cloud-Official-00BFFF.svg)
 
-**Official IONOS Cloud n8n community nodes — Production-ready**
+**Official IONOS Cloud n8n community nodes**
 
 Automate your cloud infrastructure, DNS, CDN, certificates, and AI workflows with [n8n](https://n8n.io/)
 
@@ -74,7 +74,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
 | **AI Model Hub** | 4 | 20 | Foundation model inference, RAG capabilities, and OpenAI-compatible API |
 
-> **✨ v1.0.0 - Production Ready**: This package is now stable and production-ready with comprehensive testing and support for the included IONOS Cloud services.
+> **✨ v1.0.0**: First stable release with comprehensive support for the included IONOS Cloud services.
 
 
 <details>
