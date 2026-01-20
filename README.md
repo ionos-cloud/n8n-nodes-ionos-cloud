@@ -1,6 +1,6 @@
 <div align="center">
 
-![IONOS Cloud](https://www.ionos.com/brand-resources/images/ionos-cloud-logo.svg)
+![IONOS Cloud](./credentials/ionos.svg)
 
 # n8n Nodes for IONOS Cloud
 
