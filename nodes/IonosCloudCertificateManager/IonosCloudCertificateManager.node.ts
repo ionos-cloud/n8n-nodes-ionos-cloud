@@ -9,15 +9,15 @@ import { providerDescriptions } from './resources/provider/provider';
 
 export class IonosCloudCertificateManager implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Ionos Cloud (Certificate Manager)',
+		displayName: 'IONOS Cloud (Certificate Manager)',
 		name: 'ionosCloudCertificateManager',
 		icon: { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Interact with Ionos Cloud Certificate Manager API v2',
+		description: 'Interact with IONOS Cloud Certificate Manager API v2',
 		defaults: {
-			name: 'Ionos Cloud (Certificate Manager)',
+			name: 'IONOS Cloud (Certificate Manager)',
 		},
 		usableAsTool: true,
 		inputs: [NodeConnectionTypes.Main],

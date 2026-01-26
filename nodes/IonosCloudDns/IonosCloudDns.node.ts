@@ -17,15 +17,15 @@ import { reverseRecordDescriptions } from './resources/reverseRecord/reverseReco
 
 export class IonosCloudDns implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Ionos Cloud (Cloud DNS)',
+		displayName: 'IONOS Cloud (Cloud DNS)',
 		name: 'ionosCloudDns',
 		icon: { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Interact with Ionos Cloud DNS API v1',
+		description: 'Interact with IONOS Cloud DNS API v1',
 		defaults: {
-			name: 'Ionos Cloud (Cloud DNS)',
+			name: 'IONOS Cloud (Cloud DNS)',
 		},
 		usableAsTool: true,
 		inputs: [NodeConnectionTypes.Main],

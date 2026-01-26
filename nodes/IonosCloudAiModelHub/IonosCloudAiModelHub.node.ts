@@ -13,7 +13,7 @@ export class IonosCloudAiModelHub implements INodeType {
 	usableAsTool = true;
 
 	description: INodeTypeDescription = {
-		displayName: 'Ionos Cloud (AI Model Hub)',
+		displayName: 'IONOS Cloud (AI Model Hub)',
 		name: 'ionosCloudAiModelHub',
 		icon: { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg' },
 		group: ['transform'],

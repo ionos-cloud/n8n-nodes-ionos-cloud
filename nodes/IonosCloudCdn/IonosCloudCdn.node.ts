@@ -11,15 +11,15 @@ export class IonosCloudCdn implements INodeType {
 	usableAsTool = true;
 
 	description: INodeTypeDescription = {
-		displayName: 'Ionos Cloud (CDN)',
+		displayName: 'IONOS Cloud (CDN)',
 		name: 'ionosCloudCdn',
 		icon: { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Interact with Ionos Cloud CDN API',
+		description: 'Interact with IONOS Cloud CDN API',
 		defaults: {
-			name: 'Ionos Cloud CDN',
+			name: 'IONOS Cloud CDN',
 		},
 		inputs: ['main'],
 		outputs: ['main'],
