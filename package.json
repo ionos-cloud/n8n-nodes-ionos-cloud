@@ -1,6 +1,6 @@
 {
   "name": "@ionos-cloud/n8n-nodes-ionos-cloud",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Official n8n community nodes for IONOS Cloud services (Infrastructure, Certificate Manager, DNS, CDN, AI Model Hub)",
   "license": "MIT",
   "homepage": "https://www.ionos.com/cloud",
