@@ -1,10 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-const showForNatGatewayId = {
-	operation: ['get', 'update', 'delete'],
-	resource: ['natGateway'],
-};
-
 const showForNatGatewayCreateOrUpdate = {
 	operation: ['create', 'update'],
 	resource: ['natGateway'],
@@ -50,7 +45,26 @@ export const natGatewayDescriptions: INodeProperties[] = [
 		name: 'natGatewayId',
 		type: 'string',
 		required: true,
-		displayOptions: { show: showForNatGatewayId },
+		displayOptions: {
+			show: {
+				resource: ['natGateway'],
+				operation: [
+					'get',
+					'update',
+					'delete',
+					'createFlowLog',
+					'getFlowLogs',
+					'getFlowLog',
+					'updateFlowLog',
+					'deleteFlowLog',
+					'createRule',
+					'getRules',
+					'getRule',
+					'updateRule',
+					'deleteRule',
+				],
+			},
+		},
 		default: '',
 		description: 'The ID of the NAT Gateway',
 	},

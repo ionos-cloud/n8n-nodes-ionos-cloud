@@ -1,10 +1,5 @@
 import type { IDataObject, IExecuteSingleFunctions, IHttpRequestOptions, INodeProperties } from 'n8n-workflow';
 
-const showForApplicationLoadBalancerId = {
-	operation: ['get', 'update', 'delete'],
-	resource: ['applicationLoadBalancer'],
-};
-
 const showForApplicationLoadBalancerCreateOrUpdate = {
 	operation: ['create', 'update'],
 	resource: ['applicationLoadBalancer'],
@@ -40,7 +35,26 @@ export const applicationLoadBalancerDescriptions: INodeProperties[] = [
 		name: 'applicationLoadBalancerId',
 		type: 'string',
 		required: true,
-		displayOptions: { show: showForApplicationLoadBalancerId },
+		displayOptions: {
+			show: {
+				resource: ['applicationLoadBalancer'],
+				operation: [
+					'get',
+					'update',
+					'delete',
+					'createFlowLog',
+					'getFlowLogs',
+					'getFlowLog',
+					'updateFlowLog',
+					'deleteFlowLog',
+					'createForwardingRule',
+					'getForwardingRules',
+					'getForwardingRule',
+					'updateForwardingRule',
+					'deleteForwardingRule',
+				],
+			},
+		},
 		default: '',
 		description: 'The ID of the Application Load Balancer',
 	},

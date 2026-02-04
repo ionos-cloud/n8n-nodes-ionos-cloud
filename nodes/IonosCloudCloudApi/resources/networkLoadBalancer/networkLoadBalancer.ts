@@ -1,10 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-const showForNetworkLoadBalancerId = {
-	operation: ['get', 'update', 'delete'],
-	resource: ['networkLoadBalancer'],
-};
-
 const showForNetworkLoadBalancerCreateOrUpdate = {
 	operation: ['create', 'update'],
 	resource: ['networkLoadBalancer'],
@@ -50,7 +45,26 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 		name: 'networkLoadBalancerId',
 		type: 'string',
 		required: true,
-		displayOptions: { show: showForNetworkLoadBalancerId },
+		displayOptions: {
+			show: {
+				resource: ['networkLoadBalancer'],
+				operation: [
+					'get',
+					'update',
+					'delete',
+					'createFlowLog',
+					'getFlowLogs',
+					'getFlowLog',
+					'updateFlowLog',
+					'deleteFlowLog',
+					'createForwardingRule',
+					'getForwardingRules',
+					'getForwardingRule',
+					'updateForwardingRule',
+					'deleteForwardingRule',
+				],
+			},
+		},
 		default: '',
 		description: 'The ID of the Network Load Balancer',
 	},
