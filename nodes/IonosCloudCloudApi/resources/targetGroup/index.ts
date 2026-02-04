@@ -1,9 +1,7 @@
 import type { INodeProperties } from 'n8n-workflow';
 import { targetGroupDescriptions } from './targetGroup';
 
-export { targetGroupDescriptions as targetGroupDescription };
-
-export const targetGroupOperations: INodeProperties[] = [
+export const targetGroupDescription: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -73,9 +71,23 @@ export const targetGroupOperations: INodeProperties[] = [
 						method: 'PATCH',
 						url: '=/targetgroups/{{$parameter.targetGroupId}}',
 					},
+					send: {
+						preSend: [
+							async function (this, requestOptions) {
+								if (requestOptions.body && typeof requestOptions.body === 'object') {
+							const body = requestOptions.body as Record<string, unknown>;
+									if (body.properties && typeof body.properties === 'object') {
+										requestOptions.body = body.properties;
+									}
+								}
+								return requestOptions;
+							},
+						],
+					},
 				},
 			},
 		],
 		default: 'getMany',
 	},
+	...targetGroupDescriptions,
 ];

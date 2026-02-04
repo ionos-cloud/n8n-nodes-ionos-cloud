@@ -81,8 +81,19 @@ export const autoCertificateOperations: INodeProperties[] = [
 					request: {
 						method: 'PATCH',
 						url: '=/auto-certificates/{{$parameter.autoCertificateId}}',
-					},
-				},
+					},					send: {
+						preSend: [
+							async function (this, requestOptions) {
+								if (requestOptions.body && typeof requestOptions.body === 'object') {
+							const body = requestOptions.body as Record<string, unknown>;
+									if (body.properties && typeof body.properties === 'object') {
+										requestOptions.body = body.properties;
+									}
+								}
+								return requestOptions;
+							},
+						],
+					},				},
 			},
 		],
 		default: 'getAll',

@@ -20,6 +20,7 @@ import { applicationLoadBalancerDescription } from './resources/applicationLoadB
 import { loadBalancerDescription } from './resources/loadBalancer';
 import { pccDescription } from './resources/pcc';
 import { targetGroupDescription } from './resources/targetGroup';
+import { requestDescription } from './resources/request';
 
 export class IonosCloudCloudApi implements INodeType {
 	description: INodeTypeDescription = {
@@ -69,6 +70,10 @@ export class IonosCloudCloudApi implements INodeType {
 					{
 						name: 'IP Block',
 						value: 'ipBlock',
+					},
+					{
+						name: 'Request',
+						value: 'request',
 					},
 					// Core Infrastructure
 					{
@@ -147,6 +152,7 @@ export class IonosCloudCloudApi implements INodeType {
 			...locationDescription,
 			...imageDescription,
 			...ipBlockDescription,
+			...requestDescription,
 			// Core Infrastructure
 			...datacenterDescription,
 			...lanDescription,
