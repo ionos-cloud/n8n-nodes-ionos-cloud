@@ -1,12 +1,12 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-const showForNodePoolId = {
-	operation: ['get', 'update', 'delete'],
+const showForNodePoolCreateOrUpdate = {
+	operation: ['create', 'update'],
 	resource: ['nodePool'],
 };
 
-const showForNodePoolCreateOrUpdate = {
-	operation: ['create', 'update'],
+const showForNodeId = {
+	operation: ['getNode', 'deleteNode', 'replaceNode', 'recreateNode'],
 	resource: ['nodePool'],
 };
 
@@ -25,9 +25,33 @@ export const nodePoolDescriptions: INodeProperties[] = [
 		name: 'nodePoolId',
 		type: 'string',
 		required: true,
-		displayOptions: { show: showForNodePoolId },
+		displayOptions: {
+			show: {
+				resource: ['nodePool'],
+				operation: [
+					'get',
+					'update',
+					'delete',
+					'getAll',
+					'getNode',
+					'getNodes',
+					'deleteNode',
+					'replaceNode',
+					'recreateNode',
+				],
+			},
+		},
 		default: '',
 		description: 'The ID of the node pool',
+	},
+	{
+		displayName: 'Node ID',
+		name: 'nodeId',
+		type: 'string',
+		required: true,
+		displayOptions: { show: showForNodeId },
+		default: '',
+		description: 'The ID of the node',
 	},
 	// Fields for Create and Update
 	{
