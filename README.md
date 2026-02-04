@@ -30,11 +30,11 @@ The package provides comprehensive integration with key IONOS Cloud services, en
 
 This package provides five separate nodes for different IONOS Cloud services:
 
-1. **Ionos Cloud (Infrastructure)** - Core infrastructure management
-2. **Ionos Cloud (Certificate Manager)** - SSL/TLS certificate management  
-3. **Ionos Cloud (Cloud DNS)** - Domain name system management
-4. **Ionos Cloud (CDN)** - Content delivery network management
-5. **Ionos Cloud (AI Model Hub)** - AI model inference and RAG capabilities
+1. **IONOS Cloud (Infrastructure)** - Core infrastructure management
+2. **IONOS Cloud (Certificate Manager)** - SSL/TLS certificate management  
+3. **IONOS Cloud (Cloud DNS)** - Domain name system management
+4. **IONOS Cloud (CDN)** - Content delivery network management
+5. **IONOS Cloud (AI Model Hub)** - AI model inference and RAG capabilities
 
 ---
 
@@ -68,23 +68,24 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 | Node | Resources | Operations | Description |
 |------|-----------|------------|-------------|
-| **Infrastructure** | 20 | 145 | Complete infrastructure management (compute, networking, storage, Kubernetes) |
+| **Infrastructure** | 21 | 153 | Complete infrastructure management (compute, networking, storage, Kubernetes) |
 | **Certificate Manager** | 3 | 15 | SSL/TLS certificate lifecycle management with ACME support |
 | **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
 | **AI Model Hub** | 4 | 20 | Foundation model inference, RAG capabilities, and OpenAI-compatible API |
 
-> **✨ v1.0.0**: First stable release with comprehensive support for the included IONOS Cloud services.
+> **✨ v1.0.2**: Patch release with enhanced subresource support for load balancers, NAT gateways, security groups, and target groups. Added request monitoring capabilities.
 
 
 <details>
 <summary><b>Infrastructure - Detailed Operations</b></summary>
 
-#### Account & Global Resources (9 operations)
+#### Account & Global Resources (12 operations)
 - **Contract** (1): Get Many
 - **Location** (2): Get, Get Many
 - **Image** (2): Get, Get Many  
 - **IP Block** (4): Create, Delete, Get, Get Many
+- **Request** (3): Get, Get All, Get Status
 
 #### Core Infrastructure (10 operations)
 - **Datacenter** (5): Create, Delete, Get, Get Many, Update
@@ -105,12 +106,17 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 - **Private Cross-Connect** (5): Create, Delete, Get, Get Many, Update
 - **Load Balancer** (9): Attach/Detach NIC, Create, Delete, Get (+ Balanced NIC/NICs), Get Many, Update
 - **Network Load Balancer** (5): Create, Delete, Get, Get Many, Update
+  - Full support for Flow Logs and Forwarding Rules subresources
 - **Application Load Balancer** (5): Create, Delete, Get, Get Many, Update
+  - Full support for Flow Logs and Forwarding Rules subresources with HTTP rules
 - **Target Group** (5): Create, Delete, Get, Get Many, Update
+  - Enhanced with location and protocolVersion properties
 - **NAT Gateway** (5): Create, Delete, Get, Get Many, Update
+  - Full support for Flow Logs and Rules subresources
 
 #### Security (5 operations)
 - **Security Group** (5): Create, Delete, Get, Get Many, Update
+  - Full support for Rules subresource with comprehensive rule properties
 
 </details>
 
@@ -232,11 +238,11 @@ Use OpenAI-compatible API endpoints for standardized AI interactions.
 
 ## Credentials
 
-All nodes in this package share a single credential type: **Ionos Cloud API**
+All nodes in this package share a single credential type: **IONOS Cloud API**
 
 Authentication uses the [Cloud API Bearer token](https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager).
 
-The same token works across these IONOS Cloud services (Infrastructure, Certificate Manager, DNS, CDN, and AI Model Hub).
+The same token works across all IONOS Cloud services (Infrastructure, Certificate Manager, DNS, CDN, and AI Model Hub).
 
 ## Compatibility
 
@@ -245,34 +251,34 @@ Tested against n8n version 2.1.5+
 ## Usage
 
 ### Authentication
-1. Create new credentials in n8n and select "Ionos Cloud API"
+1. Create new credentials in n8n and select "IONOS Cloud API"
 2. Provide your API token (generated from IONOS Cloud Console)
 3. The same credential works for all five nodes
 
 ### Using the Nodes
 
 #### Infrastructure
-* Add the "Ionos Cloud (Infrastructure)" node to your workflow
+* Add the "IONOS Cloud (Infrastructure)" node to your workflow
 * Select the resource (e.g., Server, Volume, Datacenter)
 * Choose the operation and configure the required fields
 
 #### Certificate Manager
-* Add the "Ionos Cloud (Certificate Manager)" node to your workflow
+* Add the "IONOS Cloud (Certificate Manager)" node to your workflow
 * Select the resource (Certificate, AutoCertificate, or Provider)
 * Configure certificate properties, domains, and ACME providers
 
 #### DNS
-* Add the "Ionos Cloud (Cloud DNS)" node to your workflow
+* Add the "IONOS Cloud (Cloud DNS)" node to your workflow
 * Select the resource (Zone, Record, SecondaryZone, etc.)
 * Configure DNS zones, records, and DNSSEC settings
 
 #### CDN
-* Add the "Ionos Cloud (CDN)" node to your workflow
+* Add the "IONOS Cloud (CDN)" node to your workflow
 * Select the resource (Distribution or Ip)
 * Configure CDN distributions with routing rules and upstream origins
 
 #### AI Model Hub
-* Add the "Ionos Cloud (AI Model Hub)" node to your workflow
+* Add the "IONOS Cloud (AI Model Hub)" node to your workflow
 * Select the resource (Model, Collection, Document, or OpenAI Compatible)
 * **Model**: AI inference with native IONOS API
 * **Collection**: Vector database management for RAG

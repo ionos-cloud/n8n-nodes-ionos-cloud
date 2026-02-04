@@ -181,6 +181,19 @@ export const natGatewayDescription: INodeProperties[] = [
 						method: 'PATCH',
 						url: '=/datacenters/{{$parameter.datacenterId}}/natgateways/{{$parameter.natGatewayId}}/flowlogs/{{$parameter.flowLogId}}',
 					},
+					send: {
+						preSend: [
+							async function (this, requestOptions) {
+								if (requestOptions.body && typeof requestOptions.body === 'object') {
+							const body = requestOptions.body as Record<string, unknown>;
+									if (body.properties && typeof body.properties === 'object') {
+										requestOptions.body = body.properties;
+									}
+								}
+								return requestOptions;
+							},
+						],
+					},
 				},
 			},
 			{
@@ -192,6 +205,19 @@ export const natGatewayDescription: INodeProperties[] = [
 					request: {
 						method: 'PATCH',
 						url: '=/datacenters/{{$parameter.datacenterId}}/natgateways/{{$parameter.natGatewayId}}/rules/{{$parameter.ruleId}}',
+					},
+					send: {
+						preSend: [
+							async function (this, requestOptions) {
+								if (requestOptions.body && typeof requestOptions.body === 'object') {
+								const body = requestOptions.body as Record<string, unknown>;
+									if (body.properties && typeof body.properties === 'object') {
+										requestOptions.body = body.properties;
+									}
+								}
+								return requestOptions;
+							},
+						],
 					},
 				},
 			},

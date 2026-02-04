@@ -76,6 +76,22 @@ export const targetGroupDescriptions: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'Location',
+		name: 'location',
+		type: 'string',
+		required: true,
+		displayOptions: { show: showForTargetGroupCreateOrUpdate },
+		default: '',
+		placeholder: 'de/fra',
+		description: 'The location where the target group will be created (e.g., de/fra, us/las, gb/lhr)',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'properties.location',
+			},
+		},
+	},
+	{
 		displayName: 'Additional Fields',
 		name: 'additionalFields',
 		type: 'collection',
@@ -83,6 +99,23 @@ export const targetGroupDescriptions: INodeProperties[] = [
 		default: {},
 		displayOptions: { show: showForTargetGroupCreateOrUpdate },
 		options: [
+			{
+				displayName: 'Protocol Version',
+				name: 'protocolVersion',
+				type: 'options',
+				options: [
+					{ name: 'HTTP1', value: 'HTTP1' },
+					{ name: 'HTTP2', value: 'HTTP2' },
+				],
+				default: 'HTTP1',
+				description: 'The forwarding protocol version. Value is ignored when protocol is not HTTP.',
+				routing: {
+					send: {
+						type: 'body',
+						property: 'properties.protocolVersion',
+					},
+				},
+			},
 			{
 				displayName: 'Health Check',
 				name: 'healthCheck',
