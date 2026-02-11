@@ -5,7 +5,27 @@ const showForServerResource = {
 };
 
 const showForServerId = {
-	operation: ['get', 'start', 'stop', 'reboot', 'update', 'delete'], 
+	operation: [
+		'get',
+		'start',
+		'stop',
+		'reboot',
+		'update',
+		'delete',
+		'attachCdrom',
+		'attachVolume',
+		'detachCdrom',
+		'detachVolume',
+		'getCdrom',
+		'getCdroms',
+		'getRemoteConsole',
+		'getToken',
+		'getVolume',
+		'getVolumes',
+		'resume',
+		'suspend',
+		'upgrade',
+	],
 	resource: ['server'],
 };
 
@@ -37,6 +57,46 @@ export const serverDescriptions: INodeProperties[] = [
 		displayOptions: { show: showForServerId },
 		default: '',
 		description: 'The ID of the server to operate on',
+	},
+	{
+		displayName: 'Volume ID',
+		name: 'volumeId',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				operation: ['attachVolume', 'detachVolume', 'getVolume'],
+				resource: ['server'],
+			},
+		},
+		default: '',
+		description: 'The ID of the volume',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'id',
+			},
+		},
+	},
+	{
+		displayName: 'CDROM ID',
+		name: 'cdromId',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				operation: ['attachCdrom', 'detachCdrom', 'getCdrom'],
+				resource: ['server'],
+			},
+		},
+		default: '',
+		description: 'The ID of the CDROM image',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'id',
+			},
+		},
 	},
 	{
 		displayName: 'Limit',
