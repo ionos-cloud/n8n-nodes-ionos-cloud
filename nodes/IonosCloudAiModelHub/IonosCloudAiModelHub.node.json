@@ -1,3 +1,18 @@
 {
-	"node": "dist/nodes/IonosCloudAiModelHub/IonosCloudAiModelHub.node.js"
+	"node": "@ionos-cloud/n8n-nodes-ionos-cloud",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["AI", "Development"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/ionos-cloud/n8n-nodes-ionos-cloud"
+			}
+		]
+	}
 }

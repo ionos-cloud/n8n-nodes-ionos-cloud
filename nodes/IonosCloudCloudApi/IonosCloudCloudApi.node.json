@@ -1,5 +1,5 @@
 {
-	"node": "@ionos-cloud/n8n-nodes-cloud-api",
+	"node": "@ionos-cloud/n8n-nodes-ionos-cloud",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["Development", "Developer Tools"],
@@ -11,7 +11,7 @@
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://github.com/org/repo?tab=readme-ov-file"
+				"url": "https://github.com/ionos-cloud/n8n-nodes-ionos-cloud"
 			}
 		]
 	}
