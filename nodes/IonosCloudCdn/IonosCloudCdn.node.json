@@ -1,0 +1,15 @@
+{
+	"categories": ["Development", "DevOps"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/ionos-cloud/n8n-nodes-ionos-cloud"
+			}
+		]
+	}
+}
