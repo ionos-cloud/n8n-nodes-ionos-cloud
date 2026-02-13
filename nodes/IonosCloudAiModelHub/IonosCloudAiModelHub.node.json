@@ -1,5 +1,8 @@
 {
-	"categories": ["AI", "Development"],
+	"categories": ["Development", "Developer Tools"],
+	"subcategories": {
+		"Developer Tools": ["AI"]
+	},
 	"resources": {
 		"credentialDocumentation": [
 			{

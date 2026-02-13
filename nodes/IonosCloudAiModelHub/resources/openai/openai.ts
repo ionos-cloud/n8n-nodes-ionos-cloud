@@ -1,5 +1,45 @@
 import type { INodeProperties } from 'n8n-workflow';
 
+/**
+ * Shared routing config to dynamically load available models from
+ * the OpenAI-compatible GET /v1/models endpoint at runtime.
+ * When IONOS adds or retires models the dropdown updates automatically.
+ */
+const modelsLoadOptions: INodeProperties['typeOptions'] = {
+	loadOptions: {
+		routing: {
+			request: {
+				method: 'GET',
+				url: '/v1/models',
+				baseURL: 'https://openai.inference.de-txl.ionos.com',
+			},
+			output: {
+				postReceive: [
+					{
+						type: 'rootProperty',
+						properties: {
+							property: 'data',
+						},
+					},
+					{
+						type: 'setKeyValue',
+						properties: {
+							name: '={{$responseItem.id}}',
+							value: '={{$responseItem.id}}',
+						},
+					},
+					{
+						type: 'sort',
+						properties: {
+							key: 'name',
+						},
+					},
+				],
+			},
+		},
+	},
+};
+
 export const openaiOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -97,7 +137,7 @@ export const openaiDescriptions: INodeProperties[] = [
 	{
 		displayName: 'Model',
 		name: 'model',
-		type: 'string',
+		type: 'options',
 		required: true,
 		displayOptions: {
 			show: {
@@ -105,8 +145,9 @@ export const openaiDescriptions: INodeProperties[] = [
 				operation: ['chatCompletion'],
 			},
 		},
+		typeOptions: modelsLoadOptions,
 		default: 'meta-llama/Llama-3.3-70B-Instruct',
-		description: 'ID of the model to use',
+		description: 'ID of the model to use for chat completions. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
 				type: 'body',
@@ -379,7 +420,7 @@ export const openaiDescriptions: INodeProperties[] = [
 	{
 		displayName: 'Model',
 		name: 'model',
-		type: 'string',
+		type: 'options',
 		required: true,
 		displayOptions: {
 			show: {
@@ -387,8 +428,9 @@ export const openaiDescriptions: INodeProperties[] = [
 				operation: ['completion'],
 			},
 		},
+		typeOptions: modelsLoadOptions,
 		default: 'meta-llama/Llama-3.3-70B-Instruct',
-		description: 'ID of the model to use',
+		description: 'ID of the model to use for text completions. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
 				type: 'body',
@@ -569,7 +611,7 @@ export const openaiDescriptions: INodeProperties[] = [
 	{
 		displayName: 'Model',
 		name: 'model',
-		type: 'string',
+		type: 'options',
 		required: true,
 		displayOptions: {
 			show: {
@@ -577,8 +619,9 @@ export const openaiDescriptions: INodeProperties[] = [
 				operation: ['embeddings'],
 			},
 		},
-		default: 'intfloat/e5-large-v2',
-		description: 'ID of the embedding model to use',
+		typeOptions: modelsLoadOptions,
+		default: 'BAAI/bge-large-en-v1.5',
+		description: 'ID of the embedding model to use. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
 				type: 'body',
@@ -614,7 +657,7 @@ export const openaiDescriptions: INodeProperties[] = [
 	{
 		displayName: 'Model',
 		name: 'model',
-		type: 'string',
+		type: 'options',
 		required: true,
 		displayOptions: {
 			show: {
@@ -622,8 +665,9 @@ export const openaiDescriptions: INodeProperties[] = [
 				operation: ['generateImage'],
 			},
 		},
-		default: 'stabilityai/stable-diffusion-xl-base-1.0',
-		description: 'ID of the image generation model to use',
+		typeOptions: modelsLoadOptions,
+		default: 'black-forest-labs/FLUX.1-schnell',
+		description: 'ID of the image generation model to use. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
 				type: 'body',
