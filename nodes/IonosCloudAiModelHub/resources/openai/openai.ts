@@ -146,7 +146,7 @@ export const openaiDescriptions: INodeProperties[] = [
 			},
 		},
 		typeOptions: modelsLoadOptions,
-		default: 'meta-llama/Llama-3.3-70B-Instruct',
+		default: '',
 		description: 'ID of the model to use for chat completions. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
@@ -429,7 +429,7 @@ export const openaiDescriptions: INodeProperties[] = [
 			},
 		},
 		typeOptions: modelsLoadOptions,
-		default: 'meta-llama/Llama-3.3-70B-Instruct',
+		default: '',
 		description: 'ID of the model to use for text completions. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
@@ -620,7 +620,7 @@ export const openaiDescriptions: INodeProperties[] = [
 			},
 		},
 		typeOptions: modelsLoadOptions,
-		default: 'BAAI/bge-large-en-v1.5',
+		default: '',
 		description: 'ID of the embedding model to use. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
@@ -666,7 +666,7 @@ export const openaiDescriptions: INodeProperties[] = [
 			},
 		},
 		typeOptions: modelsLoadOptions,
-		default: 'black-forest-labs/FLUX.1-schnell',
+		default: '',
 		description: 'ID of the image generation model to use. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
