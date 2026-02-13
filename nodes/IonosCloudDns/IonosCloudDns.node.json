@@ -1,5 +1,15 @@
 {
-  "name": "n8n-nodes-ionos-cloud-dns",
-  "version": "1.0.0",
-  "description": "n8n node for Ionos Cloud DNS"
+	"categories": ["Development", "Communication"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/ionos-cloud/n8n-nodes-ionos-cloud"
+			}
+		]
+	}
 }

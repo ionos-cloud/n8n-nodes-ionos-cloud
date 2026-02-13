@@ -65,12 +65,46 @@ export const serverDescriptions: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				operation: ['attachVolume', 'detachVolume', 'getVolume'],
+				operation: ['attachVolume'],
+				resource: ['server'],
+			},
+		},
+		default: '',
+		description: 'The ID of the volume to attach',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'id',
+			},
+		},
+	},
+	{
+		displayName: 'Volume ID',
+		name: 'volumeId',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				operation: ['detachVolume', 'getVolume'],
 				resource: ['server'],
 			},
 		},
 		default: '',
 		description: 'The ID of the volume',
+	},
+	{
+		displayName: 'CDROM ID',
+		name: 'cdromId',
+		type: 'string',
+		required: true,
+		displayOptions: {
+			show: {
+				operation: ['attachCdrom'],
+				resource: ['server'],
+			},
+		},
+		default: '',
+		description: 'The ID of the CDROM image to attach',
 		routing: {
 			send: {
 				type: 'body',
@@ -85,18 +119,12 @@ export const serverDescriptions: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				operation: ['attachCdrom', 'detachCdrom', 'getCdrom'],
+				operation: ['detachCdrom', 'getCdrom'],
 				resource: ['server'],
 			},
 		},
 		default: '',
 		description: 'The ID of the CDROM image',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'id',
-			},
-		},
 	},
 	{
 		displayName: 'Limit',
