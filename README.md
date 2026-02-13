@@ -217,11 +217,11 @@ Use OpenAI-compatible API endpoints for standardized AI interactions.
 - Compatible with OpenAI completion API format
 
 **Create Embeddings** - Generate vector embeddings from text
-- Parameters: model (default: intfloat/e5-large-v2), input (single text or comma-separated multiple texts)
+- Parameters: model (default: BAAI/bge-large-en-v1.5), input (single text or comma-separated multiple texts)
 - Returns embedding vectors for semantic search and similarity
 
 **Generate Image** - Text-to-image generation
-- Parameters: model (default: stabilityai/stable-diffusion-xl-base-1.0), prompt (required), n, size (1024x1024, 1024x1792, 1792x1024), response_format (b64_json), user
+- Parameters: model (default: black-forest-labs/FLUX.1-schnell), prompt (required), n, size (1024x1024, 1024x1792, 1792x1024), response_format (b64_json), user
 - Generates images from text descriptions
 
 **Get Many** - List available models
@@ -231,6 +231,8 @@ Use OpenAI-compatible API endpoints for standardized AI interactions.
 **API Endpoint**: `https://openai.inference.de-txl.ionos.com` (path: `/v1/*`)
 
 **Features**: Full OpenAI API compatibility, drop-in replacement for OpenAI in existing workflows, comprehensive parameter support
+
+> **Note:** Model dropdowns are populated dynamically from the IONOS API at runtime (`GET /v1/models`). When models are added or retired, the dropdown lists update automatically without requiring a node update.
 
 </details>
 
@@ -305,15 +307,15 @@ Tested against n8n version 2.1.5+
 
 **AI-Powered Applications with RAG:**
 1. Use AI Model Hub Collection resource to create a vector database
+2. Use Document resource to add knowledge base documents
+3. Use Model Predict operation with collection query for context-aware responses
+4. Automate document updates and model inference in workflows
 
 **OpenAI-Compatible AI Integration:**
 1. Use OpenAI Compatible Chat Completion for conversational AI
 2. Use Create Embeddings for semantic search and similarity
 3. Use Generate Image for text-to-image generation
-4. Drop-in replacement for OpenAI API in existing n8n workflowstabase
-2. Use Document resource to add knowledge base documents
-3. Use Model Predict operation with collection query for context-aware responses
-4. Automate document updates and model inference in workflows
+4. Drop-in replacement for OpenAI API in existing n8n workflows
 
 ## API Endpoints
 
