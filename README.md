@@ -317,6 +317,21 @@ Tested against n8n version 2.1.5+
 3. Use Generate Image for text-to-image generation
 4. Drop-in replacement for OpenAI API in existing n8n workflows
 
+### Avoiding Rate Limits
+
+The IONOS AI Model Hub API enforces rate limits (300 requests/min, 5 requests/sec with a burst of 10). When a node receives multiple input items (e.g., from a preceding "Get All" operation), n8n executes the node once per item, which can trigger `429 Too Many Requests` errors.
+
+To prevent this, configure **batching** in the node's **Settings** tab:
+
+1. Open the AI Model Hub node and go to the **Settings** tab
+2. Under **Request Options**, click **Add Option** and select **Batching**
+3. Set **Items per Batch** to `2` (or lower)
+4. Set **Batch Interval (ms)** to `1000` (or higher)
+
+This ensures n8n processes only a few items at a time with a delay between batches, staying within the API rate limits.
+
+> **Tip:** If your workflow only needs a single API call (e.g., one Chat Completion), use a **Limit** node before the AI Model Hub node to reduce the input to 1 item.
+
 ## API Endpoints
 
 Each node connects to:
