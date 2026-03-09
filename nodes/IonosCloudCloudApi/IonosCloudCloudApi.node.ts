@@ -1,4 +1,6 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { requestTrackingProperty } from '../../utils/requestTracking';
+import { includeResponseHeadersProperty } from '../../utils/responseHeaders';
 import { USER_AGENT } from '../../utils/userAgent';
 import { serverDescription } from './resources/server';
 import { contractDescription } from './resources/contract';
@@ -174,6 +176,8 @@ export class IonosCloudCloudApi implements INodeType {
 			...natGatewayDescription,
 			// Security
 			...securityGroupDescription,
+			requestTrackingProperty,
+			includeResponseHeadersProperty,
 		],
 	};
 }

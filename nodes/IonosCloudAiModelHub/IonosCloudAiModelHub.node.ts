@@ -2,6 +2,7 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
+import { includeResponseHeadersProperty } from '../../utils/responseHeaders';
 import { USER_AGENT } from '../../utils/userAgent';
 
 import * as collection from './resources/collection';
@@ -73,6 +74,7 @@ export class IonosCloudAiModelHub implements INodeType {
 			...document.descriptions,
 			...model.descriptions,
 			...openai.descriptions,
+			includeResponseHeadersProperty,
 		],
 		usableAsTool: true,
 	};

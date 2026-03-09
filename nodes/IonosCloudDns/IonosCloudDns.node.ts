@@ -1,4 +1,5 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { includeResponseHeadersProperty } from '../../utils/responseHeaders';
 import { USER_AGENT } from '../../utils/userAgent';
 import { zoneOperations } from './resources/zone';
 import { zoneDescriptions } from './resources/zone/zone';
@@ -111,6 +112,7 @@ export class IonosCloudDns implements INodeType {
 			// Reverse Record Operations
 			...reverseRecordOperations,
 			...reverseRecordDescriptions,
+			includeResponseHeadersProperty,
 		],
 	};
 }

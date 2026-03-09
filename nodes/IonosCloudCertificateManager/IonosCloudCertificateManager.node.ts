@@ -1,4 +1,5 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { includeResponseHeadersProperty } from '../../utils/responseHeaders';
 import { USER_AGENT } from '../../utils/userAgent';
 import { certificateOperations } from './resources/certificate';
 import { certificateDescriptions } from './resources/certificate/certificate';
@@ -67,6 +68,7 @@ export class IonosCloudCertificateManager implements INodeType {
 			// Provider Operations
 			...providerOperations,
 			...providerDescriptions,
+			includeResponseHeadersProperty,
 		],
 	};
 }
