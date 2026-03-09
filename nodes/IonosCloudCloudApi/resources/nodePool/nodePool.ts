@@ -117,7 +117,7 @@ export const nodePoolDescriptions: INodeProperties[] = [
 			},
 		},
 		options: [
-			{ name: 'AMD EPYC', value: 'AMD_OPTERON' },
+			{ name: 'AMD EPYC', value: 'AMD_EPYC' },
 			{ name: 'Intel Icelake', value: 'INTEL_ICELAKE' },
 			{ name: 'Intel Skylake', value: 'INTEL_SKYLAKE' },
 			{ name: 'Intel Xeon', value: 'INTEL_XEON' },
