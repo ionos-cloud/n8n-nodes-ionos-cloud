@@ -2,6 +2,7 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
+import { includeResponseHeadersProperty } from '../../utils/responseHeaders';
 import { USER_AGENT } from '../../utils/userAgent';
 
 import * as distribution from './resources/distribution';
@@ -57,6 +58,7 @@ export class IonosCloudCdn implements INodeType {
 			},
 			...distribution.descriptions,
 			...ips.descriptions,
+			includeResponseHeadersProperty,
 		],
 		usableAsTool: true,
 	};
