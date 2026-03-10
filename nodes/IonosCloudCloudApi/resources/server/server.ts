@@ -285,7 +285,7 @@ export const serverDescriptions: INodeProperties[] = [
 				name: 'cpuFamily',
 				type: 'options',
 				options: [
-					{ name: 'AMD EPYC', value: 'AMD_OPTERON' },
+					{ name: 'AMD EPYC', value: 'AMD_EPYC' },
 					{ name: 'Intel Skylake', value: 'INTEL_SKYLAKE' },
 					{ name: 'Intel Xeon', value: 'INTEL_XEON' },
 				],
