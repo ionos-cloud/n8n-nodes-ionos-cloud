@@ -117,6 +117,7 @@ export class IonosCloudChatModel implements INodeType {
 						name: 'maxTokens',
 						type: 'number',
 						default: -1,
+						typeOptions: { minValue: -1, numberStepSize: 1 },
 						description:
 							'Maximum number of tokens to generate. Set to -1 for model default.',
 					},
@@ -185,7 +186,7 @@ export class IonosCloudChatModel implements INodeType {
 			topP: options.topP,
 			frequencyPenalty: options.frequencyPenalty,
 			presencePenalty: options.presencePenalty,
-			timeout: options.timeout,
+			timeout: options.timeout ?? 60000,
 			configuration: {
 				baseURL: IONOS_OPENAI_BASE_URL,
 				defaultHeaders: {

@@ -149,7 +149,7 @@ export class IonosCloudEmbeddings implements INodeType {
 			model,
 			batchSize: options.batchSize ?? 512,
 			stripNewLines: options.stripNewLines ?? true,
-			timeout: options.timeout,
+			timeout: options.timeout ?? 60000,
 			configuration: {
 				baseURL: IONOS_OPENAI_BASE_URL,
 				defaultHeaders: {
