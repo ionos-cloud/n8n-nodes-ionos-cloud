@@ -28,13 +28,15 @@ The package provides comprehensive integration with key IONOS Cloud services, en
 
 ## Included Nodes
 
-This package provides five separate nodes for different IONOS Cloud services:
+This package provides seven separate nodes for different IONOS Cloud services:
 
 1. **IONOS Cloud (Infrastructure)** - Core infrastructure management
 2. **IONOS Cloud (Certificate Manager)** - SSL/TLS certificate management  
 3. **IONOS Cloud (Cloud DNS)** - Domain name system management
 4. **IONOS Cloud (CDN)** - Content delivery network management
 5. **IONOS Cloud (AI Model Hub)** - AI model inference and RAG capabilities
+6. **IONOS Cloud Chat Model** ⚡ - LangChain sub-node for n8n's AI Agent (language model)
+7. **IONOS Cloud Embeddings** ⚡ - LangChain sub-node for n8n's AI Agent (text embeddings)
 
 ---
 
@@ -73,6 +75,10 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
 | **AI Model Hub** | 4 | 20 | Foundation model inference, RAG capabilities, and OpenAI-compatible API |
+| **Chat Model** ⚡ | — | supplyData | LangChain chat model sub-node for n8n AI Agent |
+| **Embeddings** ⚡ | — | supplyData | LangChain embeddings sub-node for n8n AI Agent |
+
+> ⚡ **Sub-nodes**: The Chat Model and Embeddings nodes are LangChain sub-nodes that plug into n8n's built-in AI nodes (AI Agent, AI Chain, Vector Stores, etc.) rather than operating as standalone workflow nodes.
 
 > **✨ v1.0.2**: Patch release with enhanced subresource support for load balancers, NAT gateways, security groups, and target groups. Added request monitoring capabilities.
 
@@ -287,6 +293,35 @@ Tested against n8n version 2.1.5+
 * **Document**: Manage documents in collections
 * **OpenAI Compatible**: Use OpenAI-compatible endpoints (chat, completions, embeddings, images)
 
+#### AI Agent Integration (Chat Model & Embeddings Sub-Nodes)
+
+The **IONOS Cloud Chat Model** and **IONOS Cloud Embeddings** are LangChain sub-nodes that integrate with n8n's built-in AI nodes.
+
+**Chat Model** — Use IONOS AI Model Hub as the LLM brain for the AI Agent:
+1. Add an **AI Agent** node to your workflow
+2. Click **+** on the AI Agent's **Language Model** input
+3. Select **IONOS Cloud Chat Model**
+4. Choose your credential and pick a model from the auto-populated dropdown
+5. The agent now uses IONOS AI Model Hub for all LLM reasoning
+
+**Embeddings** — Use IONOS AI Model Hub for text embeddings in RAG pipelines:
+1. Add an **In-Memory Vector Store** (or any vector store node)
+2. Click **+** on the vector store's **Embedding** input
+3. Select **IONOS Cloud Embeddings**
+4. Choose your credential and pick an embedding model
+
+**Example: AI Agent with RAG**
+```
+Chat Trigger → AI Agent
+                 ├── Language Model: IONOS Cloud Chat Model
+                 ├── Memory: Window Buffer Memory
+                 └── Tool: Vector Store Tool
+                              └── In-Memory Vector Store (Load)
+                                       └── Embedding: IONOS Cloud Embeddings
+```
+
+> **Note:** The model dropdowns are populated dynamically from the IONOS API at runtime. Both sub-nodes reuse the same **IONOS Cloud API** credential as all other nodes in this package.
+
 ### Common Patterns
 
 **Automated SSL Certificate Deployment:**
@@ -316,6 +351,13 @@ Tested against n8n version 2.1.5+
 2. Use Create Embeddings for semantic search and similarity
 3. Use Generate Image for text-to-image generation
 4. Drop-in replacement for OpenAI API in existing n8n workflows
+
+**AI Agent with IONOS Cloud (native n8n AI integration):**
+1. Use IONOS Cloud Chat Model as the language model for n8n's AI Agent
+2. Use IONOS Cloud Embeddings with Vector Stores for RAG pipelines
+3. Combine with Window Buffer Memory for conversational context
+4. Add Vector Store Tool to give the agent access to your knowledge base
+5. See `examples/ionos-ai-agent-workflow.json` for a ready-to-import workflow
 
 ### Avoiding Rate Limits
 
