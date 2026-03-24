@@ -56,8 +56,10 @@
       "dist/nodes/IonosCloudAiModelHub/IonosCloudAiModelHub.node.js",
       "dist/nodes/IonosCloudCdn/IonosCloudCdn.node.js",
       "dist/nodes/IonosCloudCertificateManager/IonosCloudCertificateManager.node.js",
+      "dist/nodes/IonosCloudChatModel/IonosCloudChatModel.node.js",
       "dist/nodes/IonosCloudCloudApi/IonosCloudCloudApi.node.js",
-      "dist/nodes/IonosCloudDns/IonosCloudDns.node.js"
+      "dist/nodes/IonosCloudDns/IonosCloudDns.node.js",
+      "dist/nodes/IonosCloudEmbeddings/IonosCloudEmbeddings.node.js"
     ]
   },
   "devDependencies": {

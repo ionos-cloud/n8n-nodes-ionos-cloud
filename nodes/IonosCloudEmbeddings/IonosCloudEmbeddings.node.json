@@ -1,0 +1,19 @@
+{
+	"categories": ["AI"],
+	"subcategories": {
+		"AI": ["Embeddings"]
+	},
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.ionos.com/cloud/managed-services/ai-model-hub"
+			}
+		]
+	},
+	"alias": ["ionos", "ai", "embedding", "vector", "rag"]
+}
