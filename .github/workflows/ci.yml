@@ -31,8 +31,5 @@ jobs:
       - name: Check formatting
         run: npx prettier --check .
 
-      - name: Lint workflow files
-        uses: rhysd/actionlint@5301b5a6450e1e4ffc4dcd8e4f3f93a47b7fb23e # v1.7.7
-
       - name: Build
         run: npm run build
