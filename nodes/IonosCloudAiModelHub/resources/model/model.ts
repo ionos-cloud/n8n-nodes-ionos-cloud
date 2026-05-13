@@ -107,34 +107,6 @@ export const modelDescriptions: INodeProperties[] = [
 		displayOptions: { show: showForPredict },
 		options: [
 			{
-				displayName: 'Collection ID',
-				name: 'collectionId',
-				type: 'string',
-				default: '',
-				description: 'ID of the collection to use for RAG (Retrieval Augmented Generation)',
-				routing: {
-					send: {
-						type: 'body',
-						property: 'properties.collectionId',
-						value: '={{ $value || undefined }}',
-					},
-				},
-			},
-			{
-				displayName: 'Collection Query',
-				name: 'collectionQuery',
-				type: 'string',
-				default: '',
-				description: 'Query to search the collection for relevant context',
-				routing: {
-					send: {
-						type: 'body',
-						property: 'properties.collectionQuery',
-						value: '={{ $value || undefined }}',
-					},
-				},
-			},
-			{
 				displayName: 'Options',
 				name: 'options',
 				type: 'fixedCollection',
