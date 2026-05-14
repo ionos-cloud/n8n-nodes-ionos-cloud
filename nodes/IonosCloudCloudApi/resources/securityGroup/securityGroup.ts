@@ -35,11 +35,20 @@ export const securityGroupDescriptions: INodeProperties[] = [
 		name: 'securityGroupId',
 		type: 'string',
 		required: true,
-		displayOptions: { 
-			show: { 
+		displayOptions: {
+			show: {
 				resource: ['securityGroup'],
-				operation: ['get', 'update', 'delete', 'createRule', 'updateRule', 'deleteRule', 'getRule', 'getRules']
-			} 
+				operation: [
+					'get',
+					'update',
+					'delete',
+					'createRule',
+					'updateRule',
+					'deleteRule',
+					'getRule',
+					'getRules',
+				],
+			},
 		},
 		default: '',
 		description: 'The ID of the security group',
@@ -296,7 +305,8 @@ export const securityGroupDescriptions: INodeProperties[] = [
 				name: 'sourceIp',
 				type: 'string',
 				default: '',
-				description: 'Source IP address or CIDR block. Value null allows traffic from any IP address.',
+				description:
+					'Source IP address or CIDR block. Value null allows traffic from any IP address.',
 				routing: {
 					send: {
 						type: 'body',
@@ -310,7 +320,8 @@ export const securityGroupDescriptions: INodeProperties[] = [
 				name: 'sourceMac',
 				type: 'string',
 				default: '',
-				description: 'Source MAC address. Valid format: aa:bb:cc:dd:ee:ff. Value null allows traffic from any MAC address.',
+				description:
+					'Source MAC address. Valid format: aa:bb:cc:dd:ee:ff. Value null allows traffic from any MAC address.',
 				routing: {
 					send: {
 						type: 'body',
@@ -324,7 +335,8 @@ export const securityGroupDescriptions: INodeProperties[] = [
 				name: 'targetIp',
 				type: 'string',
 				default: '',
-				description: 'Target IP address or CIDR block. Value null allows traffic to any target IP address.',
+				description:
+					'Target IP address or CIDR block. Value null allows traffic to any target IP address.',
 				routing: {
 					send: {
 						type: 'body',

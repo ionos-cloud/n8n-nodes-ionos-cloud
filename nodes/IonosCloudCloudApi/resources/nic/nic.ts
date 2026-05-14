@@ -158,10 +158,12 @@ export const nicDescriptions: INodeProperties[] = [
 						type: 'body',
 						property: 'properties.ips',
 						preSend: [
-						async function (this, requestOptions) {
+							async function (this, requestOptions) {
 								const ips = this.getNodeParameter('additionalFields.ips') as string;
 								if (ips) {
-									requestOptions.body.properties.ips = ips.split(',').map((ip: string) => ip.trim());
+									requestOptions.body.properties.ips = ips
+										.split(',')
+										.map((ip: string) => ip.trim());
 								}
 								return requestOptions;
 							},

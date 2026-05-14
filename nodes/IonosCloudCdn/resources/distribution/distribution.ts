@@ -171,7 +171,8 @@ export const distributionFields: INodeProperties[] = [
 						name: 'upstreamCaching',
 						type: 'boolean',
 						default: true,
-						description: 'Whether to enable caching. If enabled, the CDN will cache responses from the upstream host.',
+						description:
+							'Whether to enable caching. If enabled, the CDN will cache responses from the upstream host.',
 					},
 					{
 						displayName: 'Enable WAF',
@@ -232,7 +233,7 @@ export const distributionFields: INodeProperties[] = [
 								name: 'R500	-	500 Requests/sec per IP',
 								value: 'R500',
 							},
-					],
+						],
 						default: 'R100',
 						description: 'Rate limit class to limit the number of incoming requests per IP',
 					},
@@ -253,7 +254,7 @@ export const distributionFields: INodeProperties[] = [
 								name: 'HTTP/HTTPS',
 								value: 'http/https',
 							},
-					],
+						],
 						default: 'http/https',
 						description: 'The protocol scheme',
 					},
@@ -270,7 +271,7 @@ export const distributionFields: INodeProperties[] = [
 								name: 'Origin	-	Match Upstream Hostname',
 								value: 'origin',
 							},
-					],
+						],
 						default: 'distribution',
 						description: 'SNI (Server Name Indication) mode for SSL/TLS connections to upstream',
 					},
@@ -278,24 +279,26 @@ export const distributionFields: INodeProperties[] = [
 						displayName: 'Upstream Host',
 						name: 'upstreamHost',
 						type: 'string',
-							required:	true,
+						required: true,
 						default: '',
 						placeholder: 'origin.example.com',
 						description: 'The upstream origin server hostname',
 					},
-			],
+				],
 			},
 		],
 		routing: {
 			send: {
 				preSend: [
 					async function (this, requestOptions) {
-						const rules = this.getNodeParameter('routingRules.rule', 0) as Array<Record<string, unknown>>;
+						const rules = this.getNodeParameter('routingRules.rule', 0) as Array<
+							Record<string, unknown>
+						>;
 						if (rules && rules.length > 0) {
 							requestOptions.body = requestOptions.body || {};
 							const body = requestOptions.body as Record<string, unknown>;
 							body.properties = body.properties || {};
-							(body.properties as Record<string, unknown>).routingRules = rules.map(rule => {
+							(body.properties as Record<string, unknown>).routingRules = rules.map((rule) => {
 								const upstream: Record<string, unknown> = {
 									host: rule.upstreamHost,
 									caching: rule.upstreamCaching !== undefined ? rule.upstreamCaching : true,
@@ -303,7 +306,7 @@ export const distributionFields: INodeProperties[] = [
 									rateLimitClass: rule.upstreamRateLimitClass || 'R100',
 									sniMode: rule.upstreamSniMode || 'distribution',
 								};
-								
+
 								if (rule.upstreamGeoRestriction) {
 									try {
 										upstream.geoRestrictions = JSON.parse(rule.upstreamGeoRestriction as string);
@@ -311,13 +314,13 @@ export const distributionFields: INodeProperties[] = [
 										// If parsing fails, skip geo restriction
 									}
 								}
-								
+
 								const routingRule: Record<string, unknown> = {
 									scheme: rule.scheme,
 									prefix: rule.prefix,
 									upstream,
 								};
-								
+
 								return routingRule;
 							});
 						}

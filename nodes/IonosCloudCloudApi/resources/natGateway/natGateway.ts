@@ -167,10 +167,12 @@ export const natGatewayDescriptions: INodeProperties[] = [
 				type: 'body',
 				property: 'properties.publicIps',
 				preSend: [
-				async function (this, requestOptions) {
+					async function (this, requestOptions) {
 						const ips = this.getNodeParameter('publicIps') as string;
 						if (ips) {
-							requestOptions.body.properties.publicIps = ips.split(',').map((ip: string) => ip.trim());
+							requestOptions.body.properties.publicIps = ips
+								.split(',')
+								.map((ip: string) => ip.trim());
 						}
 						return requestOptions;
 					},
@@ -190,10 +192,12 @@ export const natGatewayDescriptions: INodeProperties[] = [
 				type: 'body',
 				property: 'properties.lans',
 				preSend: [
-				async function (this, requestOptions) {
+					async function (this, requestOptions) {
 						const lans = this.getNodeParameter('lans') as string;
 						if (lans) {
-							requestOptions.body.properties.lans = lans.split(',').map((id: string) => ({ id: parseInt(id.trim(), 10) }));
+							requestOptions.body.properties.lans = lans
+								.split(',')
+								.map((id: string) => ({ id: parseInt(id.trim(), 10) }));
 						}
 						return requestOptions;
 					},
@@ -416,7 +420,9 @@ export const natGatewayDescriptions: INodeProperties[] = [
 						property: 'properties.targetPortRange',
 						preSend: [
 							async function (this, requestOptions) {
-								const targetPortRange = this.getNodeParameter('ruleProperties.targetPortRange') as Record<string, unknown>;
+								const targetPortRange = this.getNodeParameter(
+									'ruleProperties.targetPortRange',
+								) as Record<string, unknown>;
 								if (targetPortRange?.range) {
 									requestOptions.body.properties.targetPortRange = {
 										start: (targetPortRange.range as Record<string, unknown>).start,

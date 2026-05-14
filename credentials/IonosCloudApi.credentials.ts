@@ -12,9 +12,10 @@ export class IonosCloudApi implements ICredentialType {
 
 	displayName = 'Ionos Cloud API';
 
-	icon: Icon = { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg'};
+	icon: Icon = { light: 'file:ionos.svg', dark: 'file:ionos.dark.svg' };
 
-	documentationUrl = 'https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager';
+	documentationUrl =
+		'https://docs.ionos.com/cloud/set-up-ionos-cloud/management/identity-access-management/token-manager';
 
 	properties: INodeProperties[] = [
 		{

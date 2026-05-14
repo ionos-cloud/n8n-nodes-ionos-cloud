@@ -139,21 +139,21 @@ export const securityGroupDescription: INodeProperties[] = [
 								// PATCH endpoint expects direct fields, not wrapped in 'properties'
 								// Unwrap the properties object if it exists
 								if (requestOptions.body && typeof requestOptions.body === 'object') {
-								const body = requestOptions.body as Record<string, unknown>;
+									const body = requestOptions.body as Record<string, unknown>;
 									if (body.properties && typeof body.properties === 'object') {
 										requestOptions.body = body.properties;
 									}
 								}
-								
+
 								// Remove immutable protocol field from update requests
 								// Protocol can only be set during creation, not modified
 								if (requestOptions.body && typeof requestOptions.body === 'object') {
-								const body = requestOptions.body as Record<string, unknown>;
+									const body = requestOptions.body as Record<string, unknown>;
 									if (body.protocol !== undefined) {
 										delete body.protocol;
 									}
 								}
-								
+
 								return requestOptions;
 							},
 						],

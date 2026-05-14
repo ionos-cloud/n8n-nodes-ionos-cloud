@@ -155,14 +155,17 @@ export const providerDescriptions: INodeProperties[] = [
 			send: {
 				preSend: [
 					async function (this, requestOptions) {
-					const additionalFields = this.getNodeParameter('additionalFields', 0) as Record<string, unknown>;
-					if (additionalFields.eabKeyId || additionalFields.eabHmacKey) {
-						const body = requestOptions.body as Record<string, unknown>;
-						if (!body.properties) body.properties = {};
-						const eab: Record<string, unknown> = {};
-						if (additionalFields.eabKeyId) eab.keyId = additionalFields.eabKeyId;
-						if (additionalFields.eabHmacKey) eab.hmacKey = additionalFields.eabHmacKey;
-						(body.properties as Record<string, unknown>).externalAccountBinding = eab;
+						const additionalFields = this.getNodeParameter('additionalFields', 0) as Record<
+							string,
+							unknown
+						>;
+						if (additionalFields.eabKeyId || additionalFields.eabHmacKey) {
+							const body = requestOptions.body as Record<string, unknown>;
+							if (!body.properties) body.properties = {};
+							const eab: Record<string, unknown> = {};
+							if (additionalFields.eabKeyId) eab.keyId = additionalFields.eabKeyId;
+							if (additionalFields.eabHmacKey) eab.hmacKey = additionalFields.eabHmacKey;
+							(body.properties as Record<string, unknown>).externalAccountBinding = eab;
 						}
 						return requestOptions;
 					},
