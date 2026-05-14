@@ -118,8 +118,7 @@ export class IonosCloudChatModel implements INodeType {
 						type: 'number',
 						default: -1,
 						typeOptions: { minValue: -1, numberStepSize: 1 },
-						description:
-							'Maximum number of tokens to generate. Set to -1 for model default.',
+						description: 'Maximum number of tokens to generate. Set to -1 for model default.',
 					},
 					{
 						displayName: 'Presence Penalty',

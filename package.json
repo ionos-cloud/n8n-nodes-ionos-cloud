@@ -1,75 +1,75 @@
 {
-  "name": "@ionos-cloud/n8n-nodes-ionos-cloud",
-  "version": "2.0.0",
-  "description": "Official n8n community nodes for IONOS Cloud services (Infrastructure, Certificate Manager, DNS, CDN, AI Model Hub)",
-  "license": "MIT",
-  "homepage": "https://www.ionos.com/cloud",
-  "keywords": [
-    "n8n-community-node-package",
-    "n8n",
-    "ionos",
-    "ionos-cloud",
-    "cloud",
-    "infrastructure",
-    "iaas",
-    "kubernetes",
-    "dns",
-    "cdn",
-    "certificate",
-    "ssl",
-    "ai",
-    "llm",
-    "rag",
-    "vector-database",
-    "automation"
-  ],
-  "author": {
-    "name": "Rijesh Haridas",
-    "email": "rijesh.haridas@cloud.ionos.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ionos-cloud/n8n-nodes-ionos-cloud.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "n8n-node build",
-    "build:watch": "tsc --watch",
-    "dev": "n8n-node dev",
-    "lint": "n8n-node lint",
-    "lint:fix": "n8n-node lint --fix",
-    "release": "n8n-node release",
-    "prepublishOnly": "n8n-node prerelease"
-  },
-  "files": [
-    "dist"
-  ],
-  "n8n": {
-    "n8nNodesApiVersion": 1,
-    "strict": true,
-    "credentials": [
-      "dist/credentials/IonosCloudApi.credentials.js"
-    ],
-    "nodes": [
-      "dist/nodes/IonosCloudAiModelHub/IonosCloudAiModelHub.node.js",
-      "dist/nodes/IonosCloudCdn/IonosCloudCdn.node.js",
-      "dist/nodes/IonosCloudCertificateManager/IonosCloudCertificateManager.node.js",
-      "dist/nodes/IonosCloudChatModel/IonosCloudChatModel.node.js",
-      "dist/nodes/IonosCloudCloudApi/IonosCloudCloudApi.node.js",
-      "dist/nodes/IonosCloudDns/IonosCloudDns.node.js",
-      "dist/nodes/IonosCloudEmbeddings/IonosCloudEmbeddings.node.js"
-    ]
-  },
-  "devDependencies": {
-    "@n8n/node-cli": "*",
-    "eslint": "9.32.0",
-    "prettier": "3.6.2",
-    "release-it": "^19.0.4",
-    "typescript": "5.9.2"
-  },
-  "peerDependencies": {
-    "n8n-workflow": "*"
-  }
+	"name": "@ionos-cloud/n8n-nodes-ionos-cloud",
+	"version": "2.0.0",
+	"description": "Official n8n community nodes for IONOS Cloud services (Infrastructure, Certificate Manager, DNS, CDN, AI Model Hub)",
+	"license": "MIT",
+	"homepage": "https://www.ionos.com/cloud",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"ionos",
+		"ionos-cloud",
+		"cloud",
+		"infrastructure",
+		"iaas",
+		"kubernetes",
+		"dns",
+		"cdn",
+		"certificate",
+		"ssl",
+		"ai",
+		"llm",
+		"rag",
+		"vector-database",
+		"automation"
+	],
+	"author": {
+		"name": "Rijesh Haridas",
+		"email": "rijesh.haridas@cloud.ionos.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ionos-cloud/n8n-nodes-ionos-cloud.git"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/IonosCloudApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/IonosCloudAiModelHub/IonosCloudAiModelHub.node.js",
+			"dist/nodes/IonosCloudCdn/IonosCloudCdn.node.js",
+			"dist/nodes/IonosCloudCertificateManager/IonosCloudCertificateManager.node.js",
+			"dist/nodes/IonosCloudChatModel/IonosCloudChatModel.node.js",
+			"dist/nodes/IonosCloudCloudApi/IonosCloudCloudApi.node.js",
+			"dist/nodes/IonosCloudDns/IonosCloudDns.node.js",
+			"dist/nodes/IonosCloudEmbeddings/IonosCloudEmbeddings.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "*",
+		"eslint": "9.32.0",
+		"prettier": "3.6.2",
+		"release-it": "^19.0.4",
+		"typescript": "5.9.2"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
 }

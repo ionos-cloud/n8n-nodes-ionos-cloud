@@ -1,166 +1,166 @@
 {
-  "name": "IONOS AI Agent – Chat Model & Embeddings Demo",
-  "nodes": [
-    {
-      "parameters": {},
-      "id": "trigger-01",
-      "name": "Start Chat",
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.1,
-      "position": [0, 300],
-      "webhookId": "ionos-ai-demo"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "agent-01",
-      "name": "AI Agent",
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2,
-      "position": [300, 300]
-    },
-    {
-      "parameters": {
-        "model": "",
-        "options": {
-          "temperature": 0.7,
-          "maxTokens": 1024
-        }
-      },
-      "id": "chat-model-01",
-      "name": "IONOS Cloud Chat Model",
-      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudChatModel",
-      "typeVersion": 1,
-      "position": [100, 500],
-      "credentials": {
-        "ionosCloudApi": {
-          "id": "",
-          "name": "IONOS Cloud API"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "memory-01",
-      "name": "Window Buffer Memory",
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [300, 500]
-    },
-    {
-      "parameters": {
-        "model": "",
-        "options": {
-          "batchSize": 512
-        }
-      },
-      "id": "embeddings-01",
-      "name": "IONOS Cloud Embeddings",
-      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudEmbeddings",
-      "typeVersion": 1,
-      "position": [700, 500],
-      "credentials": {
-        "ionosCloudApi": {
-          "id": "",
-          "name": "IONOS Cloud API"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "mode": "insert"
-      },
-      "id": "vectorstore-01",
-      "name": "In-Memory Vector Store",
-      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
-      "typeVersion": 1,
-      "position": [500, 500]
-    },
-    {
-      "parameters": {},
-      "id": "retriever-01",
-      "name": "Vector Store Retriever",
-      "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
-      "typeVersion": 1,
-      "position": [500, 300]
-    }
-  ],
-  "connections": {
-    "Start Chat": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IONOS Cloud Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Window Buffer Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Vector Store Retriever": {
-      "ai_retriever": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_retriever",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "In-Memory Vector Store": {
-      "ai_vectorStore": [
-        [
-          {
-            "node": "Vector Store Retriever",
-            "type": "ai_vectorStore",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IONOS Cloud Embeddings": {
-      "ai_embedding": [
-        [
-          {
-            "node": "In-Memory Vector Store",
-            "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  },
-  "pinData": {},
-  "settings": {
-    "executionOrder": "v1"
-  },
-  "staticData": null,
-  "tags": [],
-  "triggerCount": 0
+	"name": "IONOS AI Agent – Chat Model & Embeddings Demo",
+	"nodes": [
+		{
+			"parameters": {},
+			"id": "trigger-01",
+			"name": "Start Chat",
+			"type": "@n8n/n8n-nodes-langchain.chatTrigger",
+			"typeVersion": 1.1,
+			"position": [0, 300],
+			"webhookId": "ionos-ai-demo"
+		},
+		{
+			"parameters": {
+				"options": {}
+			},
+			"id": "agent-01",
+			"name": "AI Agent",
+			"type": "@n8n/n8n-nodes-langchain.agent",
+			"typeVersion": 2,
+			"position": [300, 300]
+		},
+		{
+			"parameters": {
+				"model": "",
+				"options": {
+					"temperature": 0.7,
+					"maxTokens": 1024
+				}
+			},
+			"id": "chat-model-01",
+			"name": "IONOS Cloud Chat Model",
+			"type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudChatModel",
+			"typeVersion": 1,
+			"position": [100, 500],
+			"credentials": {
+				"ionosCloudApi": {
+					"id": "",
+					"name": "IONOS Cloud API"
+				}
+			}
+		},
+		{
+			"parameters": {
+				"options": {}
+			},
+			"id": "memory-01",
+			"name": "Window Buffer Memory",
+			"type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+			"typeVersion": 1.3,
+			"position": [300, 500]
+		},
+		{
+			"parameters": {
+				"model": "",
+				"options": {
+					"batchSize": 512
+				}
+			},
+			"id": "embeddings-01",
+			"name": "IONOS Cloud Embeddings",
+			"type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudEmbeddings",
+			"typeVersion": 1,
+			"position": [700, 500],
+			"credentials": {
+				"ionosCloudApi": {
+					"id": "",
+					"name": "IONOS Cloud API"
+				}
+			}
+		},
+		{
+			"parameters": {
+				"mode": "insert"
+			},
+			"id": "vectorstore-01",
+			"name": "In-Memory Vector Store",
+			"type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+			"typeVersion": 1,
+			"position": [500, 500]
+		},
+		{
+			"parameters": {},
+			"id": "retriever-01",
+			"name": "Vector Store Retriever",
+			"type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+			"typeVersion": 1,
+			"position": [500, 300]
+		}
+	],
+	"connections": {
+		"Start Chat": {
+			"main": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS Cloud Chat Model": {
+			"ai_languageModel": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "ai_languageModel",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Window Buffer Memory": {
+			"ai_memory": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "ai_memory",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Vector Store Retriever": {
+			"ai_retriever": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "ai_retriever",
+						"index": 0
+					}
+				]
+			]
+		},
+		"In-Memory Vector Store": {
+			"ai_vectorStore": [
+				[
+					{
+						"node": "Vector Store Retriever",
+						"type": "ai_vectorStore",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS Cloud Embeddings": {
+			"ai_embedding": [
+				[
+					{
+						"node": "In-Memory Vector Store",
+						"type": "ai_embedding",
+						"index": 0
+					}
+				]
+			]
+		}
+	},
+	"pinData": {},
+	"settings": {
+		"executionOrder": "v1"
+	},
+	"staticData": null,
+	"tags": [],
+	"triggerCount": 0
 }

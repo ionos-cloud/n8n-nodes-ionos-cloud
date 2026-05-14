@@ -106,12 +106,16 @@ export const lanDescriptions: INodeProperties[] = [
 					send: {
 						preSend: [
 							async function (this, requestOptions) {
-								const ipFailover = this.getNodeParameter('additionalFields.ipFailover', 0) as string;
+								const ipFailover = this.getNodeParameter(
+									'additionalFields.ipFailover',
+									0,
+								) as string;
 								if (ipFailover) {
 									try {
 										const body = requestOptions.body as Record<string, unknown>;
 										if (!body.properties) body.properties = {};
-										(body.properties as Record<string, unknown>).ipFailover = JSON.parse(ipFailover);
+										(body.properties as Record<string, unknown>).ipFailover =
+											JSON.parse(ipFailover);
 									} catch {
 										// If parsing fails, skip ipFailover
 									}
@@ -128,7 +132,8 @@ export const lanDescriptions: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: 'AUTO or custom /64 block',
-				description: 'IPv6 CIDR block for the LAN. Use "AUTO" to auto-assign, or provide a /64 block.',
+				description:
+					'IPv6 CIDR block for the LAN. Use "AUTO" to auto-assign, or provide a /64 block.',
 				routing: {
 					send: {
 						type: 'body',

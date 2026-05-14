@@ -1,4 +1,9 @@
-import type { IDataObject, IExecuteSingleFunctions, IHttpRequestOptions, INodeProperties } from 'n8n-workflow';
+import type {
+	IDataObject,
+	IExecuteSingleFunctions,
+	IHttpRequestOptions,
+	INodeProperties,
+} from 'n8n-workflow';
 
 const showForApplicationLoadBalancerCreateOrUpdate = {
 	operation: ['create', 'update'],
@@ -358,7 +363,8 @@ export const applicationLoadBalancerDescriptions: INodeProperties[] = [
 				name: 'clientTimeout',
 				type: 'number',
 				default: 50000,
-				description: 'The maximum time in milliseconds to wait for the client to acknowledge or send data. Default is 50,000 (50 seconds).',
+				description:
+					'The maximum time in milliseconds to wait for the client to acknowledge or send data. Default is 50,000 (50 seconds).',
 				routing: {
 					send: {
 						type: 'body',
@@ -376,67 +382,68 @@ export const applicationLoadBalancerDescriptions: INodeProperties[] = [
 				},
 				default: {},
 				placeholder: 'Add HTTP Rule',
-				description: 'HTTP routing rules for the forwarding rule. Rules are processed in order except FORWARD type rules which are processed last.',
+				description:
+					'HTTP routing rules for the forwarding rule. Rules are processed in order except FORWARD type rules which are processed last.',
 				options: [
 					{
 						name: 'rules',
 						displayName: 'Rules',
 						values: [
 							{
-						displayName: 'Content Type',
-						name: 'contentType',
-						type: 'string',
-						default: 'text/html',
-						description: 'The content type for STATIC type rules',
+								displayName: 'Content Type',
+								name: 'contentType',
+								type: 'string',
+								default: 'text/html',
+								description: 'The content type for STATIC type rules',
 							},
 							{
-						displayName: 'Drop Query',
-						name: 'dropQuery',
-						type: 'boolean',
-						default: false,
-						description: 'Whether to drop query string during redirect',
+								displayName: 'Drop Query',
+								name: 'dropQuery',
+								type: 'boolean',
+								default: false,
+								description: 'Whether to drop query string during redirect',
 							},
 							{
-						displayName: 'Location',
-						name: 'location',
-						type: 'string',
-						default: '',
-						description: 'The location URL for REDIRECT type rules',
+								displayName: 'Location',
+								name: 'location',
+								type: 'string',
+								default: '',
+								description: 'The location URL for REDIRECT type rules',
 							},
 							{
-						displayName: 'Name',
-						name: 'name',
-						type: 'string',
-						default: '',
-						description: 'The name of the HTTP rule',
+								displayName: 'Name',
+								name: 'name',
+								type: 'string',
+								default: '',
+								description: 'The name of the HTTP rule',
 							},
 							{
-						displayName: 'Response Message',
-						name: 'responseMessage',
-						type: 'string',
-						default: '',
-						description: 'The response message body for STATIC type rules',
+								displayName: 'Response Message',
+								name: 'responseMessage',
+								type: 'string',
+								default: '',
+								description: 'The response message body for STATIC type rules',
 							},
 							{
-						displayName: 'Status Code',
-						name: 'statusCode',
-						type: 'number',
-						default: 200,
-						description: 'HTTP status code for STATIC type rules',
+								displayName: 'Status Code',
+								name: 'statusCode',
+								type: 'number',
+								default: 200,
+								description: 'HTTP status code for STATIC type rules',
 							},
 							{
-						displayName: 'Target Group',
-						name: 'targetGroup',
-						type: 'string',
-						default: '',
-						description: 'The UUID of the target group for FORWARD type rules',
+								displayName: 'Target Group',
+								name: 'targetGroup',
+								type: 'string',
+								default: '',
+								description: 'The UUID of the target group for FORWARD type rules',
 							},
 							{
-						displayName: 'Type',
-						name: 'type',
-						type: 'options',
-						default: 'FORWARD',
-						options: [
+								displayName: 'Type',
+								name: 'type',
+								type: 'options',
+								default: 'FORWARD',
+								options: [
 									{
 										name: 'FORWARD',
 										value: 'FORWARD',
@@ -450,17 +457,23 @@ export const applicationLoadBalancerDescriptions: INodeProperties[] = [
 										value: 'REDIRECT',
 									},
 								],
-						description: 'The type of HTTP rule action',
+								description: 'The type of HTTP rule action',
 							},
-					],
+						],
 					},
 				],
 				routing: {
 					send: {
 						preSend: [
 							async function (this: IExecuteSingleFunctions, requestOptions: IHttpRequestOptions) {
-								const httpRules = this.getNodeParameter('forwardingRuleProperties.httpRules') as IDataObject;
-								if (httpRules?.rules && Array.isArray(httpRules.rules) && httpRules.rules.length > 0) {
+								const httpRules = this.getNodeParameter(
+									'forwardingRuleProperties.httpRules',
+								) as IDataObject;
+								if (
+									httpRules?.rules &&
+									Array.isArray(httpRules.rules) &&
+									httpRules.rules.length > 0
+								) {
 									const body = requestOptions.body as IDataObject;
 									if (!body.properties) {
 										body.properties = {};
@@ -527,7 +540,8 @@ export const applicationLoadBalancerDescriptions: INodeProperties[] = [
 						value: 'HTTP',
 					},
 				],
-				description: 'The balancing protocol. Only HTTP is supported for Application Load Balancers (immutable - only used during creation).',
+				description:
+					'The balancing protocol. Only HTTP is supported for Application Load Balancers (immutable - only used during creation).',
 				routing: {
 					send: {
 						type: 'body',
@@ -546,7 +560,8 @@ export const applicationLoadBalancerDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.serverCertificates',
-						value: '={{ $value ? $value.split(",").map(v => v.trim()).filter(v => v) : undefined }}',
+						value:
+							'={{ $value ? $value.split(",").map(v => v.trim()).filter(v => v) : undefined }}',
 					},
 				},
 			},

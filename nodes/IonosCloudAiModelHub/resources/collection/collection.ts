@@ -323,7 +323,8 @@ export const collectionDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.labels',
-						value: '={{ $value.label?.reduce((acc, item) => ({ ...acc, [item.key]: item.value }), {}) }}',
+						value:
+							'={{ $value.label?.reduce((acc, item) => ({ ...acc, [item.key]: item.value }), {}) }}',
 					},
 				},
 			},
@@ -393,7 +394,8 @@ export const collectionDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.labels',
-						value: '={{ $value.label?.reduce((acc, item) => ({ ...acc, [item.key]: item.value }), {}) }}',
+						value:
+							'={{ $value.label?.reduce((acc, item) => ({ ...acc, [item.key]: item.value }), {}) }}',
 					},
 				},
 			},

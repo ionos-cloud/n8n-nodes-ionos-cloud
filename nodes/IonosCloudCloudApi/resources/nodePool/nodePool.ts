@@ -238,7 +238,7 @@ export const nodePoolDescriptions: INodeProperties[] = [
 						type: 'body',
 						property: 'properties.annotations',
 						preSend: [
-						async function (this, requestOptions) {
+							async function (this, requestOptions) {
 								const annotations = this.getNodeParameter('additionalFields.annotations') as string;
 								if (annotations) {
 									const annotationsObj: Record<string, string> = {};
@@ -328,7 +328,7 @@ export const nodePoolDescriptions: INodeProperties[] = [
 						type: 'body',
 						property: 'properties.labels',
 						preSend: [
-						async function (this, requestOptions) {
+							async function (this, requestOptions) {
 								const labels = this.getNodeParameter('additionalFields.labels') as string;
 								if (labels) {
 									const labelsObj: Record<string, string> = {};
@@ -358,7 +358,7 @@ export const nodePoolDescriptions: INodeProperties[] = [
 						type: 'body',
 						property: 'properties.lans',
 						preSend: [
-						async function (this, requestOptions) {
+							async function (this, requestOptions) {
 								const lans = this.getNodeParameter('additionalFields.lans') as string;
 								if (lans) {
 									requestOptions.body.properties.lans = lans

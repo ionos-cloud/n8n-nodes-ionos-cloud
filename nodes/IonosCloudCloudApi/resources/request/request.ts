@@ -58,7 +58,8 @@ export const requestDescriptions: INodeProperties[] = [
 									const hours = String(date.getHours()).padStart(2, '0');
 									const minutes = String(date.getMinutes()).padStart(2, '0');
 									const seconds = String(date.getSeconds()).padStart(2, '0');
-									requestOptions.qs['filter.createdAfter'] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+									requestOptions.qs['filter.createdAfter'] =
+										`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 								}
 								return requestOptions;
 							},
@@ -86,7 +87,8 @@ export const requestDescriptions: INodeProperties[] = [
 									const hours = String(date.getHours()).padStart(2, '0');
 									const minutes = String(date.getMinutes()).padStart(2, '0');
 									const seconds = String(date.getSeconds()).padStart(2, '0');
-									requestOptions.qs['filter.createdBefore'] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+									requestOptions.qs['filter.createdBefore'] =
+										`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 								}
 								return requestOptions;
 							},

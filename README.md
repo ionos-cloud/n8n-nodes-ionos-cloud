@@ -31,7 +31,7 @@ The package provides comprehensive integration with key IONOS Cloud services, en
 This package provides seven separate nodes for different IONOS Cloud services:
 
 1. **IONOS Cloud (Infrastructure)** - Core infrastructure management
-2. **IONOS Cloud (Certificate Manager)** - SSL/TLS certificate management  
+2. **IONOS Cloud (Certificate Manager)** - SSL/TLS certificate management
 3. **IONOS Cloud (Cloud DNS)** - Domain name system management
 4. **IONOS Cloud (CDN)** - Content delivery network management
 5. **IONOS Cloud (AI Model Hub)** - AI model inference and RAG capabilities
@@ -68,36 +68,38 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ### Overview
 
-| Node | Resources | Operations | Description |
-|------|-----------|------------|-------------|
-| **Infrastructure** | 21 | 153 | Complete infrastructure management (compute, networking, storage, Kubernetes) |
-| **Certificate Manager** | 3 | 15 | SSL/TLS certificate lifecycle management with ACME support |
-| **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
-| **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
-| **AI Model Hub** | 4 | 20 | Foundation model inference, RAG capabilities, and OpenAI-compatible API |
-| **Chat Model** ⚡ | — | supplyData | LangChain chat model sub-node for n8n AI Agent |
-| **Embeddings** ⚡ | — | supplyData | LangChain embeddings sub-node for n8n AI Agent |
+| Node                    | Resources | Operations | Description                                                                   |
+| ----------------------- | --------- | ---------- | ----------------------------------------------------------------------------- |
+| **Infrastructure**      | 21        | 153        | Complete infrastructure management (compute, networking, storage, Kubernetes) |
+| **Certificate Manager** | 3         | 15         | SSL/TLS certificate lifecycle management with ACME support                    |
+| **Cloud DNS**           | 7         | 28         | DNS zones, records (15 types), DNSSEC, zone transfers                         |
+| **CDN**                 | 2         | 7          | Content delivery with custom routing and geo-restrictions                     |
+| **AI Model Hub**        | 4         | 20         | Foundation model inference, RAG capabilities, and OpenAI-compatible API       |
+| **Chat Model** ⚡       | —         | supplyData | LangChain chat model sub-node for n8n AI Agent                                |
+| **Embeddings** ⚡       | —         | supplyData | LangChain embeddings sub-node for n8n AI Agent                                |
 
 > ⚡ **Sub-nodes**: The Chat Model and Embeddings nodes are LangChain sub-nodes that plug into n8n's built-in AI nodes (AI Agent, AI Chain, Vector Stores, etc.) rather than operating as standalone workflow nodes.
 
 > **✨ v1.0.2**: Patch release with enhanced subresource support for load balancers, NAT gateways, security groups, and target groups. Added request monitoring capabilities.
 
-
 <details>
 <summary><b>Infrastructure - Detailed Operations</b></summary>
 
 #### Account & Global Resources (12 operations)
+
 - **Contract** (1): Get Many
 - **Location** (2): Get, Get Many
-- **Image** (2): Get, Get Many  
+- **Image** (2): Get, Get Many
 - **IP Block** (4): Create, Delete, Get, Get Many
 - **Request** (3): Get, Get All, Get Status
 
 #### Core Infrastructure (10 operations)
+
 - **Datacenter** (5): Create, Delete, Get, Get Many, Update
 - **LAN** (5): Create, Delete, Get, Get Many, Update
 
 #### Compute Resources (41 operations)
+
 - **Server** (21): Attach/Detach CDROM/Volume, Create, Delete, Get (+ CDROM/CDROMs/Volume/Volumes/Remote Console/Token), Get Many, Reboot, Resume, Start, Stop, Suspend, Update, Upgrade
 - **Volume** (6): Create, Create Snapshot, Delete, Get, Get Many, Update
 - **Snapshot** (4): Delete, Get, Get Many, Update
@@ -105,10 +107,12 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 - **Firewall Rule** (5): Create, Delete, Get, Get Many, Update
 
 #### Kubernetes (11 operations)
+
 - **Kubernetes Cluster** (6): Create, Delete, Get, Get Many, Get Kubeconfig, Update
 - **Node Pool** (5): Create, Delete, Get, Get Many, Update
 
 #### Networking (34 operations)
+
 - **Private Cross-Connect** (5): Create, Delete, Get, Get Many, Update
 - **Load Balancer** (9): Attach/Detach NIC, Create, Delete, Get (+ Balanced NIC/NICs), Get Many, Update
 - **Network Load Balancer** (5): Create, Delete, Get, Get Many, Update
@@ -121,6 +125,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
   - Full support for Flow Logs and Rules subresources
 
 #### Security (5 operations)
+
 - **Security Group** (5): Create, Delete, Get, Get Many, Update
   - Full support for Rules subresource with comprehensive rule properties
 
@@ -130,17 +135,23 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 <summary><b>Certificate Manager - Detailed Operations</b></summary>
 
 #### Certificate Resource (5 operations)
+
 Upload and manage SSL/TLS certificates manually with full chain and private key support.
+
 - Create, Delete, Get, Get Many, Update
 
 #### AutoCertificate Resource (5 operations)
+
 Configure automatic certificate renewal via ACME providers (Let's Encrypt, etc.).
+
 - Create, Delete, Get, Get Many, Update
 - **Key Algorithms**: RSA (2048/4096), ECDSA (256/384)
 - **Features**: Subject Alternative Names (SANs), common name, provider selection
 
 #### Provider Resource (5 operations)
+
 Configure ACME certificate providers with External Account Binding (EAB) support.
+
 - Create, Delete, Get, Get Many, Update
 
 </details>
@@ -149,31 +160,45 @@ Configure ACME certificate providers with External Account Binding (EAB) support
 <summary><b>Cloud DNS - Detailed Operations</b></summary>
 
 #### Zone Resource (5 operations)
+
 Manage primary DNS zones.
+
 - Create, Delete, Get, Get Many, Update
 
 #### Record Resource (5 operations)
+
 Manage DNS records with 15 supported types: A, AAAA, ALIAS, CAA, CNAME, DS, HTTPS, MX, NS, SMIMEA, SRV, SSHFP, SVCB, TLSA, TXT
+
 - Create, Delete, Get, Get Many, Update
 
 #### SecondaryZone Resource (7 operations)
+
 Secondary zones with AXFR (zone transfer) support.
+
 - Create, Delete, Get, Get Many, Update, AXFR Get, AXFR Start
 
 #### ZoneFile Resource (2 operations)
+
 Import/export zones in BIND format (RFC 1035).
+
 - Get (export), Update (import)
 
 #### Quota Resource (1 operation)
+
 View DNS resource usage and limits.
+
 - Get
 
 #### DNSSEC Resource (3 operations)
+
 Enable and manage DNSSEC for zones.
+
 - Create (enable), Delete (disable), Get
 
 #### ReverseRecord Resource (5 operations)
+
 Manage reverse DNS (PTR) records for IPv4/IPv6.
+
 - Create, Delete, Get, Get Many, Update
 
 </details>
@@ -182,12 +207,16 @@ Manage reverse DNS (PTR) records for IPv4/IPv6.
 <summary><b>CDN - Detailed Operations</b></summary>
 
 #### Distribution Resource (5 operations)
+
 Configure CDN distributions with custom routing rules.
+
 - Create, Delete, Get, Get Many, Update
 - **Features**: Domain routing, SSL/TLS integration, HTTP/HTTPS schemes, geo-restrictions, upstream origins
 
 #### Ip Resource (2 operations)
+
 Get CDN edge server IPs for origin whitelisting.
+
 - Get, Get Many
 
 </details>
@@ -196,41 +225,53 @@ Get CDN edge server IPs for origin whitelisting.
 <summary><b>AI Model Hub - Detailed Operations</b></summary>
 
 #### Model Resource (2 operations)
+
 Browse and invoke foundation models for AI inference.
+
 - Get Many (list available models), Predict (run inference)
 - **Features**: RAG support via collection queries, custom model options, streaming responses
 
 #### Collection Resource (6 operations)
+
 Manage vector database collections for document storage and retrieval.
+
 - Create, Delete, Get, Get Many, Update, Query
 - **Features**: Chunking strategies (sentence/fixed/recursive), embedding models, database types (chromadb/pgvector), semantic search
 
 #### Document Resource (7 operations)
+
 Manage documents within collections for RAG applications.
+
 - Add, Delete, Delete All, Get, Get Many, Get Chunks, Update
 - **Features**: Base64 content encoding, metadata management, chunk retrieval, batch operations
 
 #### OpenAI Compatible Resource (5 operations)
+
 Use OpenAI-compatible API endpoints for standardized AI interactions.
 
 **Chat Completion** - Create chat completions with message history
+
 - Supports system, user, and assistant message roles
 - Parameters: model, messages (required), temperature, top_p, max_tokens, max_completion_tokens, n, stream, stop, presence_penalty, frequency_penalty, logit_bias, response_format, tools, tool_choice, user
 - Compatible with OpenAI chat completion API format
 
 **Completion** - Simple text completion
+
 - Parameters: model, prompt (required), temperature, top_p, max_tokens, n, stream, stop, presence_penalty, frequency_penalty, logit_bias, user
 - Compatible with OpenAI completion API format
 
 **Create Embeddings** - Generate vector embeddings from text
+
 - Parameters: model (default: BAAI/bge-large-en-v1.5), input (single text or comma-separated multiple texts)
 - Returns embedding vectors for semantic search and similarity
 
 **Generate Image** - Text-to-image generation
+
 - Parameters: model (default: black-forest-labs/FLUX.1-schnell), prompt (required), n, size (1024x1024, 1024x1792, 1792x1024), response_format (b64_json), user
 - Generates images from text descriptions
 
 **Get Many** - List available models
+
 - Returns all models in OpenAI-compatible format
 - Shows model capabilities and availability
 
@@ -259,6 +300,7 @@ Tested against n8n version 2.1.5+
 ## Usage
 
 ### Authentication
+
 1. Create new credentials in n8n and select "IONOS Cloud API"
 2. Provide your API token (generated from IONOS Cloud Console)
 3. The same credential works for all five nodes
@@ -266,38 +308,44 @@ Tested against n8n version 2.1.5+
 ### Using the Nodes
 
 #### Infrastructure
-* Add the "IONOS Cloud (Infrastructure)" node to your workflow
-* Select the resource (e.g., Server, Volume, Datacenter)
-* Choose the operation and configure the required fields
+
+- Add the "IONOS Cloud (Infrastructure)" node to your workflow
+- Select the resource (e.g., Server, Volume, Datacenter)
+- Choose the operation and configure the required fields
 
 #### Certificate Manager
-* Add the "IONOS Cloud (Certificate Manager)" node to your workflow
-* Select the resource (Certificate, AutoCertificate, or Provider)
-* Configure certificate properties, domains, and ACME providers
+
+- Add the "IONOS Cloud (Certificate Manager)" node to your workflow
+- Select the resource (Certificate, AutoCertificate, or Provider)
+- Configure certificate properties, domains, and ACME providers
 
 #### DNS
-* Add the "IONOS Cloud (Cloud DNS)" node to your workflow
-* Select the resource (Zone, Record, SecondaryZone, etc.)
-* Configure DNS zones, records, and DNSSEC settings
+
+- Add the "IONOS Cloud (Cloud DNS)" node to your workflow
+- Select the resource (Zone, Record, SecondaryZone, etc.)
+- Configure DNS zones, records, and DNSSEC settings
 
 #### CDN
-* Add the "IONOS Cloud (CDN)" node to your workflow
-* Select the resource (Distribution or Ip)
-* Configure CDN distributions with routing rules and upstream origins
+
+- Add the "IONOS Cloud (CDN)" node to your workflow
+- Select the resource (Distribution or Ip)
+- Configure CDN distributions with routing rules and upstream origins
 
 #### AI Model Hub
-* Add the "IONOS Cloud (AI Model Hub)" node to your workflow
-* Select the resource (Model, Collection, Document, or OpenAI Compatible)
-* **Model**: AI inference with native IONOS API
-* **Collection**: Vector database management for RAG
-* **Document**: Manage documents in collections
-* **OpenAI Compatible**: Use OpenAI-compatible endpoints (chat, completions, embeddings, images)
+
+- Add the "IONOS Cloud (AI Model Hub)" node to your workflow
+- Select the resource (Model, Collection, Document, or OpenAI Compatible)
+- **Model**: AI inference with native IONOS API
+- **Collection**: Vector database management for RAG
+- **Document**: Manage documents in collections
+- **OpenAI Compatible**: Use OpenAI-compatible endpoints (chat, completions, embeddings, images)
 
 #### AI Agent Integration (Chat Model & Embeddings Sub-Nodes)
 
 The **IONOS Cloud Chat Model** and **IONOS Cloud Embeddings** are LangChain sub-nodes that integrate with n8n's built-in AI nodes.
 
 **Chat Model** — Use IONOS AI Model Hub as the LLM brain for the AI Agent:
+
 1. Add an **AI Agent** node to your workflow
 2. Click **+** on the AI Agent's **Language Model** input
 3. Select **IONOS Cloud Chat Model**
@@ -305,12 +353,14 @@ The **IONOS Cloud Chat Model** and **IONOS Cloud Embeddings** are LangChain sub-
 5. The agent now uses IONOS AI Model Hub for all LLM reasoning
 
 **Embeddings** — Use IONOS AI Model Hub for text embeddings in RAG pipelines:
+
 1. Add an **In-Memory Vector Store** (or any vector store node)
 2. Click **+** on the vector store's **Embedding** input
 3. Select **IONOS Cloud Embeddings**
 4. Choose your credential and pick an embedding model
 
 **Example: AI Agent with RAG**
+
 ```
 Chat Trigger → AI Agent
                  ├── Language Model: IONOS Cloud Chat Model
@@ -325,34 +375,40 @@ Chat Trigger → AI Agent
 ### Common Patterns
 
 **Automated SSL Certificate Deployment:**
+
 1. Use Certificate Manager to create an AutoCertificate
 2. Use CDN node to create a Distribution referencing the certificate ID
 3. Automate certificate renewal with n8n scheduling
 
 **Infrastructure Provisioning:**
+
 1. Use Infrastructure node to create Datacenter, Server, and Volume
 2. Use DNS node to create Zone and A/AAAA Records pointing to server IPs
 3. Use Certificate Manager to provision SSL certificates for domains
 
 **DNS Management:**
+
 1. Use DNS Zone resource to create zones
 2. Use Record resource to manage DNS records (A, CNAME, MX, TXT, etc.)
 3. Use DNSSEC resource to enable DNSSEC signing
 4. Use ReverseRecord for PTR records
 
 **AI-Powered Applications with RAG:**
+
 1. Use AI Model Hub Collection resource to create a vector database
 2. Use Document resource to add knowledge base documents
 3. Use Model Predict operation with collection query for context-aware responses
 4. Automate document updates and model inference in workflows
 
 **OpenAI-Compatible AI Integration:**
+
 1. Use OpenAI Compatible Chat Completion for conversational AI
 2. Use Create Embeddings for semantic search and similarity
 3. Use Generate Image for text-to-image generation
 4. Drop-in replacement for OpenAI API in existing n8n workflows
 
 **AI Agent with IONOS Cloud (native n8n AI integration):**
+
 1. Use IONOS Cloud Chat Model as the language model for n8n's AI Agent
 2. Use IONOS Cloud Embeddings with Vector Stores for RAG pipelines
 3. Combine with Window Buffer Memory for conversational context
@@ -387,14 +443,14 @@ Each node connects to:
 
 ## Resources
 
-* [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-* [IONOS Cloud Documentation](https://docs.ionos.com/cloud)
-* [Infrastructure API Documentation](https://api.ionos.com/docs/cloud/v6/)
-* [Certificate Manager API Documentation](https://api.ionos.com/docs/certmanager/v2/)
-* [Cloud DNS API Documentation](https://api.ionos.com/docs/dns/v1/)
-* [CDN API Documentation](https://api.ionos.com/docs/cdn/v1/)
-* [AI Model Hub API Documentation](https://api.ionos.com/docs/inference-modelhub/v1/)
-* [AI Model Hub OpenAI-compatible API Documentation](https://api.ionos.com/docs/inference-openai/v1/)
+- [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
+- [IONOS Cloud Documentation](https://docs.ionos.com/cloud)
+- [Infrastructure API Documentation](https://api.ionos.com/docs/cloud/v6/)
+- [Certificate Manager API Documentation](https://api.ionos.com/docs/certmanager/v2/)
+- [Cloud DNS API Documentation](https://api.ionos.com/docs/dns/v1/)
+- [CDN API Documentation](https://api.ionos.com/docs/cdn/v1/)
+- [AI Model Hub API Documentation](https://api.ionos.com/docs/inference-modelhub/v1/)
+- [AI Model Hub OpenAI-compatible API Documentation](https://api.ionos.com/docs/inference-openai/v1/)
 
 ## Contributing
 

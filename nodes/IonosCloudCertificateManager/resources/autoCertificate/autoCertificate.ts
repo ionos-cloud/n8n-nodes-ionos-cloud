@@ -203,11 +203,16 @@ export const autoCertificateDescriptions: INodeProperties[] = [
 					send: {
 						preSend: [
 							async function (this, requestOptions) {
-								const names = this.getNodeParameter('additionalFields.subjectAlternativeNames', 0) as string;
+								const names = this.getNodeParameter(
+									'additionalFields.subjectAlternativeNames',
+									0,
+								) as string;
 								if (names) {
-								const body = requestOptions.body as Record<string, unknown>;
-								if (!body.properties) body.properties = {};
-								(body.properties as Record<string, unknown>).subjectAlternativeNames = names.split(',').map((n: string) => n.trim());
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).subjectAlternativeNames = names
+										.split(',')
+										.map((n: string) => n.trim());
 								}
 								return requestOptions;
 							},

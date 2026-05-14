@@ -105,7 +105,8 @@ export const datacenterDescriptions: INodeProperties[] = [
 		required: true,
 		displayOptions: { show: showForDatacenterCreate },
 		default: 'us/las',
-		description: 'The physical location where the datacenter will be created (e.g., us/las, de/fra, de/txl). Property cannot be modified after creation.',
+		description:
+			'The physical location where the datacenter will be created (e.g., us/las, de/fra, de/txl). Property cannot be modified after creation.',
 		routing: {
 			send: {
 				type: 'body',

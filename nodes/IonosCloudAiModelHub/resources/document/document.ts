@@ -250,7 +250,7 @@ export const documentDescriptions: INodeProperties[] = [
 						type: 'hidden',
 						default: 'document',
 					},
-			],
+				],
 			},
 		],
 		routing: {
@@ -333,12 +333,16 @@ export const documentDescriptions: INodeProperties[] = [
 								const content = this.getNodeParameter('updateFields.content') as string;
 								if (content) {
 									if (!requestOptions.body) requestOptions.body = {};
-									if (typeof requestOptions.body === 'object' && !Array.isArray(requestOptions.body)) {
+									if (
+										typeof requestOptions.body === 'object' &&
+										!Array.isArray(requestOptions.body)
+									) {
 										if (!requestOptions.body.properties) {
 											requestOptions.body.properties = {};
 										}
 										if (typeof requestOptions.body.properties === 'object') {
-											requestOptions.body.properties.content = Buffer.from(content).toString('base64');
+											requestOptions.body.properties.content =
+												Buffer.from(content).toString('base64');
 										}
 									}
 								}
