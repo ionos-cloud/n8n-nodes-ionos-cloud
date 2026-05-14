@@ -14,7 +14,7 @@
 
 Automate your cloud infrastructure, DNS, CDN, certificates, and AI workflows with [n8n](https://n8n.io/)
 
-[Installation](#installation) • [Operations](#operations) • [Credentials](#credentials) • [Usage](#usage) • [Examples](#common-patterns) • [Resources](#resources)
+[Installation](#installation) • [Operations](#operations) • [Credentials](#credentials) • [Usage](#usage) • [Examples](#common-patterns) • [Workflows](#example-workflows) • [Resources](#resources)
 
 </div>
 
@@ -25,6 +25,11 @@ Automate your cloud infrastructure, DNS, CDN, certificates, and AI workflows wit
 This is the **official** n8n community node package for IONOS Cloud, developed and maintained by the IONOS Cloud team. [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
 The package provides comprehensive integration with key IONOS Cloud services, enabling you to automate infrastructure provisioning, certificate management, DNS operations, CDN distribution, and AI-powered workflows directly from n8n.
+
+## Example Workflows
+
+> **Looking for ready-to-use workflows?**
+> Browse community-contributed IONOS workflow templates on the [n8n workflows page](https://n8n.io/workflows/?q=ionos) — import them directly into your n8n instance with one click.
 
 ## Included Nodes
 
@@ -387,6 +392,7 @@ Each node connects to:
 
 ## Resources
 
+* [Ready-to-use IONOS workflow templates](https://n8n.io/workflows/?q=ionos)
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
 * [IONOS Cloud Documentation](https://docs.ionos.com/cloud)
 * [Infrastructure API Documentation](https://api.ionos.com/docs/cloud/v6/)
