@@ -10,7 +10,8 @@ import type {
  * Uses the standard UUID format: 8-4-4-4-12 hex digits.
  * Example: https://api.ionos.com/cloudapi/v6/requests/99b077f7-45fc-4634-9e2a-dd0d96f28b5d/status
  */
-const REQUEST_ID_REGEX = /\/requests\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/status/i;
+const REQUEST_ID_REGEX =
+	/\/requests\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/status/i;
 
 /**
  * Property that automatically extracts the request tracking info from

@@ -170,7 +170,8 @@ export const modelDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.options',
-						value: '={{ $value.option?.reduce((acc, item) => ({ ...acc, [item.key]: item.value }), {}) }}',
+						value:
+							'={{ $value.option?.reduce((acc, item) => ({ ...acc, [item.key]: item.value }), {}) }}',
 					},
 				},
 			},

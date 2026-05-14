@@ -358,7 +358,8 @@ export const volumeDescriptions: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: 'Base64 encoded cloud-init configuration',
-				description: 'Cloud-init configuration for the volume (base64 encoded, immutable after creation)',
+				description:
+					'Cloud-init configuration for the volume (base64 encoded, immutable after creation)',
 				routing: {
 					send: {
 						type: 'body',

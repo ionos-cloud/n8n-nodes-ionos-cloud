@@ -303,7 +303,8 @@ export const serverDescriptions: INodeProperties[] = [
 				name: 'nicMultiQueue',
 				type: 'boolean',
 				default: false,
-				description: 'Whether to activate Multi Queue feature on all NICs for improved network performance',
+				description:
+					'Whether to activate Multi Queue feature on all NICs for improved network performance',
 				routing: {
 					send: {
 						type: 'body',
