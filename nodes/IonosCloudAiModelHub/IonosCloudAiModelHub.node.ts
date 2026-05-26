@@ -5,8 +5,6 @@ import type {
 import { includeResponseHeadersProperty } from '../../utils/responseHeaders';
 import { USER_AGENT } from '../../utils/userAgent';
 
-import * as collection from './resources/collection';
-import * as document from './resources/document';
 import * as model from './resources/model';
 import * as openai from './resources/openai';
 
@@ -48,16 +46,6 @@ export class IonosCloudAiModelHub implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Collection',
-						value: 'collection',
-						description: 'Manage document collections in a vector database',
-					},
-					{
-						name: 'Document',
-						value: 'document',
-						description: 'Manage documents in collections',
-					},
-					{
 						name: 'Model',
 						value: 'model',
 						description: 'Browse and call foundation models',
@@ -68,10 +56,8 @@ export class IonosCloudAiModelHub implements INodeType {
 						description: 'Use OpenAI-compatible API endpoints',
 					},
 				],
-				default: 'collection',
+				default: 'model',
 			},
-			...collection.descriptions,
-			...document.descriptions,
 			...model.descriptions,
 			...openai.descriptions,
 			includeResponseHeadersProperty,

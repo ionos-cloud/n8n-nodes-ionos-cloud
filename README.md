@@ -74,7 +74,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Certificate Manager** | 3 | 15 | SSL/TLS certificate lifecycle management with ACME support |
 | **Cloud DNS** | 7 | 28 | DNS zones, records (15 types), DNSSEC, zone transfers |
 | **CDN** | 2 | 7 | Content delivery with custom routing and geo-restrictions |
-| **AI Model Hub** | 4 | 20 | Foundation model inference, RAG capabilities, and OpenAI-compatible API |
+| **AI Model Hub** | 2 | 7 | Foundation model inference and OpenAI-compatible API |
 | **Chat Model** ⚡ | — | supplyData | LangChain chat model sub-node for n8n AI Agent |
 | **Embeddings** ⚡ | — | supplyData | LangChain embeddings sub-node for n8n AI Agent |
 
@@ -198,17 +198,7 @@ Get CDN edge server IPs for origin whitelisting.
 #### Model Resource (2 operations)
 Browse and invoke foundation models for AI inference.
 - Get Many (list available models), Predict (run inference)
-- **Features**: RAG support via collection queries, custom model options, streaming responses
-
-#### Collection Resource (6 operations)
-Manage vector database collections for document storage and retrieval.
-- Create, Delete, Get, Get Many, Update, Query
-- **Features**: Chunking strategies (sentence/fixed/recursive), embedding models, database types (chromadb/pgvector), semantic search
-
-#### Document Resource (7 operations)
-Manage documents within collections for RAG applications.
-- Add, Delete, Delete All, Get, Get Many, Get Chunks, Update
-- **Features**: Base64 content encoding, metadata management, chunk retrieval, batch operations
+- **Features**: Custom model options, streaming responses
 
 #### OpenAI Compatible Resource (5 operations)
 Use OpenAI-compatible API endpoints for standardized AI interactions.
@@ -287,10 +277,8 @@ Tested against n8n version 2.1.5+
 
 #### AI Model Hub
 * Add the "IONOS Cloud (AI Model Hub)" node to your workflow
-* Select the resource (Model, Collection, Document, or OpenAI Compatible)
+* Select the resource (Model or OpenAI Compatible)
 * **Model**: AI inference with native IONOS API
-* **Collection**: Vector database management for RAG
-* **Document**: Manage documents in collections
 * **OpenAI Compatible**: Use OpenAI-compatible endpoints (chat, completions, embeddings, images)
 
 #### AI Agent Integration (Chat Model & Embeddings Sub-Nodes)
@@ -339,12 +327,6 @@ Chat Trigger → AI Agent
 2. Use Record resource to manage DNS records (A, CNAME, MX, TXT, etc.)
 3. Use DNSSEC resource to enable DNSSEC signing
 4. Use ReverseRecord for PTR records
-
-**AI-Powered Applications with RAG:**
-1. Use AI Model Hub Collection resource to create a vector database
-2. Use Document resource to add knowledge base documents
-3. Use Model Predict operation with collection query for context-aware responses
-4. Automate document updates and model inference in workflows
 
 **OpenAI-Compatible AI Integration:**
 1. Use OpenAI Compatible Chat Completion for conversational AI
