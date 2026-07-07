@@ -326,17 +326,28 @@ export const serverDescriptions: INodeProperties[] = [
 						description: 'Whether to expose the serial ID of the disk attached to the server. Some operating systems or software solutions require this to work properly.',
 					},
 					{
+						displayName: 'Image',
+						name: 'image',
+						type: 'string',
+						default: '',
+						placeholder: 'ubuntu:latest',
+						description: 'The UUID, name, or alias of the IONOS Cloud Linux image to boot from (e.g. "ubuntu:latest"). Only IONOS Cloud Linux images are supported for GPU servers.',
+					},
+					{
+						displayName: 'Image Password',
+						name: 'imagePassword',
+						type: 'string',
+						typeOptions: { password: true },
+						default: '',
+						description: 'Initial root/administrator password for the image',
+					},
+					{
 						displayName: 'Licence Type',
 						name: 'licenceType',
 						type: 'options',
-						options: [
-							{ name: 'Linux', value: 'LINUX' },
-							{ name: 'Windows', value: 'WINDOWS' },
-							{ name: 'Windows 2016', value: 'WINDOWS2016' },
-							{ name: 'Other', value: 'OTHER' },
-						],
+						options: [{ name: 'Linux', value: 'LINUX' }],
 						default: 'LINUX',
-						description: 'OS type for the boot volume',
+						description: 'OS type for the boot volume. Only Linux is supported for GPU servers.',
 					},
 					{
 						displayName: 'Name',
@@ -367,10 +378,15 @@ export const serverDescriptions: INodeProperties[] = [
 								availabilityZone?: string;
 								exposeSerial?: boolean;
 								requireLegacyBios?: boolean;
+								image?: string;
+								imagePassword?: string;
 							};
 						};
 						const volumeProperties = volume?.properties;
 						if (volumeProperties) {
+							const isUuid = volumeProperties.image
+								? /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(volumeProperties.image)
+								: false;
 							requestOptions.body = requestOptions.body ?? {};
 							(requestOptions.body as Record<string, unknown>).entities = {
 								volumes: {
@@ -383,6 +399,9 @@ export const serverDescriptions: INodeProperties[] = [
 												availabilityZone: volumeProperties.availabilityZone,
 												exposeSerial: volumeProperties.exposeSerial,
 												requireLegacyBios: volumeProperties.requireLegacyBios,
+												image: isUuid ? volumeProperties.image : undefined,
+												imageAlias: !isUuid ? volumeProperties.image || undefined : undefined,
+												imagePassword: volumeProperties.imagePassword || undefined,
 											},
 										},
 									],
