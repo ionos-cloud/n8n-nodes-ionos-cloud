@@ -34,13 +34,7 @@ const showForServerCreateOrUpdate = {
 	resource: ['server'],
 };
 
-const showForGpuServerCreate = {
-	operation: ['create'],
-	resource: ['server'],
-	type: ['GPU'],
-};
-
-const showForTemplateUuidCreate = {
+const showForGpuOrCubeServerCreate = {
 	operation: ['create'],
 	resource: ['server'],
 	type: ['GPU', 'CUBE'],
@@ -269,7 +263,7 @@ export const serverDescriptions: INodeProperties[] = [
 		name: 'templateUuid',
 		type: 'string',
 		required: true,
-		displayOptions: { show: showForTemplateUuidCreate },
+		displayOptions: { show: showForGpuOrCubeServerCreate },
 		default: '',
 		description: 'The UUID of the template used for creating the server. Determines the cores, RAM and (for GPU servers) GPU resources allocated. Required for CUBE and GPU server types.',
 		routing: {
@@ -281,14 +275,14 @@ export const serverDescriptions: INodeProperties[] = [
 	},
 	{
 		displayName: 'Volume',
-		name: 'gpuVolume',
+		name: 'volume',
 		type: 'fixedCollection',
 		default: {},
-		description: 'The boot volume for the GPU server (required)',
+		description: 'The boot volume for the server (required for CUBE and GPU server types)',
 		typeOptions: {
 			multipleValues: false,
 		},
-		displayOptions: { show: showForGpuServerCreate },
+		displayOptions: { show: showForGpuOrCubeServerCreate },
 		options: [
 			{
 				name: 'properties',
@@ -302,10 +296,9 @@ export const serverDescriptions: INodeProperties[] = [
 							{ name: 'Auto', value: 'AUTO' },
 							{ name: 'Zone 1', value: 'ZONE_1' },
 							{ name: 'Zone 2', value: 'ZONE_2' },
-							{ name: 'Zone 3', value: 'ZONE_3' },
 						],
 						default: 'AUTO',
-						description: 'The availability zone for the boot volume',
+						description: 'The availability zone for the boot volume. Not applicable for CUBE servers (tied to the server\'s own availability zone instead).',
 					},
 					{
 						displayName: 'Bus',
@@ -317,6 +310,14 @@ export const serverDescriptions: INodeProperties[] = [
 						],
 						default: 'VIRTIO',
 						description: 'The bus type for the boot volume',
+					},
+					{
+						displayName: 'Disk Type',
+						name: 'diskType',
+						type: 'options',
+						options: [{ name: 'DAS', value: 'DAS' }],
+						default: 'DAS',
+						description: 'Hardware type of the boot volume. Only used for CUBE servers (direct-attached NVMe storage); ignored for GPU servers, which are always SSD Premium.',
 					},
 					{
 						displayName: 'Expose Serial',
@@ -331,7 +332,7 @@ export const serverDescriptions: INodeProperties[] = [
 						type: 'string',
 						default: '',
 						placeholder: 'ubuntu:latest',
-						description: 'The UUID, name, or alias of the IONOS Cloud Linux image to boot from (e.g. "ubuntu:latest"). Only IONOS Cloud Linux images are supported for GPU servers.',
+						description: 'The UUID, name, or alias of the image to boot from (e.g. "ubuntu:latest"). Only IONOS Cloud Linux images are supported for GPU servers.',
 					},
 					{
 						displayName: 'Image Password',
@@ -345,9 +346,19 @@ export const serverDescriptions: INodeProperties[] = [
 						displayName: 'Licence Type',
 						name: 'licenceType',
 						type: 'options',
-						options: [{ name: 'Linux', value: 'LINUX' }],
+						options: [
+							{ name: 'Linux', value: 'LINUX' },
+							{ name: 'Other', value: 'OTHER' },
+							{ name: 'RHEL', value: 'RHEL' },
+							{ name: 'Unknown', value: 'UNKNOWN' },
+							{ name: 'Windows', value: 'WINDOWS' },
+							{ name: 'Windows 2016', value: 'WINDOWS2016' },
+							{ name: 'Windows 2019', value: 'WINDOWS2019' },
+							{ name: 'Windows 2022', value: 'WINDOWS2022' },
+							{ name: 'Windows 2025', value: 'WINDOWS2025' },
+						],
 						default: 'LINUX',
-						description: 'OS type for the boot volume. Only Linux is supported for GPU servers.',
+						description: 'OS type for the boot volume. Only Linux is supported for GPU servers; CUBE servers support the full list.',
 					},
 					{
 						displayName: 'Name',
@@ -370,11 +381,13 @@ export const serverDescriptions: INodeProperties[] = [
 			send: {
 				preSend: [
 					async function (this, requestOptions) {
-						const volume = this.getNodeParameter('gpuVolume') as {
+						const serverType = this.getNodeParameter('type') as string;
+						const volume = this.getNodeParameter('volume') as {
 							properties?: {
 								name?: string;
 								licenceType?: string;
 								bus?: string;
+								diskType?: string;
 								availabilityZone?: string;
 								exposeSerial?: boolean;
 								requireLegacyBios?: boolean;
@@ -388,25 +401,27 @@ export const serverDescriptions: INodeProperties[] = [
 								? /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(volumeProperties.image)
 								: false;
 							requestOptions.body = requestOptions.body ?? {};
-							(requestOptions.body as Record<string, unknown>).entities = {
-								volumes: {
-									items: [
-										{
-											properties: {
-												name: volumeProperties.name || undefined,
-												licenceType: volumeProperties.licenceType,
-												bus: volumeProperties.bus,
-												availabilityZone: volumeProperties.availabilityZone,
-												exposeSerial: volumeProperties.exposeSerial,
-												requireLegacyBios: volumeProperties.requireLegacyBios,
-												image: isUuid ? volumeProperties.image : undefined,
-												imageAlias: !isUuid ? volumeProperties.image || undefined : undefined,
-												imagePassword: volumeProperties.imagePassword || undefined,
-											},
+							const body = requestOptions.body as Record<string, unknown>;
+							const entities = (body.entities as Record<string, unknown>) ?? {};
+							entities.volumes = {
+								items: [
+									{
+										properties: {
+											name: volumeProperties.name || undefined,
+											licenceType: volumeProperties.licenceType,
+											bus: volumeProperties.bus,
+											type: serverType === 'CUBE' ? volumeProperties.diskType : undefined,
+											availabilityZone: serverType === 'CUBE' ? undefined : volumeProperties.availabilityZone,
+											exposeSerial: volumeProperties.exposeSerial,
+											requireLegacyBios: volumeProperties.requireLegacyBios,
+											image: isUuid ? volumeProperties.image : undefined,
+											imageAlias: !isUuid ? volumeProperties.image || undefined : undefined,
+											imagePassword: volumeProperties.imagePassword || undefined,
 										},
-									],
-								},
+									},
+								],
 							};
+							body.entities = entities;
 						}
 						return requestOptions;
 					},
