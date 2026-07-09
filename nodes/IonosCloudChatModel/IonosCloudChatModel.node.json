@@ -1,8 +1,5 @@
 {
 	"categories": ["AI"],
-	"subcategories": {
-		"AI": ["Language Models", "Language Models (Chat)"]
-	},
 	"resources": {
 		"credentialDocumentation": [
 			{
