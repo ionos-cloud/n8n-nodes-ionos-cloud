@@ -10,9 +10,13 @@ declare function require(module: string): unknown;
 
 const IONOS_OPENAI_BASE_URL = 'https://openai.inference.de-txl.ionos.com/v1';
 
+// This is an AI sub-node: it supplies an ai_languageModel via supplyData() and must
+// NOT be usableAsTool. n8n throws "Node already has a `supplyData` method" when it tries
+// to tool-wrap a node that already defines supplyData (see n8n NodeTypes.getByNameAndVersion).
+// The pinned local lint plugin (@n8n/eslint-plugin-community-nodes@0.7.0) still demands the
+// property; the version n8n Cloud's scanner uses (0.23.0+) already exempts AI sub-nodes.
+// eslint-disable-next-line @n8n/community-nodes/node-usable-as-tool
 export class IonosCloudChatModel implements INodeType {
-	usableAsTool = true;
-
 	description: INodeTypeDescription = {
 		displayName: 'IONOS Cloud Chat Model',
 		name: 'ionosCloudChatModel',
@@ -23,7 +27,6 @@ export class IonosCloudChatModel implements INodeType {
 		defaults: {
 			name: 'IONOS Cloud Chat Model',
 		},
-		usableAsTool: true,
 		codex: {
 			categories: ['AI'],
 			subcategories: {
@@ -172,13 +175,30 @@ export class IonosCloudChatModel implements INodeType {
 			topP?: number;
 		};
 
-		// @langchain/openai is provided by n8n at runtime via @n8n/n8n-nodes-langchain
+		// @n8n/ai-node-sdk is provided by n8n at runtime and is on the n8n Cloud allowlist
 		// eslint-disable-next-line @n8n/community-nodes/no-restricted-imports
-		const { ChatOpenAI } = require('@langchain/openai') as {
-			ChatOpenAI: new (config: Record<string, unknown>) => unknown;
+		const { supplyModel } = require('@n8n/ai-node-sdk') as {
+			supplyModel: (
+				ctx: ISupplyDataFunctions,
+				modelConfig: {
+					type: 'openai';
+					baseUrl: string;
+					apiKey: string;
+					model: string;
+					temperature?: number;
+					maxTokens?: number;
+					topP?: number;
+					frequencyPenalty?: number;
+					presencePenalty?: number;
+					timeout?: number;
+					defaultHeaders?: Record<string, string>;
+				},
+			) => SupplyData;
 		};
 
-		const chatModel = new ChatOpenAI({
+		return supplyModel(this, {
+			type: 'openai',
+			baseUrl: IONOS_OPENAI_BASE_URL,
 			apiKey: credentials.accessToken as string,
 			model,
 			temperature: options.temperature ?? 0.7,
@@ -187,14 +207,9 @@ export class IonosCloudChatModel implements INodeType {
 			frequencyPenalty: options.frequencyPenalty,
 			presencePenalty: options.presencePenalty,
 			timeout: options.timeout ?? 60000,
-			configuration: {
-				baseURL: IONOS_OPENAI_BASE_URL,
-				defaultHeaders: {
-					'User-Agent': USER_AGENT,
-				},
+			defaultHeaders: {
+				'User-Agent': USER_AGENT,
 			},
 		});
-
-		return { response: chatModel };
 	}
 }

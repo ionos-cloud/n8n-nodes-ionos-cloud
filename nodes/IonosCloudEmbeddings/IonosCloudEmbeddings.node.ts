@@ -6,13 +6,15 @@ import type {
 } from 'n8n-workflow';
 import { USER_AGENT } from '../../utils/userAgent';
 
-declare function require(module: string): unknown;
-
 const IONOS_OPENAI_BASE_URL = 'https://openai.inference.de-txl.ionos.com/v1';
 
+// This is an AI sub-node: it supplies an ai_embedding via supplyData() and must NOT be
+// usableAsTool. n8n throws "Node already has a `supplyData` method" when it tries to
+// tool-wrap a node that already defines supplyData (see n8n NodeTypes.getByNameAndVersion).
+// The pinned local lint plugin (@n8n/eslint-plugin-community-nodes@0.7.0) still demands the
+// property; the version n8n Cloud's scanner uses (0.23.0+) already exempts AI sub-nodes.
+// eslint-disable-next-line @n8n/community-nodes/node-usable-as-tool
 export class IonosCloudEmbeddings implements INodeType {
-	usableAsTool = true;
-
 	description: INodeTypeDescription = {
 		displayName: 'IONOS Cloud Embeddings',
 		name: 'ionosCloudEmbeddings',
@@ -23,7 +25,6 @@ export class IonosCloudEmbeddings implements INodeType {
 		defaults: {
 			name: 'IONOS Cloud Embeddings',
 		},
-		usableAsTool: true,
 		codex: {
 			categories: ['AI'],
 			subcategories: {
@@ -130,33 +131,52 @@ export class IonosCloudEmbeddings implements INodeType {
 	};
 
 	async supplyData(this: ISupplyDataFunctions): Promise<SupplyData> {
-		const credentials = await this.getCredentials('ionosCloudApi');
 		const model = this.getNodeParameter('model', 0) as string;
 		const options = this.getNodeParameter('options', 0, {}) as {
 			batchSize?: number;
 			stripNewLines?: boolean;
 			timeout?: number;
 		};
+		const batchSize = options.batchSize ?? 512;
+		const stripNewLines = options.stripNewLines ?? true;
+		const timeout = options.timeout ?? 60000;
 
-		// @langchain/openai is provided by n8n at runtime via @n8n/n8n-nodes-langchain
-		// eslint-disable-next-line @n8n/community-nodes/no-restricted-imports
-		const { OpenAIEmbeddings } = require('@langchain/openai') as {
-			OpenAIEmbeddings: new (config: Record<string, unknown>) => unknown;
+		const embedBatch = async (texts: string[]): Promise<number[][]> => {
+			const input = stripNewLines ? texts.map((text) => text.replace(/\n/g, ' ')) : texts;
+			const response = (await this.helpers.httpRequestWithAuthentication.call(
+				this,
+				'ionosCloudApi',
+				{
+					method: 'POST',
+					baseURL: IONOS_OPENAI_BASE_URL,
+					url: '/embeddings',
+					body: { model, input },
+					headers: {
+						'User-Agent': USER_AGENT,
+					},
+					json: true,
+					timeout,
+				},
+			)) as { data: Array<{ embedding: number[]; index: number }> };
+
+			return response.data
+				.sort((first, second) => first.index - second.index)
+				.map((item) => item.embedding);
 		};
 
-		const embeddings = new OpenAIEmbeddings({
-			apiKey: credentials.accessToken as string,
-			model,
-			batchSize: options.batchSize ?? 512,
-			stripNewLines: options.stripNewLines ?? true,
-			timeout: options.timeout ?? 60000,
-			configuration: {
-				baseURL: IONOS_OPENAI_BASE_URL,
-				defaultHeaders: {
-					'User-Agent': USER_AGENT,
-				},
+		const embeddings = {
+			async embedDocuments(documents: string[]): Promise<number[][]> {
+				const vectors: number[][] = [];
+				for (let start = 0; start < documents.length; start += batchSize) {
+					vectors.push(...(await embedBatch(documents.slice(start, start + batchSize))));
+				}
+				return vectors;
 			},
-		});
+			async embedQuery(document: string): Promise<number[]> {
+				const [vector] = await embedBatch([document]);
+				return vector;
+			},
+		};
 
 		return { response: embeddings };
 	}
