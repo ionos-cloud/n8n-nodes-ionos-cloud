@@ -34,6 +34,12 @@ const showForServerCreateOrUpdate = {
 	resource: ['server'],
 };
 
+const showForGpuOrCubeServerCreate = {
+	operation: ['create'],
+	resource: ['server'],
+	type: ['GPU', 'CUBE'],
+};
+
 const showOnlyForServerGetMany = {
 	operation: ['getAll'],
 	resource: ['server'],
@@ -199,10 +205,13 @@ export const serverDescriptions: INodeProperties[] = [
 		name: 'cores',
 		type: 'number',
 		required: true,
-		displayOptions: { show: showForServerCreateOrUpdate },
+		displayOptions: {
+			show: showForServerCreateOrUpdate,
+			hide: { type: ['GPU', 'CUBE'] },
+		},
 		default: 1,
 		typeOptions: { minValue: 1 },
-		description: 'The number of processor cores',
+		description: 'The number of processor cores. Not allowed for CUBE and GPU server types, which are determined by the template instead.',
 		routing: {
 			send: {
 				type: 'body',
@@ -215,14 +224,208 @@ export const serverDescriptions: INodeProperties[] = [
 		name: 'ram',
 		type: 'number',
 		required: true,
-		displayOptions: { show: showForServerCreateOrUpdate },
+		displayOptions: {
+			show: showForServerCreateOrUpdate,
+			hide: { type: ['GPU', 'CUBE'] },
+		},
 		default: 1024,
 		typeOptions: { minValue: 256 },
-		description: 'The amount of memory in MB',
+		description: 'The amount of memory in MB. Not allowed for CUBE and GPU server types, which are determined by the template instead.',
 		routing: {
 			send: {
 				type: 'body',
 				property: 'properties.ram',
+			},
+		},
+	},
+	{
+		displayName: 'Server Type',
+		name: 'type',
+		type: 'options',
+		options: [
+			{ name: 'Enterprise', value: 'ENTERPRISE' },
+			{ name: 'CUBE', value: 'CUBE' },
+			{ name: 'VCPU', value: 'VCPU' },
+			{ name: 'GPU', value: 'GPU' },
+		],
+		default: 'ENTERPRISE',
+		displayOptions: { show: showForServerCreateOrUpdate },
+		description: 'The type of server to create',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'properties.type',
+			},
+		},
+	},
+	{
+		displayName: 'Template UUID',
+		name: 'templateUuid',
+		type: 'string',
+		required: true,
+		displayOptions: { show: showForGpuOrCubeServerCreate },
+		default: '',
+		description: 'The UUID of the template used for creating the server. Determines the cores, RAM and (for GPU servers) GPU resources allocated. Required for CUBE and GPU server types.',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'properties.templateUuid',
+			},
+		},
+	},
+	{
+		displayName: 'Volume',
+		name: 'volume',
+		type: 'fixedCollection',
+		default: {},
+		description: 'The boot volume for the server (required for CUBE and GPU server types)',
+		typeOptions: {
+			multipleValues: false,
+		},
+		displayOptions: { show: showForGpuOrCubeServerCreate },
+		options: [
+			{
+				name: 'properties',
+				displayName: 'Volume Properties',
+				values: [
+					{
+						displayName: 'Availability Zone',
+						name: 'availabilityZone',
+						type: 'options',
+						options: [
+							{ name: 'Auto', value: 'AUTO' },
+							{ name: 'Zone 1', value: 'ZONE_1' },
+							{ name: 'Zone 2', value: 'ZONE_2' },
+						],
+						default: 'AUTO',
+						description: 'The availability zone for the boot volume. Not applicable for CUBE servers (tied to the server\'s own availability zone instead).',
+					},
+					{
+						displayName: 'Bus',
+						name: 'bus',
+						type: 'options',
+						options: [
+							{ name: 'VIRTIO', value: 'VIRTIO' },
+							{ name: 'IDE', value: 'IDE' },
+						],
+						default: 'VIRTIO',
+						description: 'The bus type for the boot volume',
+					},
+					{
+						displayName: 'Disk Type',
+						name: 'diskType',
+						type: 'options',
+						options: [{ name: 'DAS', value: 'DAS' }],
+						default: 'DAS',
+						description: 'Hardware type of the boot volume. Only used for CUBE servers (direct-attached NVMe storage); ignored for GPU servers, which are always SSD Premium.',
+					},
+					{
+						displayName: 'Expose Serial',
+						name: 'exposeSerial',
+						type: 'boolean',
+						default: true,
+						description: 'Whether to expose the serial ID of the disk attached to the server. Some operating systems or software solutions require this to work properly.',
+					},
+					{
+						displayName: 'Image',
+						name: 'image',
+						type: 'string',
+						default: '',
+						placeholder: 'ubuntu:latest',
+						description: 'The UUID, name, or alias of the image to boot from (e.g. "ubuntu:latest"). Only IONOS Cloud Linux images are supported for GPU servers.',
+					},
+					{
+						displayName: 'Image Password',
+						name: 'imagePassword',
+						type: 'string',
+						typeOptions: { password: true },
+						default: '',
+						description: 'Initial root/administrator password for the image',
+					},
+					{
+						displayName: 'Licence Type',
+						name: 'licenceType',
+						type: 'options',
+						options: [
+							{ name: 'Linux', value: 'LINUX' },
+							{ name: 'Other', value: 'OTHER' },
+							{ name: 'RHEL', value: 'RHEL' },
+							{ name: 'Unknown', value: 'UNKNOWN' },
+							{ name: 'Windows', value: 'WINDOWS' },
+							{ name: 'Windows 2016', value: 'WINDOWS2016' },
+							{ name: 'Windows 2019', value: 'WINDOWS2019' },
+							{ name: 'Windows 2022', value: 'WINDOWS2022' },
+							{ name: 'Windows 2025', value: 'WINDOWS2025' },
+						],
+						default: 'LINUX',
+						description: 'OS type for the boot volume. Only Linux is supported for GPU servers; CUBE servers support the full list.',
+					},
+					{
+						displayName: 'Name',
+						name: 'name',
+						type: 'string',
+						default: 'system',
+						description: 'The name of the boot volume',
+					},
+					{
+						displayName: 'Require Legacy BIOS',
+						name: 'requireLegacyBios',
+						type: 'boolean',
+						default: false,
+						description: 'Whether the image requires the legacy BIOS for compatibility or specific needs',
+					},
+				],
+			},
+		],
+		routing: {
+			send: {
+				preSend: [
+					async function (this, requestOptions) {
+						const serverType = this.getNodeParameter('type') as string;
+						const volume = this.getNodeParameter('volume') as {
+							properties?: {
+								name?: string;
+								licenceType?: string;
+								bus?: string;
+								diskType?: string;
+								availabilityZone?: string;
+								exposeSerial?: boolean;
+								requireLegacyBios?: boolean;
+								image?: string;
+								imagePassword?: string;
+							};
+						};
+						const volumeProperties = volume?.properties;
+						if (volumeProperties) {
+							const isUuid = volumeProperties.image
+								? /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(volumeProperties.image)
+								: false;
+							requestOptions.body = requestOptions.body ?? {};
+							const body = requestOptions.body as Record<string, unknown>;
+							const entities = (body.entities as Record<string, unknown>) ?? {};
+							entities.volumes = {
+								items: [
+									{
+										properties: {
+											name: volumeProperties.name || undefined,
+											licenceType: volumeProperties.licenceType,
+											bus: volumeProperties.bus,
+											type: serverType === 'CUBE' ? volumeProperties.diskType : undefined,
+											availabilityZone: serverType === 'CUBE' ? undefined : volumeProperties.availabilityZone,
+											exposeSerial: volumeProperties.exposeSerial,
+											requireLegacyBios: volumeProperties.requireLegacyBios,
+											image: isUuid ? volumeProperties.image : undefined,
+											imageAlias: !isUuid ? volumeProperties.image || undefined : undefined,
+											imagePassword: volumeProperties.imagePassword || undefined,
+										},
+									},
+								],
+							};
+							body.entities = entities;
+						}
+						return requestOptions;
+					},
+				],
 			},
 		},
 	},
@@ -321,39 +524,6 @@ export const serverDescriptions: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'properties.placementGroupId',
-						value: '={{ $value || undefined }}',
-					},
-				},
-			},
-			{
-				displayName: 'Server Type',
-				name: 'type',
-				type: 'options',
-				options: [
-					{ name: 'Enterprise', value: 'ENTERPRISE' },
-					{ name: 'CUBE', value: 'CUBE' },
-					{ name: 'VCPU', value: 'VCPU' },
-					{ name: 'GPU', value: 'GPU' },
-				],
-				default: 'ENTERPRISE',
-				description: 'The type of server to create',
-				routing: {
-					send: {
-						type: 'body',
-						property: 'properties.type',
-					},
-				},
-			},
-			{
-				displayName: 'Template UUID',
-				name: 'templateUuid',
-				type: 'string',
-				default: '',
-				description: 'UUID of the template to use for server creation',
-				routing: {
-					send: {
-						type: 'body',
-						property: 'properties.templateUuid',
 						value: '={{ $value || undefined }}',
 					},
 				},
