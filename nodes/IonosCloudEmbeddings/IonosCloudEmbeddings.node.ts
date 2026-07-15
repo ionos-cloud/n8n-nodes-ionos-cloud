@@ -4,6 +4,7 @@ import type {
 	ISupplyDataFunctions,
 	SupplyData,
 } from 'n8n-workflow';
+import { NodeOperationError } from 'n8n-workflow';
 import { USER_AGENT } from '../../utils/userAgent';
 
 const IONOS_OPENAI_BASE_URL = 'https://openai.inference.de-txl.ionos.com/v1';
@@ -109,6 +110,7 @@ export class IonosCloudEmbeddings implements INodeType {
 						name: 'batchSize',
 						type: 'number',
 						default: 512,
+						typeOptions: { minValue: 1 },
 						description: 'Maximum number of texts to embed in a single request',
 					},
 					{
@@ -137,9 +139,10 @@ export class IonosCloudEmbeddings implements INodeType {
 			stripNewLines?: boolean;
 			timeout?: number;
 		};
-		const batchSize = options.batchSize ?? 512;
+		const batchSize = Math.max(1, Math.floor(options.batchSize ?? 512));
 		const stripNewLines = options.stripNewLines ?? true;
 		const timeout = options.timeout ?? 60000;
+		const node = this.getNode();
 
 		const embedBatch = async (texts: string[]): Promise<number[][]> => {
 			const input = stripNewLines ? texts.map((text) => text.replace(/\n/g, ' ')) : texts;
@@ -174,6 +177,9 @@ export class IonosCloudEmbeddings implements INodeType {
 			},
 			async embedQuery(document: string): Promise<number[]> {
 				const [vector] = await embedBatch([document]);
+				if (!vector) {
+					throw new NodeOperationError(node, 'IONOS embeddings API returned no embedding vector');
+				}
 				return vector;
 			},
 		};
