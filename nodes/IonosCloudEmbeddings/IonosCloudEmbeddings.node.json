@@ -1,8 +1,5 @@
 {
 	"categories": ["AI"],
-	"subcategories": {
-		"AI": ["Embeddings"]
-	},
 	"resources": {
 		"credentialDocumentation": [
 			{
