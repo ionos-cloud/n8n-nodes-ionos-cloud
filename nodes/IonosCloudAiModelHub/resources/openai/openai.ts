@@ -147,7 +147,8 @@ export const openaiDescriptions: INodeProperties[] = [
 		},
 		typeOptions: modelsLoadOptions,
 		default: '',
-		description: 'ID of the model to use for chat completions. The list is fetched live from the IONOS API.',
+		description:
+			'ID of the model to use for chat completions. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
 				type: 'body',
@@ -327,7 +328,8 @@ export const openaiDescriptions: INodeProperties[] = [
 				name: 'stop',
 				type: 'string',
 				default: '',
-				description: 'Up to 4 sequences where the API will stop generating tokens (comma-separated)',
+				description:
+					'Up to 4 sequences where the API will stop generating tokens (comma-separated)',
 				routing: {
 					send: {
 						type: 'body',
@@ -430,7 +432,8 @@ export const openaiDescriptions: INodeProperties[] = [
 		},
 		typeOptions: modelsLoadOptions,
 		default: '',
-		description: 'ID of the model to use for text completions. The list is fetched live from the IONOS API.',
+		description:
+			'ID of the model to use for text completions. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
 				type: 'body',
@@ -667,7 +670,8 @@ export const openaiDescriptions: INodeProperties[] = [
 		},
 		typeOptions: modelsLoadOptions,
 		default: '',
-		description: 'ID of the image generation model to use. The list is fetched live from the IONOS API.',
+		description:
+			'ID of the image generation model to use. The list is fetched live from the IONOS API.',
 		routing: {
 			send: {
 				type: 'body',

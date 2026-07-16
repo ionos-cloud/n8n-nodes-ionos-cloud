@@ -344,7 +344,7 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 			},
 		],
 	},
-	// Forwarding Rule Properties  
+	// Forwarding Rule Properties
 	{
 		displayName: 'Forwarding Rule Properties',
 		name: 'forwardingRuleProperties',
@@ -403,28 +403,32 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 								name: 'clientTimeout',
 								type: 'number',
 								default: 50000,
-								description: 'The maximum time in milliseconds to wait for the client to acknowledge or send data (default: 50000)',
+								description:
+									'The maximum time in milliseconds to wait for the client to acknowledge or send data (default: 50000)',
 							},
 							{
 								displayName: 'Connect Timeout',
 								name: 'connectTimeout',
 								type: 'number',
 								default: 5000,
-								description: 'The maximum time in milliseconds to wait for a connection attempt to a target to succeed (default: 5000)',
+								description:
+									'The maximum time in milliseconds to wait for a connection attempt to a target to succeed (default: 5000)',
 							},
 							{
 								displayName: 'Target Timeout',
 								name: 'targetTimeout',
 								type: 'number',
 								default: 50000,
-								description: 'The maximum time in milliseconds that the target can take to respond (default: 50000)',
+								description:
+									'The maximum time in milliseconds that the target can take to respond (default: 50000)',
 							},
 							{
 								displayName: 'Retries',
 								name: 'retries',
 								type: 'number',
 								default: 3,
-								description: 'The number of retries to perform if a health check fails (default: 3)',
+								description:
+									'The number of retries to perform if a health check fails (default: 3)',
 							},
 						],
 					},
@@ -435,7 +439,9 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 						property: 'properties.healthCheck',
 						preSend: [
 							async function (this, requestOptions) {
-								const healthCheck = this.getNodeParameter('forwardingRuleProperties.healthCheck') as Record<string, unknown>;
+								const healthCheck = this.getNodeParameter(
+									'forwardingRuleProperties.healthCheck',
+								) as Record<string, unknown>;
 								if (healthCheck?.config) {
 									requestOptions.body.properties.healthCheck = healthCheck.config;
 								}
@@ -530,59 +536,59 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 						displayName: 'Target',
 						values: [
 							{
-						displayName: 'Health Check Enabled',
-						name: 'healthCheckEnabled',
-						type: 'boolean',
-						default: true,
-						description: 'Whether health check is enabled for this target',
+								displayName: 'Health Check Enabled',
+								name: 'healthCheckEnabled',
+								type: 'boolean',
+								default: true,
+								description: 'Whether health check is enabled for this target',
 							},
 							{
-						displayName: 'Health Check Interval (Ms)',
-						name: 'checkInterval',
-						type: 'number',
-						default: 2000,
-						description: 'The interval in milliseconds between health checks for this target',
+								displayName: 'Health Check Interval (Ms)',
+								name: 'checkInterval',
+								type: 'number',
+								default: 2000,
+								description: 'The interval in milliseconds between health checks for this target',
 							},
 							{
-						displayName: 'IP',
-						name: 'ip',
-						type: 'string',
-						default: '',
-						description: 'The IP address of the target',
+								displayName: 'IP',
+								name: 'ip',
+								type: 'string',
+								default: '',
+								description: 'The IP address of the target',
 							},
 							{
-						displayName: 'Maintenance Mode',
-						name: 'maintenanceMode',
-						type: 'boolean',
-						default: false,
-						description: 'Whether the target is in maintenance mode',
+								displayName: 'Maintenance Mode',
+								name: 'maintenanceMode',
+								type: 'boolean',
+								default: false,
+								description: 'Whether the target is in maintenance mode',
 							},
 							{
-						displayName: 'Port',
-						name: 'port',
-						type: 'number',
-						default: 80,
-						description: 'The port of the target',
+								displayName: 'Port',
+								name: 'port',
+								type: 'number',
+								default: 80,
+								description: 'The port of the target',
 							},
 							{
-						displayName: 'Proxy Protocol',
-						name: 'proxyProtocol',
-						type: 'options',
-						options: [
-							{ name: 'None', value: 'none' },
-							{ name: 'V1', value: 'v1' },
-							{ name: 'V2', value: 'v2' },
-							{ name: 'V2ssl', value: 'v2ssl' },
-						],
-						default: 'none',
-						description: 'The proxy protocol version for the target',
+								displayName: 'Proxy Protocol',
+								name: 'proxyProtocol',
+								type: 'options',
+								options: [
+									{ name: 'None', value: 'none' },
+									{ name: 'V1', value: 'v1' },
+									{ name: 'V2', value: 'v2' },
+									{ name: 'V2ssl', value: 'v2ssl' },
+								],
+								default: 'none',
+								description: 'The proxy protocol version for the target',
 							},
 							{
-						displayName: 'Weight',
-						name: 'weight',
-						type: 'number',
-						default: 1,
-						description: 'The weight of the target (for weighted load balancing)',
+								displayName: 'Weight',
+								name: 'weight',
+								type: 'number',
+								default: 1,
+								description: 'The weight of the target (for weighted load balancing)',
 							},
 						],
 					},
@@ -593,24 +599,29 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 						property: 'properties.targets',
 						preSend: [
 							async function (this, requestOptions) {
-								const targets = this.getNodeParameter('forwardingRuleProperties.targets') as Record<string, unknown>;
+								const targets = this.getNodeParameter('forwardingRuleProperties.targets') as Record<
+									string,
+									unknown
+								>;
 								if (targets?.target) {
-									const formattedTargets = (targets.target as Array<Record<string, unknown>>).map((t) => {
-										const target: Record<string, unknown> = {
-											ip: t.ip,
-											port: t.port,
-											weight: t.weight,
-										};
-										if (t.proxyProtocol && t.proxyProtocol !== 'none') {
-											target.proxyProtocol = t.proxyProtocol;
-										}
-										target.healthCheck = {
-											check: t.healthCheckEnabled ?? true,
-											checkInterval: t.checkInterval ?? 2000,
-											maintenance: t.maintenanceMode ?? false,
-										};
-										return target;
-									});
+									const formattedTargets = (targets.target as Array<Record<string, unknown>>).map(
+										(t) => {
+											const target: Record<string, unknown> = {
+												ip: t.ip,
+												port: t.port,
+												weight: t.weight,
+											};
+											if (t.proxyProtocol && t.proxyProtocol !== 'none') {
+												target.proxyProtocol = t.proxyProtocol;
+											}
+											target.healthCheck = {
+												check: t.healthCheckEnabled ?? true,
+												checkInterval: t.checkInterval ?? 2000,
+												maintenance: t.maintenanceMode ?? false,
+											};
+											return target;
+										},
+									);
 									requestOptions.body.properties.targets = formattedTargets;
 								}
 								return requestOptions;

@@ -211,7 +211,8 @@ export const serverDescriptions: INodeProperties[] = [
 		},
 		default: 1,
 		typeOptions: { minValue: 1 },
-		description: 'The number of processor cores. Not allowed for CUBE and GPU server types, which are determined by the template instead.',
+		description:
+			'The number of processor cores. Not allowed for CUBE and GPU server types, which are determined by the template instead.',
 		routing: {
 			send: {
 				type: 'body',
@@ -230,7 +231,8 @@ export const serverDescriptions: INodeProperties[] = [
 		},
 		default: 1024,
 		typeOptions: { minValue: 256 },
-		description: 'The amount of memory in MB. Not allowed for CUBE and GPU server types, which are determined by the template instead.',
+		description:
+			'The amount of memory in MB. Not allowed for CUBE and GPU server types, which are determined by the template instead.',
 		routing: {
 			send: {
 				type: 'body',
@@ -265,7 +267,8 @@ export const serverDescriptions: INodeProperties[] = [
 		required: true,
 		displayOptions: { show: showForGpuOrCubeServerCreate },
 		default: '',
-		description: 'The UUID of the template used for creating the server. Determines the cores, RAM and (for GPU servers) GPU resources allocated. Required for CUBE and GPU server types.',
+		description:
+			'The UUID of the template used for creating the server. Determines the cores, RAM and (for GPU servers) GPU resources allocated. Required for CUBE and GPU server types.',
 		routing: {
 			send: {
 				type: 'body',
@@ -298,7 +301,8 @@ export const serverDescriptions: INodeProperties[] = [
 							{ name: 'Zone 2', value: 'ZONE_2' },
 						],
 						default: 'AUTO',
-						description: 'The availability zone for the boot volume. Not applicable for CUBE servers (tied to the server\'s own availability zone instead).',
+						description:
+							"The availability zone for the boot volume. Not applicable for CUBE servers (tied to the server's own availability zone instead).",
 					},
 					{
 						displayName: 'Bus',
@@ -317,14 +321,16 @@ export const serverDescriptions: INodeProperties[] = [
 						type: 'options',
 						options: [{ name: 'DAS', value: 'DAS' }],
 						default: 'DAS',
-						description: 'Hardware type of the boot volume. Only used for CUBE servers (direct-attached NVMe storage); ignored for GPU servers, which are always SSD Premium.',
+						description:
+							'Hardware type of the boot volume. Only used for CUBE servers (direct-attached NVMe storage); ignored for GPU servers, which are always SSD Premium.',
 					},
 					{
 						displayName: 'Expose Serial',
 						name: 'exposeSerial',
 						type: 'boolean',
 						default: true,
-						description: 'Whether to expose the serial ID of the disk attached to the server. Some operating systems or software solutions require this to work properly.',
+						description:
+							'Whether to expose the serial ID of the disk attached to the server. Some operating systems or software solutions require this to work properly.',
 					},
 					{
 						displayName: 'Image',
@@ -332,7 +338,8 @@ export const serverDescriptions: INodeProperties[] = [
 						type: 'string',
 						default: '',
 						placeholder: 'ubuntu:latest',
-						description: 'The UUID, name, or alias of the image to boot from (e.g. "ubuntu:latest"). Only IONOS Cloud Linux images are supported for GPU servers.',
+						description:
+							'The UUID, name, or alias of the image to boot from (e.g. "ubuntu:latest"). Only IONOS Cloud Linux images are supported for GPU servers.',
 					},
 					{
 						displayName: 'Image Password',
@@ -358,7 +365,8 @@ export const serverDescriptions: INodeProperties[] = [
 							{ name: 'Windows 2025', value: 'WINDOWS2025' },
 						],
 						default: 'LINUX',
-						description: 'OS type for the boot volume. Only Linux is supported for GPU servers; CUBE servers support the full list.',
+						description:
+							'OS type for the boot volume. Only Linux is supported for GPU servers; CUBE servers support the full list.',
 					},
 					{
 						displayName: 'Name',
@@ -372,7 +380,8 @@ export const serverDescriptions: INodeProperties[] = [
 						name: 'requireLegacyBios',
 						type: 'boolean',
 						default: false,
-						description: 'Whether the image requires the legacy BIOS for compatibility or specific needs',
+						description:
+							'Whether the image requires the legacy BIOS for compatibility or specific needs',
 					},
 				],
 			},
@@ -398,7 +407,9 @@ export const serverDescriptions: INodeProperties[] = [
 						const volumeProperties = volume?.properties;
 						if (volumeProperties) {
 							const isUuid = volumeProperties.image
-								? /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(volumeProperties.image)
+								? /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+										volumeProperties.image,
+									)
 								: false;
 							requestOptions.body = requestOptions.body ?? {};
 							const body = requestOptions.body as Record<string, unknown>;
@@ -411,7 +422,8 @@ export const serverDescriptions: INodeProperties[] = [
 											licenceType: volumeProperties.licenceType,
 											bus: volumeProperties.bus,
 											type: serverType === 'CUBE' ? volumeProperties.diskType : undefined,
-											availabilityZone: serverType === 'CUBE' ? undefined : volumeProperties.availabilityZone,
+											availabilityZone:
+												serverType === 'CUBE' ? undefined : volumeProperties.availabilityZone,
 											exposeSerial: volumeProperties.exposeSerial,
 											requireLegacyBios: volumeProperties.requireLegacyBios,
 											image: isUuid ? volumeProperties.image : undefined,
@@ -506,7 +518,8 @@ export const serverDescriptions: INodeProperties[] = [
 				name: 'nicMultiQueue',
 				type: 'boolean',
 				default: false,
-				description: 'Whether to activate Multi Queue feature on all NICs for improved network performance',
+				description:
+					'Whether to activate Multi Queue feature on all NICs for improved network performance',
 				routing: {
 					send: {
 						type: 'body',

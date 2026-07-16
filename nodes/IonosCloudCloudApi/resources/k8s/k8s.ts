@@ -107,7 +107,8 @@ export const k8sDescriptions: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				placeholder: '192.168.1.0/24, 10.0.0.0/16',
-				description: 'Comma-separated list of IP addresses or CIDR blocks allowed to access the API server',
+				description:
+					'Comma-separated list of IP addresses or CIDR blocks allowed to access the API server',
 				routing: {
 					send: {
 						type: 'body',
