@@ -79,7 +79,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Certificate Manager** | 3         | 15         | SSL/TLS certificate lifecycle management with ACME support                    |
 | **Cloud DNS**           | 7         | 28         | DNS zones, records (15 types), DNSSEC, zone transfers                         |
 | **CDN**                 | 2         | 7          | Content delivery with custom routing and geo-restrictions                     |
-| **AI Model Hub**        | 2         | 7          | Foundation model inference and OpenAI-compatible API                         |
+| **AI Model Hub**        | 2         | 7          | Foundation model inference and OpenAI-compatible API                          |
 | **Chat Model** ⚡       | —         | supplyData | LangChain chat model sub-node for n8n AI Agent                                |
 | **Embeddings** ⚡       | —         | supplyData | LangChain embeddings sub-node for n8n AI Agent                                |
 
