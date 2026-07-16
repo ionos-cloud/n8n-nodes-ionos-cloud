@@ -1,0 +1,270 @@
+{
+  "name": "IONOS RAG – Question and Answer Chain with Chat Model & Embeddings",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -656,
+        -240
+      ],
+      "id": "chat-trigger-01",
+      "name": "When chat message received",
+      "webhookId": "ionos-qa-demo"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudChatModel",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        128
+      ],
+      "id": "chat-model-01",
+      "name": "IONOS Cloud Chat Model",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "",
+          "name": "IONOS Cloud API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainRetrievalQa",
+      "typeVersion": 1.7,
+      "position": [
+        -336,
+        -240
+      ],
+      "id": "qa-chain-01",
+      "name": "Question and Answer Chain"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -16
+      ],
+      "id": "retriever-01",
+      "name": "Vector Store Retriever",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "memoryKey": {
+          "__rl": true,
+          "value": "knowledge",
+          "mode": "list",
+          "cachedResultName": "knowledge"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        160
+      ],
+      "id": "vectorstore-retrieve-01",
+      "name": "Simple Vector Store1"
+    },
+    {
+      "parameters": {
+        "model": "BAAI/bge-large-en-v1.5",
+        "options": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudEmbeddings",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        448
+      ],
+      "id": "embeddings-01",
+      "name": "IONOS Cloud Embeddings1",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "",
+          "name": "IONOS Cloud API"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1152,
+        -80
+      ],
+      "id": "manual-trigger-01",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -528,
+        112
+      ],
+      "id": "data-loader-01",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "knowledge",
+          "mode": "list",
+          "cachedResultName": "knowledge"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -784,
+        -80
+      ],
+      "id": "vectorstore-insert-01",
+      "name": "INSERT DOCUMENTS"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign-demo-text",
+              "name": "text",
+              "value": "The internal codename for our Q3 launch is Project Marmot, and its budget is €47,000.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -960,
+        -80
+      ],
+      "id": "set-demo-text-01",
+      "name": "DEMO TEXT TO RETRIEVE"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IONOS Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Retriever": {
+      "ai_retriever": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "ai_retriever",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store1": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Retriever",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IONOS Cloud Embeddings1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "INSERT DOCUMENTS",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "DEMO TEXT TO RETRIEVE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "INSERT DOCUMENTS",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DEMO TEXT TO RETRIEVE": {
+      "main": [
+        [
+          {
+            "node": "INSERT DOCUMENTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0
+}
