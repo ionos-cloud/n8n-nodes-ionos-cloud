@@ -1,14 +1,18 @@
 name: Publish
 
+# A version tag is the only trigger: it is the one ref where the tag can be
+# checked against package.json before publishing. To retry a failed publish,
+# re-run this workflow's jobs so it stays bound to the same tag.
 on:
   push:
     tags:
+      # Actions filter patterns are globs where `+` matches one or more of the
+      # preceding character and `.` is literal, so these match 2.0.1 / v2.0.1.
       # Tags are unprefixed (1.0.8, 2.0.0, 2.0.1) and .release-it.json pins
-      # tagName to ${version}. The v-prefixed pattern is tolerated so a
+      # tagName to ${version}; the v-prefixed pattern is tolerated so a
       # hand-cut `v2.0.2` publishes instead of silently doing nothing.
       - '[0-9]+.[0-9]+.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+'
-  workflow_dispatch:
 
 jobs:
   publish:
@@ -32,7 +36,6 @@ jobs:
         run: npm ci
 
       - name: Verify tag matches package.json version
-        if: github.event_name == 'push'
         run: |
           pkg_version="$(node -p "require('./package.json').version")"
           tag_version="${GITHUB_REF_NAME#v}"
