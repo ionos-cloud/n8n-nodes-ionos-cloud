@@ -1,0 +1,61 @@
+name: Publish
+
+# A version tag is the only trigger: it is the one ref where the tag can be
+# checked against package.json before publishing. To retry a failed publish,
+# re-run this workflow's jobs so it stays bound to the same tag.
+on:
+  push:
+    tags:
+      # Actions filter patterns are globs where `+` matches one or more of the
+      # preceding character and `.` is literal, so these match 2.0.1 / v2.0.1.
+      # Tags are unprefixed (1.0.8, 2.0.0, 2.0.1) and .release-it.json pins
+      # tagName to ${version}; the v-prefixed pattern is tolerated so a
+      # hand-cut `v2.0.2` publishes instead of silently doing nothing.
+      - '[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm-release
+
+    permissions:
+      contents: read
+      id-token: write # required for npm provenance attestation
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Use Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify tag matches package.json version
+        run: |
+          pkg_version="$(node -p "require('./package.json').version")"
+          tag_version="${GITHUB_REF_NAME#v}"
+          if [ "$pkg_version" != "$tag_version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $pkg_version"
+            exit 1
+          fi
+
+      - name: Audit dependencies
+        run: npm audit --omit=dev --audit-level=critical
+
+      - name: Publish to npm
+        # `n8n-node release` detects GITHUB_ACTIONS and runs lint -> build ->
+        # npm publish with NPM_CONFIG_PROVENANCE=true (needs id-token: write).
+        # The conditional keeps this file working unchanged if we later switch
+        # to npm trusted publishing (which additionally needs npm >= 11.5.1).
+        run: |
+          if [ -n "$NPM_TOKEN" ]; then
+            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          fi
+          npm run release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

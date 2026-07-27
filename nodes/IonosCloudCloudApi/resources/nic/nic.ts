@@ -161,7 +161,9 @@ export const nicDescriptions: INodeProperties[] = [
 							async function (this, requestOptions) {
 								const ips = this.getNodeParameter('additionalFields.ips') as string;
 								if (ips) {
-									requestOptions.body.properties.ips = ips
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).ips = ips
 										.split(',')
 										.map((ip: string) => ip.trim());
 								}

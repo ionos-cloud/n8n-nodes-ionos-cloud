@@ -454,6 +454,23 @@ To contribute code:
 5. Push to the branch (`git push origin feature/amazing-feature`)
 6. Open a Pull Request
 
+### Releasing
+
+Releases are published to npm by GitHub Actions so that each package carries an
+[npm provenance](https://docs.npmjs.com/generating-provenance-statements) attestation, which lets
+anyone verify the package was built from this repository at a specific commit.
+
+A maintainer starts a release locally:
+
+```bash
+npm run release
+```
+
+This lints, builds, prompts for the version bump, updates the changelog, then commits, tags, and
+pushes. It does **not** publish to npm. Pushing the version tag (unprefixed, e.g. `2.0.1`) triggers
+the [Publish workflow](.github/workflows/publish.yml), which builds the package again on a clean
+runner and publishes it with provenance.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

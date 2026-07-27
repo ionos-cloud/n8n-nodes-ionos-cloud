@@ -248,7 +248,9 @@ export const nodePoolDescriptions: INodeProperties[] = [
 											annotationsObj[key] = value;
 										}
 									});
-									requestOptions.body.properties.annotations = annotationsObj;
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).annotations = annotationsObj;
 								}
 								return requestOptions;
 							},
@@ -338,7 +340,9 @@ export const nodePoolDescriptions: INodeProperties[] = [
 											labelsObj[key] = value;
 										}
 									});
-									requestOptions.body.properties.labels = labelsObj;
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).labels = labelsObj;
 								}
 								return requestOptions;
 							},
@@ -361,7 +365,9 @@ export const nodePoolDescriptions: INodeProperties[] = [
 							async function (this, requestOptions) {
 								const lans = this.getNodeParameter('additionalFields.lans') as string;
 								if (lans) {
-									requestOptions.body.properties.lans = lans
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).lans = lans
 										.split(',')
 										.map((id: string) => ({ id: parseInt(id.trim(), 10) }));
 								}

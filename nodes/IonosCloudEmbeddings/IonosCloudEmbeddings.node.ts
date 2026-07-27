@@ -1,10 +1,11 @@
-import type {
-	INodeType,
-	INodeTypeDescription,
-	ISupplyDataFunctions,
-	SupplyData,
+import {
+	NodeConnectionTypes,
+	NodeOperationError,
+	type INodeType,
+	type INodeTypeDescription,
+	type ISupplyDataFunctions,
+	type SupplyData,
 } from 'n8n-workflow';
-import { NodeOperationError } from 'n8n-workflow';
 import { USER_AGENT } from '../../utils/userAgent';
 
 const IONOS_OPENAI_BASE_URL = 'https://openai.inference.de-txl.ionos.com/v1';
@@ -12,9 +13,6 @@ const IONOS_OPENAI_BASE_URL = 'https://openai.inference.de-txl.ionos.com/v1';
 // This is an AI sub-node: it supplies an ai_embedding via supplyData() and must NOT be
 // usableAsTool. n8n throws "Node already has a `supplyData` method" when it tries to
 // tool-wrap a node that already defines supplyData (see n8n NodeTypes.getByNameAndVersion).
-// The pinned local lint plugin (@n8n/eslint-plugin-community-nodes@0.7.0) still demands the
-// property; the version n8n Cloud's scanner uses (0.23.0+) already exempts AI sub-nodes.
-// eslint-disable-next-line @n8n/community-nodes/node-usable-as-tool
 export class IonosCloudEmbeddings implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'IONOS Cloud Embeddings',
@@ -23,6 +21,7 @@ export class IonosCloudEmbeddings implements INodeType {
 		group: ['transform'],
 		version: 1,
 		description: 'Use IONOS Cloud AI Model Hub to generate text embeddings',
+		subtitle: '={{$parameter["model"]}}',
 		defaults: {
 			name: 'IONOS Cloud Embeddings',
 		},
@@ -40,7 +39,7 @@ export class IonosCloudEmbeddings implements INodeType {
 			},
 		},
 		inputs: [],
-		outputs: ['ai_embedding'],
+		outputs: [NodeConnectionTypes.AiEmbedding],
 		outputNames: ['Embeddings'],
 		credentials: [
 			{

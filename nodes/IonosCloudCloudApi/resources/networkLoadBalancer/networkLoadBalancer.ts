@@ -443,7 +443,9 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 									'forwardingRuleProperties.healthCheck',
 								) as Record<string, unknown>;
 								if (healthCheck?.config) {
-									requestOptions.body.properties.healthCheck = healthCheck.config;
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).healthCheck = healthCheck.config;
 								}
 								return requestOptions;
 							},
@@ -622,7 +624,9 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 											return target;
 										},
 									);
-									requestOptions.body.properties.targets = formattedTargets;
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).targets = formattedTargets;
 								}
 								return requestOptions;
 							},
