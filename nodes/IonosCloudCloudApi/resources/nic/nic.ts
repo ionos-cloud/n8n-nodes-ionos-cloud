@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { requestBodyProperties } from '../../../../utils/requestBody';
 
 const showForNicId = {
 	operation: ['get', 'update', 'delete'],
@@ -162,7 +161,9 @@ export const nicDescriptions: INodeProperties[] = [
 							async function (this, requestOptions) {
 								const ips = this.getNodeParameter('additionalFields.ips') as string;
 								if (ips) {
-									requestBodyProperties(requestOptions).ips = ips
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).ips = ips
 										.split(',')
 										.map((ip: string) => ip.trim());
 								}

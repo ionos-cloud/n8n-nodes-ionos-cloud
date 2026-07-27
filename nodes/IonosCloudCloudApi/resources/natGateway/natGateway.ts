@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { requestBodyProperties } from '../../../../utils/requestBody';
 
 const showForNatGatewayCreateOrUpdate = {
 	operation: ['create', 'update'],
@@ -171,7 +170,9 @@ export const natGatewayDescriptions: INodeProperties[] = [
 					async function (this, requestOptions) {
 						const ips = this.getNodeParameter('publicIps') as string;
 						if (ips) {
-							requestBodyProperties(requestOptions).publicIps = ips
+							const body = requestOptions.body as Record<string, unknown>;
+							if (!body.properties) body.properties = {};
+							(body.properties as Record<string, unknown>).publicIps = ips
 								.split(',')
 								.map((ip: string) => ip.trim());
 						}
@@ -196,7 +197,9 @@ export const natGatewayDescriptions: INodeProperties[] = [
 					async function (this, requestOptions) {
 						const lans = this.getNodeParameter('lans') as string;
 						if (lans) {
-							requestBodyProperties(requestOptions).lans = lans
+							const body = requestOptions.body as Record<string, unknown>;
+							if (!body.properties) body.properties = {};
+							(body.properties as Record<string, unknown>).lans = lans
 								.split(',')
 								.map((id: string) => ({ id: parseInt(id.trim(), 10) }));
 						}
@@ -425,7 +428,9 @@ export const natGatewayDescriptions: INodeProperties[] = [
 									'ruleProperties.targetPortRange',
 								) as Record<string, unknown>;
 								if (targetPortRange?.range) {
-									requestBodyProperties(requestOptions).targetPortRange = {
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).targetPortRange = {
 										start: (targetPortRange.range as Record<string, unknown>).start,
 										end: (targetPortRange.range as Record<string, unknown>).end,
 									};

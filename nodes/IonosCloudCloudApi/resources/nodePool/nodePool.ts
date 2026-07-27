@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-import { requestBodyProperties } from '../../../../utils/requestBody';
 
 const showForNodePoolCreateOrUpdate = {
 	operation: ['create', 'update'],
@@ -249,7 +248,9 @@ export const nodePoolDescriptions: INodeProperties[] = [
 											annotationsObj[key] = value;
 										}
 									});
-									requestBodyProperties(requestOptions).annotations = annotationsObj;
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).annotations = annotationsObj;
 								}
 								return requestOptions;
 							},
@@ -339,7 +340,9 @@ export const nodePoolDescriptions: INodeProperties[] = [
 											labelsObj[key] = value;
 										}
 									});
-									requestBodyProperties(requestOptions).labels = labelsObj;
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).labels = labelsObj;
 								}
 								return requestOptions;
 							},
@@ -362,7 +365,9 @@ export const nodePoolDescriptions: INodeProperties[] = [
 							async function (this, requestOptions) {
 								const lans = this.getNodeParameter('additionalFields.lans') as string;
 								if (lans) {
-									requestBodyProperties(requestOptions).lans = lans
+									const body = requestOptions.body as Record<string, unknown>;
+									if (!body.properties) body.properties = {};
+									(body.properties as Record<string, unknown>).lans = lans
 										.split(',')
 										.map((id: string) => ({ id: parseInt(id.trim(), 10) }));
 								}
