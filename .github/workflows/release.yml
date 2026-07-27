@@ -31,10 +31,7 @@ jobs:
       - name: Audit dependencies
         run: npm audit --omit=dev --audit-level=critical
 
-      - name: Build
-        run: npm run build
-
       - name: Publish to npm
-        run: npm publish --provenance
+        run: npm run release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
