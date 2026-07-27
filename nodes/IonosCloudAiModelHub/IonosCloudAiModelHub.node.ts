@@ -1,4 +1,4 @@
-import type { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
 import { includeResponseHeadersProperty } from '../../utils/responseHeaders';
 import { USER_AGENT } from '../../utils/userAgent';
 
@@ -19,8 +19,8 @@ export class IonosCloudAiModelHub implements INodeType {
 		defaults: {
 			name: 'IONOS Cloud AI Model Hub',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				name: 'ionosCloudApi',

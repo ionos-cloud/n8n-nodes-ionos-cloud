@@ -1,4 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { requestBodyProperties } from '../../../../utils/requestBody';
 
 const showForNatGatewayCreateOrUpdate = {
 	operation: ['create', 'update'],
@@ -170,7 +171,7 @@ export const natGatewayDescriptions: INodeProperties[] = [
 					async function (this, requestOptions) {
 						const ips = this.getNodeParameter('publicIps') as string;
 						if (ips) {
-							requestOptions.body.properties.publicIps = ips
+							requestBodyProperties(requestOptions).publicIps = ips
 								.split(',')
 								.map((ip: string) => ip.trim());
 						}
@@ -195,7 +196,7 @@ export const natGatewayDescriptions: INodeProperties[] = [
 					async function (this, requestOptions) {
 						const lans = this.getNodeParameter('lans') as string;
 						if (lans) {
-							requestOptions.body.properties.lans = lans
+							requestBodyProperties(requestOptions).lans = lans
 								.split(',')
 								.map((id: string) => ({ id: parseInt(id.trim(), 10) }));
 						}
@@ -424,7 +425,7 @@ export const natGatewayDescriptions: INodeProperties[] = [
 									'ruleProperties.targetPortRange',
 								) as Record<string, unknown>;
 								if (targetPortRange?.range) {
-									requestOptions.body.properties.targetPortRange = {
+									requestBodyProperties(requestOptions).targetPortRange = {
 										start: (targetPortRange.range as Record<string, unknown>).start,
 										end: (targetPortRange.range as Record<string, unknown>).end,
 									};

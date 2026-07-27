@@ -1,8 +1,9 @@
-import type {
-	INodeType,
-	INodeTypeDescription,
-	ISupplyDataFunctions,
-	SupplyData,
+import {
+	NodeConnectionTypes,
+	type INodeType,
+	type INodeTypeDescription,
+	type ISupplyDataFunctions,
+	type SupplyData,
 } from 'n8n-workflow';
 import { USER_AGENT } from '../../utils/userAgent';
 
@@ -13,9 +14,6 @@ const IONOS_OPENAI_BASE_URL = 'https://openai.inference.de-txl.ionos.com/v1';
 // This is an AI sub-node: it supplies an ai_languageModel via supplyData() and must
 // NOT be usableAsTool. n8n throws "Node already has a `supplyData` method" when it tries
 // to tool-wrap a node that already defines supplyData (see n8n NodeTypes.getByNameAndVersion).
-// The pinned local lint plugin (@n8n/eslint-plugin-community-nodes@0.7.0) still demands the
-// property; the version n8n Cloud's scanner uses (0.23.0+) already exempts AI sub-nodes.
-// eslint-disable-next-line @n8n/community-nodes/node-usable-as-tool
 export class IonosCloudChatModel implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'IONOS Cloud Chat Model',
@@ -24,6 +22,7 @@ export class IonosCloudChatModel implements INodeType {
 		group: ['transform'],
 		version: 1,
 		description: 'Use IONOS Cloud AI Model Hub as a chat language model',
+		subtitle: '={{$parameter["model"]}}',
 		defaults: {
 			name: 'IONOS Cloud Chat Model',
 		},
@@ -41,7 +40,7 @@ export class IonosCloudChatModel implements INodeType {
 			},
 		},
 		inputs: [],
-		outputs: ['ai_languageModel'],
+		outputs: [NodeConnectionTypes.AiLanguageModel],
 		outputNames: ['Model'],
 		credentials: [
 			{
@@ -175,7 +174,6 @@ export class IonosCloudChatModel implements INodeType {
 		};
 
 		// @n8n/ai-node-sdk is provided by n8n at runtime and is on the n8n Cloud allowlist
-		// eslint-disable-next-line @n8n/community-nodes/no-restricted-imports
 		const { supplyModel } = require('@n8n/ai-node-sdk') as {
 			supplyModel: (
 				ctx: ISupplyDataFunctions,

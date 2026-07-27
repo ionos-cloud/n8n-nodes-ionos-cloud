@@ -1,4 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { requestBodyProperties } from '../../../../utils/requestBody';
 
 const showForNodePoolCreateOrUpdate = {
 	operation: ['create', 'update'],
@@ -248,7 +249,7 @@ export const nodePoolDescriptions: INodeProperties[] = [
 											annotationsObj[key] = value;
 										}
 									});
-									requestOptions.body.properties.annotations = annotationsObj;
+									requestBodyProperties(requestOptions).annotations = annotationsObj;
 								}
 								return requestOptions;
 							},
@@ -338,7 +339,7 @@ export const nodePoolDescriptions: INodeProperties[] = [
 											labelsObj[key] = value;
 										}
 									});
-									requestOptions.body.properties.labels = labelsObj;
+									requestBodyProperties(requestOptions).labels = labelsObj;
 								}
 								return requestOptions;
 							},
@@ -361,7 +362,7 @@ export const nodePoolDescriptions: INodeProperties[] = [
 							async function (this, requestOptions) {
 								const lans = this.getNodeParameter('additionalFields.lans') as string;
 								if (lans) {
-									requestOptions.body.properties.lans = lans
+									requestBodyProperties(requestOptions).lans = lans
 										.split(',')
 										.map((id: string) => ({ id: parseInt(id.trim(), 10) }));
 								}

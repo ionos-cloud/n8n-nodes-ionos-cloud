@@ -1,4 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { requestBodyProperties } from '../../../../utils/requestBody';
 
 const showForNetworkLoadBalancerCreateOrUpdate = {
 	operation: ['create', 'update'],
@@ -443,7 +444,7 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 									'forwardingRuleProperties.healthCheck',
 								) as Record<string, unknown>;
 								if (healthCheck?.config) {
-									requestOptions.body.properties.healthCheck = healthCheck.config;
+									requestBodyProperties(requestOptions).healthCheck = healthCheck.config;
 								}
 								return requestOptions;
 							},
@@ -622,7 +623,7 @@ export const networkLoadBalancerDescriptions: INodeProperties[] = [
 											return target;
 										},
 									);
-									requestOptions.body.properties.targets = formattedTargets;
+									requestBodyProperties(requestOptions).targets = formattedTargets;
 								}
 								return requestOptions;
 							},
