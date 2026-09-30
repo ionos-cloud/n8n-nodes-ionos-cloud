@@ -54,16 +54,22 @@ export class IonosCloudCloudApi implements INodeType {
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
-				// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 				options: [
-					// Account & Global Resources
+					{
+						name: 'Application Load Balancer',
+						value: 'applicationLoadBalancer',
+					},
 					{
 						name: 'Contract',
 						value: 'contract',
 					},
 					{
-						name: 'Location',
-						value: 'location',
+						name: 'Datacenter',
+						value: 'datacenter',
+					},
+					{
+						name: 'Firewall Rule',
+						value: 'firewallRule',
 					},
 					{
 						name: 'Image',
@@ -74,77 +80,64 @@ export class IonosCloudCloudApi implements INodeType {
 						value: 'ipBlock',
 					},
 					{
-						name: 'Request',
-						value: 'request',
-					},
-					// Core Infrastructure
-					{
-						name: 'Datacenter',
-						value: 'datacenter',
-					},
-					{
-						name: 'LAN',
-						value: 'lan',
-					},
-					// Compute Resources
-					{
-						name: 'Server',
-						value: 'server',
-					},
-					{
-						name: 'Volume',
-						value: 'volume',
-					},
-					{
-						name: 'Snapshot',
-						value: 'snapshot',
-					},
-					{
-						name: 'NIC',
-						value: 'nic',
-					},
-					{
-						name: 'Firewall Rule',
-						value: 'firewallRule',
-					},
-					// Kubernetes
-					{
 						name: 'Kubernetes Cluster',
 						value: 'k8s',
 					},
 					{
-						name: 'Node Pool',
-						value: 'nodePool',
-					},
-					// Networking
-					{
-						name: 'Private Cross-Connect',
-						value: 'pcc',
+						name: 'LAN',
+						value: 'lan',
 					},
 					{
 						name: 'Load Balancer',
 						value: 'loadBalancer',
 					},
 					{
+						name: 'Location',
+						value: 'location',
+					},
+					{
+						name: 'NAT Gateway',
+						value: 'natGateway',
+					},
+					{
 						name: 'Network Load Balancer',
 						value: 'networkLoadBalancer',
 					},
 					{
-						name: 'Application Load Balancer',
-						value: 'applicationLoadBalancer',
+						name: 'NIC',
+						value: 'nic',
+					},
+					{
+						name: 'Node Pool',
+						value: 'nodePool',
+					},
+					{
+						name: 'Private Cross-Connect',
+						value: 'pcc',
+					},
+					{
+						name: 'Request',
+						value: 'request',
+					},
+					{
+						name: 'Security Group',
+						value: 'securityGroup',
+					},
+					{
+						name: 'Server',
+						value: 'server',
+					},
+					{
+						name: 'Snapshot',
+						value: 'snapshot',
 					},
 					{
 						name: 'Target Group',
 						value: 'targetGroup',
 					},
 					{
-						name: 'NAT Gateway',
-						value: 'natGateway',
-					},
-					// Security
-					{
-						name: 'Security Group',
-						value: 'securityGroup',
+						name: 'Volume',
+						value: 'volume',
 					},
 				],
 				default: 'datacenter',

@@ -1,5 +1,8 @@
 {
-	"categories": ["Development", "Security & Identity"],
+	"node": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudCertificateManager",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Development"],
 	"resources": {
 		"credentialDocumentation": [
 			{
