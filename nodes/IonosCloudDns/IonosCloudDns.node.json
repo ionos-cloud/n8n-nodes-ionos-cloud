@@ -1,4 +1,7 @@
 {
+	"node": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudDns",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
 	"categories": ["Development", "Communication"],
 	"resources": {
 		"credentialDocumentation": [

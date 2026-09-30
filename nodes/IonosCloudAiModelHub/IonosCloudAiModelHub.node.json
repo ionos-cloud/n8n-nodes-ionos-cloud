@@ -1,5 +1,8 @@
 {
-	"categories": ["Development", "Developer Tools"],
+	"node": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHub",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Development"],
 	"resources": {
 		"credentialDocumentation": [
 			{
