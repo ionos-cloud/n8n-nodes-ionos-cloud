@@ -1,276 +1,246 @@
 {
-  "name": "IONOS CLOUD RAG",
-  "nodes": [
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.5,
-      "position": [
-        -128,
-        48
-      ],
-      "id": "4651b75f-eb3a-47a4-98e6-438eec27c9f0",
-      "name": "When chat message received",
-      "webhookId": "ae58558f-adcb-4168-9ba2-e1884ca045c6"
-    },
-    {
-      "parameters": {
-        "options": {
-          "systemMessage": "You are a helpful assistant with access to a knowledge base. When a user asks a question, search the knowledge base for relevant information and answer based on what you find there.\nAlways ground your answers in the retrieved content. If the knowledge base does not contain relevant information, say so clearly — do not answer from general knowledge or make things up. If the user's question is ambiguous, ask for clarification before searching.\nKeep answers clear and factual. When you use information from the knowledge base, cite each piece of information inline immediately after the relevant sentence using this format: (source, lines 42–58). If an answer draws from multiple chunks, each sentence or claim from a different source gets its own inline citation. Do not group all citations at the end.",
-          "maxIterations": 20,
-          "enableStreaming": true
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 3.1,
-      "position": [
-        256,
-        48
-      ],
-      "id": "0f6a5a49-794c-4749-8118-3ddedbeefe0e",
-      "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "dataType": "binary",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
-      "typeVersion": 1.1,
-      "position": [
-        -480,
-        416
-      ],
-      "id": "c90538f1-6a3a-4f31-96cd-f3a7821546e8",
-      "name": "Default Data Loader"
-    },
-    {
-      "parameters": {
-        "url": "https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf",
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file"
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.5,
-      "position": [
-        -800,
-        208
-      ],
-      "id": "0d17c11e-fbda-444e-aad7-fb5006b3e650",
-      "name": "HTTP Request"
-    },
-    {
-      "parameters": {
-        "model": "Qwen/Qwen3-VL-Embedding-8B",
-        "options": {}
-      },
-      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudEmbeddings",
-      "typeVersion": 1,
-      "position": [
-        -672,
-        416
-      ],
-      "id": "5d8df7c5-f147-4f43-8642-01388cc7bf49",
-      "name": "IONOS CLOUD Ingest Embeddings",
-      "credentials": {
-        "ionosCloudApi": {}
-      }
-    },
-    {
-      "parameters": {
-        "mode": "insert",
-        "embeddingBatchSize": 1000,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
-      "typeVersion": 1.3,
-      "position": [
-        -592,
-        208
-      ],
-      "id": "419857ec-4ae5-4427-8995-ce9ce3ea5bd4",
-      "name": "IONOS CLOUD Ingest PGVector Store",
-      "credentials": {
-        "postgres": {}
-      }
-    },
-    {
-      "parameters": {
-        "model": "Qwen/Qwen3.5-9B",
-        "options": {}
-      },
-      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudChatModel",
-      "typeVersion": 1,
-      "position": [
-        128,
-        256
-      ],
-      "id": "22f7b970-0c84-4140-b4db-07a2b4280616",
-      "name": "IONOS CLOUD Chat Model",
-      "credentials": {
-        "ionosCloudApi": {}
-      }
-    },
-    {
-      "parameters": {},
-      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
-      "typeVersion": 1.4,
-      "position": [
-        272,
-        256
-      ],
-      "id": "0c02a4ef-f90f-4032-bd0c-fe5804c99485",
-      "name": "IONOS CLOUD Postgres Chat Memory",
-      "credentials": {
-        "postgres": {}
-      }
-    },
-    {
-      "parameters": {
-        "mode": "retrieve-as-tool",
-        "toolDescription": "Searches the document knowledge base for information relevant to the user's question. Use this tool whenever the user asks about topics that might be covered in the ingested documents. Input should be the user's question or a concise search query derived from it. Returns the most relevant text passages from the stored documents.",
-        "topK": 5,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
-      "typeVersion": 1.3,
-      "position": [
-        480,
-        256
-      ],
-      "id": "90db3044-58d8-4deb-a82a-7b65d4bdd439",
-      "name": "IONOS CLOUD PGVector Store",
-      "credentials": {
-        "postgres": {}
-      }
-    },
-    {
-      "parameters": {
-        "model": "Qwen/Qwen3-VL-Embedding-8B",
-        "options": {}
-      },
-      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudEmbeddings",
-      "typeVersion": 1,
-      "position": [
-        480,
-        416
-      ],
-      "id": "df8aa8ec-29c4-433d-b697-3f107666efb8",
-      "name": "IONOS CLOUD Embeddings",
-      "credentials": {
-        "ionosCloudApi": {}
-      }
-    }
-  ],
-  "pinData": {},
-  "connections": {
-    "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Default Data Loader": {
-      "ai_document": [
-        [
-          {
-            "node": "IONOS CLOUD Ingest PGVector Store",
-            "type": "ai_document",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "IONOS CLOUD Ingest PGVector Store",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IONOS CLOUD Ingest Embeddings": {
-      "ai_embedding": [
-        [
-          {
-            "node": "IONOS CLOUD Ingest PGVector Store",
-            "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IONOS CLOUD Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IONOS CLOUD Postgres Chat Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IONOS CLOUD PGVector Store": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IONOS CLOUD Embeddings": {
-      "ai_embedding": [
-        [
-          {
-            "node": "IONOS CLOUD PGVector Store",
-            "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1",
-    "binaryMode": "separate"
-  },
-  "versionId": "e6dd5ad2-9da9-4b6c-a939-4784b7088cb0",
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "9da486285b7d4555410e521528f7104b31ae1519b753df249e9f78e91a4468f7"
-  },
-  "nodeGroups": [],
-  "id": "F81WmaJK6l2vWZl6",
-  "tags": []
+	"name": "IONOS CLOUD RAG",
+	"nodes": [
+		{
+			"parameters": {
+				"options": {}
+			},
+			"type": "@n8n/n8n-nodes-langchain.chatTrigger",
+			"typeVersion": 1.5,
+			"position": [-128, 48],
+			"id": "4651b75f-eb3a-47a4-98e6-438eec27c9f0",
+			"name": "When chat message received",
+			"webhookId": "ae58558f-adcb-4168-9ba2-e1884ca045c6"
+		},
+		{
+			"parameters": {
+				"options": {
+					"systemMessage": "You are a helpful assistant with access to a knowledge base. When a user asks a question, search the knowledge base for relevant information and answer based on what you find there.\nAlways ground your answers in the retrieved content. If the knowledge base does not contain relevant information, say so clearly — do not answer from general knowledge or make things up. If the user's question is ambiguous, ask for clarification before searching.\nKeep answers clear and factual. When you use information from the knowledge base, cite each piece of information inline immediately after the relevant sentence using this format: (source, lines 42–58). If an answer draws from multiple chunks, each sentence or claim from a different source gets its own inline citation. Do not group all citations at the end.",
+					"maxIterations": 20,
+					"enableStreaming": true
+				}
+			},
+			"type": "@n8n/n8n-nodes-langchain.agent",
+			"typeVersion": 3.1,
+			"position": [256, 48],
+			"id": "0f6a5a49-794c-4749-8118-3ddedbeefe0e",
+			"name": "AI Agent"
+		},
+		{
+			"parameters": {
+				"dataType": "binary",
+				"options": {}
+			},
+			"type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+			"typeVersion": 1.1,
+			"position": [-480, 416],
+			"id": "c90538f1-6a3a-4f31-96cd-f3a7821546e8",
+			"name": "Default Data Loader"
+		},
+		{
+			"parameters": {
+				"url": "https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf",
+				"options": {
+					"response": {
+						"response": {
+							"responseFormat": "file"
+						}
+					}
+				}
+			},
+			"type": "n8n-nodes-base.httpRequest",
+			"typeVersion": 4.5,
+			"position": [-800, 208],
+			"id": "0d17c11e-fbda-444e-aad7-fb5006b3e650",
+			"name": "HTTP Request"
+		},
+		{
+			"parameters": {
+				"model": "Qwen/Qwen3-VL-Embedding-8B",
+				"options": {}
+			},
+			"type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudEmbeddings",
+			"typeVersion": 1,
+			"position": [-672, 416],
+			"id": "5d8df7c5-f147-4f43-8642-01388cc7bf49",
+			"name": "IONOS CLOUD Ingest Embeddings",
+			"credentials": {
+				"ionosCloudApi": {}
+			}
+		},
+		{
+			"parameters": {
+				"mode": "insert",
+				"embeddingBatchSize": 1000,
+				"options": {}
+			},
+			"type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+			"typeVersion": 1.3,
+			"position": [-592, 208],
+			"id": "419857ec-4ae5-4427-8995-ce9ce3ea5bd4",
+			"name": "IONOS CLOUD Ingest PGVector Store",
+			"credentials": {
+				"postgres": {}
+			}
+		},
+		{
+			"parameters": {
+				"model": "Qwen/Qwen3.5-9B",
+				"options": {}
+			},
+			"type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudChatModel",
+			"typeVersion": 1,
+			"position": [128, 256],
+			"id": "22f7b970-0c84-4140-b4db-07a2b4280616",
+			"name": "IONOS CLOUD Chat Model",
+			"credentials": {
+				"ionosCloudApi": {}
+			}
+		},
+		{
+			"parameters": {},
+			"type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+			"typeVersion": 1.4,
+			"position": [272, 256],
+			"id": "0c02a4ef-f90f-4032-bd0c-fe5804c99485",
+			"name": "IONOS CLOUD Postgres Chat Memory",
+			"credentials": {
+				"postgres": {}
+			}
+		},
+		{
+			"parameters": {
+				"mode": "retrieve-as-tool",
+				"toolDescription": "Searches the document knowledge base for information relevant to the user's question. Use this tool whenever the user asks about topics that might be covered in the ingested documents. Input should be the user's question or a concise search query derived from it. Returns the most relevant text passages from the stored documents.",
+				"topK": 5,
+				"options": {}
+			},
+			"type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+			"typeVersion": 1.3,
+			"position": [480, 256],
+			"id": "90db3044-58d8-4deb-a82a-7b65d4bdd439",
+			"name": "IONOS CLOUD PGVector Store",
+			"credentials": {
+				"postgres": {}
+			}
+		},
+		{
+			"parameters": {
+				"model": "Qwen/Qwen3-VL-Embedding-8B",
+				"options": {}
+			},
+			"type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudEmbeddings",
+			"typeVersion": 1,
+			"position": [480, 416],
+			"id": "df8aa8ec-29c4-433d-b697-3f107666efb8",
+			"name": "IONOS CLOUD Embeddings",
+			"credentials": {
+				"ionosCloudApi": {}
+			}
+		}
+	],
+	"pinData": {},
+	"connections": {
+		"When chat message received": {
+			"main": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"Default Data Loader": {
+			"ai_document": [
+				[
+					{
+						"node": "IONOS CLOUD Ingest PGVector Store",
+						"type": "ai_document",
+						"index": 0
+					}
+				]
+			]
+		},
+		"HTTP Request": {
+			"main": [
+				[
+					{
+						"node": "IONOS CLOUD Ingest PGVector Store",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS CLOUD Ingest Embeddings": {
+			"ai_embedding": [
+				[
+					{
+						"node": "IONOS CLOUD Ingest PGVector Store",
+						"type": "ai_embedding",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS CLOUD Chat Model": {
+			"ai_languageModel": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "ai_languageModel",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS CLOUD Postgres Chat Memory": {
+			"ai_memory": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "ai_memory",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS CLOUD PGVector Store": {
+			"ai_tool": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "ai_tool",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS CLOUD Embeddings": {
+			"ai_embedding": [
+				[
+					{
+						"node": "IONOS CLOUD PGVector Store",
+						"type": "ai_embedding",
+						"index": 0
+					}
+				]
+			]
+		}
+	},
+	"active": false,
+	"settings": {
+		"executionOrder": "v1",
+		"binaryMode": "separate"
+	},
+	"versionId": "e6dd5ad2-9da9-4b6c-a939-4784b7088cb0",
+	"meta": {
+		"templateCredsSetupCompleted": true,
+		"instanceId": "9da486285b7d4555410e521528f7104b31ae1519b753df249e9f78e91a4468f7"
+	},
+	"nodeGroups": [],
+	"id": "F81WmaJK6l2vWZl6",
+	"tags": []
 }
