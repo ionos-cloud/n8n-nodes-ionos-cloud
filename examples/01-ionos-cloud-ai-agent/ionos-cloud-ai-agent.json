@@ -1,0 +1,121 @@
+{
+	"name": "IONOS CLOUD Sovereign AI Agent",
+	"nodes": [
+		{
+			"parameters": {
+				"options": {}
+			},
+			"type": "@n8n/n8n-nodes-langchain.chatTrigger",
+			"typeVersion": 1.5,
+			"position": [0, 0],
+			"id": "77b72e06-067d-4169-9045-f49d76d40a46",
+			"name": "When chat message received",
+			"webhookId": "854e4b96-2f73-4490-92eb-7e89944ed581"
+		},
+		{
+			"parameters": {
+				"options": {
+					"systemMessage": "You are a helpful assistant with access to a web search tool. When a user asks about current events, facts, prices, or anything that requires up-to-date information, use the search tool to find relevant results and answer based on what you find.\nBe concise and direct. Cite the source URL inline when you use information from search results, like this: (source: https://example.com). If the search returns no useful results, say so and answer from your general knowledge where appropriate."
+				}
+			},
+			"type": "@n8n/n8n-nodes-langchain.agent",
+			"typeVersion": 3.1,
+			"position": [272, 0],
+			"id": "5e12fa46-0680-42e0-9028-16a8b8423197",
+			"name": "AI Agent"
+		},
+		{
+			"parameters": {
+				"model": "Qwen/Qwen3.5-9B",
+				"options": {}
+			},
+			"type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudChatModel",
+			"typeVersion": 1,
+			"position": [272, 224],
+			"id": "c2d144d5-29f4-48a9-afd5-22473390722c",
+			"name": "IONOS Cloud Chat Model",
+			"credentials": {
+				"ionosCloudApi": {}
+			}
+		},
+		{
+			"parameters": {
+				"toolDescription": "Searches the web using a sovereign EU-hosted search engine running on IONOS Cloud in Germany. Use this tool to find current information, news, or facts beyond the model's training data. Input should be a concise search query.",
+				"url": "https://YOUR_SEARXNG_HOST:8080/search",
+				"sendQuery": true,
+				"queryParameters": {
+					"parameters": [
+						{
+							"name": "q",
+							"value": "={{ $json.chatInput }}"
+						},
+						{
+							"name": "format",
+							"value": "json"
+						}
+					]
+				},
+				"options": {
+					"response": {
+						"response": {
+							"responseFormat": "json"
+						}
+					}
+				}
+			},
+			"type": "n8n-nodes-base.httpRequestTool",
+			"typeVersion": 4.5,
+			"position": [592, 224],
+			"id": "72305416-847d-484c-af8b-56f8c7dfb368",
+			"name": "SearXNG Web Search"
+		}
+	],
+	"pinData": {},
+	"connections": {
+		"When chat message received": {
+			"main": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "main",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS Cloud Chat Model": {
+			"ai_languageModel": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "ai_languageModel",
+						"index": 0
+					}
+				]
+			]
+		},
+		"SearXNG Web Search": {
+			"ai_tool": [
+				[
+					{
+						"node": "AI Agent",
+						"type": "ai_tool",
+						"index": 0
+					}
+				]
+			]
+		}
+	},
+	"active": false,
+	"settings": {
+		"executionOrder": "v1",
+		"binaryMode": "separate"
+	},
+	"versionId": "3641cd32-9d4c-4103-8aee-d059bfaeb3e9",
+	"meta": {
+		"instanceId": "9da486285b7d4555410e521528f7104b31ae1519b753df249e9f78e91a4468f7"
+	},
+	"nodeGroups": [],
+	"id": "48vedzvkKD2uMBpF",
+	"tags": []
+}
