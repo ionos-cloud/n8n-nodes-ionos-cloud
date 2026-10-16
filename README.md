@@ -79,7 +79,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Certificate Manager** | 3         | 15         | SSL/TLS certificate lifecycle management with ACME support                    |
 | **Cloud DNS**           | 7         | 28         | DNS zones, records (15 types), DNSSEC, zone transfers                         |
 | **CDN**                 | 2         | 7          | Content delivery with custom routing and geo-restrictions                     |
-| **AI Model Hub**        | 2         | 7          | Foundation model inference and OpenAI-compatible API                          |
+| **AI Model Hub**        | 2         | 10         | Foundation model inference, OpenAI-compatible API and reranking               |
 | **Chat Model** ⚡       | —         | supplyData | LangChain chat model sub-node for n8n AI Agent                                |
 | **Embeddings** ⚡       | —         | supplyData | LangChain embeddings sub-node for n8n AI Agent                                |
 
@@ -236,7 +236,7 @@ Browse and invoke foundation models for AI inference.
 - Get Many (list available models), Predict (run inference)
 - **Features**: Custom model options, streaming responses
 
-#### OpenAI Compatible Resource (5 operations)
+#### OpenAI Compatible Resource (8 operations)
 
 Use OpenAI-compatible API endpoints for standardized AI interactions.
 
@@ -256,6 +256,17 @@ Use OpenAI-compatible API endpoints for standardized AI interactions.
 - Parameters: model (default: BAAI/bge-large-en-v1.5), input (single text or comma-separated multiple texts)
 - Returns embedding vectors for semantic search and similarity
 
+**Create Response** - Generate a model response with the Responses API
+
+- Parameters: model, input (required), tools
+- Input as plain text, or as a JSON array of input items for multi-turn conversations, images (`input_image` parts), and earlier `function_call` / `function_call_output` items
+- Supports function tool calling. The API keeps no conversation state, so send the whole conversation on every call
+
+**Edit Image** - Edit an existing image with a text prompt
+
+- Parameters: model (e.g. black-forest-labs/FLUX.2-klein-4B), image URL (public HTTP(S) URL or base64 data URL) and prompt (both required), n, size
+- Sent as `multipart/form-data`, which the endpoint requires; returns the edited images as base64 (`b64_json`)
+
 **Generate Image** - Text-to-image generation
 
 - Parameters: model (default: black-forest-labs/FLUX.1-schnell), prompt (required), n, size (1024x1024, 1024x1792, 1792x1024), response_format (b64_json), user
@@ -265,6 +276,12 @@ Use OpenAI-compatible API endpoints for standardized AI interactions.
 
 - Returns all models in OpenAI-compatible format
 - Shows model capabilities and availability
+
+**Rerank** - Rank documents by their relevance to a query
+
+- Parameters: model (e.g. Qwen/Qwen3-VL-Reranker-8B), query and documents (both required), top_n, return_documents
+- Documents are a JSON array of plain strings and/or multimodal `{"content": [...]}` objects with `text` and `image_url` parts, so images can be ranked against a text query
+- Returns results sorted by `relevance_score`, each with the `index` of its input document. The document itself is included only when return_documents is on; the API leaves it out by default
 
 **API Endpoint**: `https://openai.inference.de-txl.ionos.com` (path: `/v1/*`)
 
@@ -327,7 +344,7 @@ Tested against n8n version 2.1.5+
 - Add the "IONOS Cloud (AI Model Hub)" node to your workflow
 - Select the resource (Model or OpenAI Compatible)
 - **Model**: AI inference with native IONOS API
-- **OpenAI Compatible**: Use OpenAI-compatible endpoints (chat, completions, embeddings, images)
+- **OpenAI Compatible**: Use OpenAI-compatible endpoints (chat, completions, responses, embeddings, image generation and editing, reranking)
 
 #### AI Agent Integration (Chat Model & Embeddings Sub-Nodes)
 
