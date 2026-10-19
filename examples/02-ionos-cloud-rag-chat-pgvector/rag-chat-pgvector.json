@@ -112,7 +112,8 @@
 			"parameters": {
 				"mode": "retrieve-as-tool",
 				"toolDescription": "Searches the document knowledge base for information relevant to the user's question. Use this tool whenever the user asks about topics that might be covered in the ingested documents. Input should be the user's question or a concise search query derived from it. Returns the most relevant text passages from the stored documents.",
-				"topK": 5,
+				"topK": 10,
+				"useReranker": true,
 				"options": {}
 			},
 			"type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
@@ -134,6 +135,20 @@
 			"position": [480, 416],
 			"id": "df8aa8ec-29c4-433d-b697-3f107666efb8",
 			"name": "IONOS CLOUD Embeddings",
+			"credentials": {
+				"ionosCloudApi": {}
+			}
+		},
+		{
+			"parameters": {
+				"model": "Qwen/Qwen3-VL-Reranker-8B",
+				"topN": 5
+			},
+			"type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudReranker",
+			"typeVersion": 1,
+			"position": [640, 416],
+			"id": "a17f4f7a-0001-4b40-b7eb-5980a676f3e0",
+			"name": "IONOS CLOUD Reranker",
 			"credentials": {
 				"ionosCloudApi": {}
 			}
@@ -224,6 +239,17 @@
 					{
 						"node": "IONOS CLOUD PGVector Store",
 						"type": "ai_embedding",
+						"index": 0
+					}
+				]
+			]
+		},
+		"IONOS CLOUD Reranker": {
+			"ai_reranker": [
+				[
+					{
+						"node": "IONOS CLOUD PGVector Store",
+						"type": "ai_reranker",
 						"index": 0
 					}
 				]

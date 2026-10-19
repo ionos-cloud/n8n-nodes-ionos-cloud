@@ -33,7 +33,7 @@ The package provides comprehensive integration with key IONOS Cloud services, en
 
 ## Included Nodes
 
-This package provides seven separate nodes for different IONOS Cloud services:
+This package provides eight separate nodes for different IONOS Cloud services:
 
 1. **IONOS Cloud (Infrastructure)** - Core infrastructure management
 2. **IONOS Cloud (Certificate Manager)** - SSL/TLS certificate management
@@ -42,6 +42,7 @@ This package provides seven separate nodes for different IONOS Cloud services:
 5. **IONOS Cloud (AI Model Hub)** - AI model inference and RAG capabilities
 6. **IONOS Cloud Chat Model** ⚡ - LangChain sub-node for n8n's AI Agent (language model)
 7. **IONOS Cloud Embeddings** ⚡ - LangChain sub-node for n8n's AI Agent (text embeddings)
+8. **IONOS Cloud Reranker** ⚡ - LangChain sub-node for n8n's Vector Stores (reranks retrieved documents)
 
 ---
 
@@ -82,8 +83,9 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **AI Model Hub**        | 2         | 10         | Foundation model inference, OpenAI-compatible API and reranking               |
 | **Chat Model** ⚡       | —         | supplyData | LangChain chat model sub-node for n8n AI Agent                                |
 | **Embeddings** ⚡       | —         | supplyData | LangChain embeddings sub-node for n8n AI Agent                                |
+| **Reranker** ⚡         | —         | supplyData | LangChain reranker sub-node for n8n Vector Stores                             |
 
-> ⚡ **Sub-nodes**: The Chat Model and Embeddings nodes are LangChain sub-nodes that plug into n8n's built-in AI nodes (AI Agent, AI Chain, Vector Stores, etc.) rather than operating as standalone workflow nodes.
+> ⚡ **Sub-nodes**: The Chat Model, Embeddings and Reranker nodes are LangChain sub-nodes that plug into n8n's built-in AI nodes (AI Agent, AI Chain, Vector Stores, etc.) rather than operating as standalone workflow nodes.
 
 > **✨ v1.0.2**: Patch release with enhanced subresource support for load balancers, NAT gateways, security groups, and target groups. Added request monitoring capabilities.
 
@@ -346,9 +348,9 @@ Tested against n8n version 2.1.5+
 - **Model**: AI inference with native IONOS API
 - **OpenAI Compatible**: Use OpenAI-compatible endpoints (chat, completions, responses, embeddings, image generation and editing, reranking)
 
-#### AI Agent Integration (Chat Model & Embeddings Sub-Nodes)
+#### AI Agent Integration (Chat Model, Embeddings & Reranker Sub-Nodes)
 
-The **IONOS Cloud Chat Model** and **IONOS Cloud Embeddings** are LangChain sub-nodes that integrate with n8n's built-in AI nodes.
+The **IONOS Cloud Chat Model**, **IONOS Cloud Embeddings** and **IONOS Cloud Reranker** are LangChain sub-nodes that integrate with n8n's built-in AI nodes.
 
 **Chat Model** — Use IONOS AI Model Hub as the LLM brain for the AI Agent:
 
@@ -365,6 +367,15 @@ The **IONOS Cloud Chat Model** and **IONOS Cloud Embeddings** are LangChain sub-
 3. Select **IONOS Cloud Embeddings**
 4. Choose your credential and pick an embedding model
 
+**Reranker** — Use IONOS AI Model Hub to rerank the documents a vector store retrieves, so only the most relevant ones reach the model:
+
+1. On a vector store node in **Get Many**, **Retrieve Documents (As Vector Store for Chain/Tool)** or **Retrieve Documents (As Tool for AI Agent)** mode, turn on **Rerank Results**
+2. Click **+** on the vector store's new **Reranker** input
+3. Select **IONOS Cloud Reranker**
+4. Choose your credential, pick a reranking model (e.g. `Qwen/Qwen3-VL-Reranker-8B`) and set **Top N**, the number of documents to keep
+
+`examples/02-ionos-cloud-rag-chat-pgvector/rag-chat-pgvector.json` shows the full chain: the PGVector Store retrieves 10 passages, the reranker keeps the 5 most relevant, and the AI Agent answers from those.
+
 **Example: AI Agent with RAG**
 
 ```
@@ -376,7 +387,7 @@ Chat Trigger → AI Agent
                                        └── Embedding: IONOS Cloud Embeddings
 ```
 
-> **Note:** The model dropdowns are populated dynamically from the IONOS API at runtime. Both sub-nodes reuse the same **IONOS Cloud API** credential as all other nodes in this package.
+> **Note:** The model dropdowns are populated dynamically from the IONOS API at runtime. All three sub-nodes reuse the same **IONOS Cloud API** credential as all other nodes in this package.
 
 ### Common Patterns
 
