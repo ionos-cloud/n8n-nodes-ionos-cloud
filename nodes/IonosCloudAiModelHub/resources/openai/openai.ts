@@ -1,11 +1,12 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { sendBodyAsMultipartFormData } from '../../../../utils/multipartFormData';
 
 /**
  * Shared routing config to dynamically load available models from
  * the OpenAI-compatible GET /v1/models endpoint at runtime.
  * When IONOS adds or retires models the dropdown updates automatically.
  */
-const modelsLoadOptions: INodeProperties['typeOptions'] = {
+export const modelsLoadOptions: INodeProperties['typeOptions'] = {
 	loadOptions: {
 		routing: {
 			request: {
@@ -92,6 +93,36 @@ export const openaiOperations: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'Create Response',
+				value: 'createResponse',
+				description: 'Generate a model response using the Responses API',
+				action: 'Create response',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/v1/responses',
+						baseURL: 'https://openai.inference.de-txl.ionos.com',
+					},
+				},
+			},
+			{
+				name: 'Edit Image',
+				value: 'editImage',
+				description: 'Edit an image from a URL with a text prompt',
+				action: 'Edit image',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/v1/images/edits',
+						baseURL: 'https://openai.inference.de-txl.ionos.com',
+					},
+					send: {
+						// The only endpoint in this node that takes multipart/form-data
+						preSend: [sendBodyAsMultipartFormData],
+					},
+				},
+			},
+			{
 				name: 'Generate Image',
 				value: 'generateImage',
 				description: 'Generate images from text prompts',
@@ -124,6 +155,19 @@ export const openaiOperations: INodeProperties[] = [
 								},
 							},
 						],
+					},
+				},
+			},
+			{
+				name: 'Rerank',
+				value: 'rerank',
+				description: 'Rank documents by their relevance to a query',
+				action: 'Rerank documents',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/v1/rerank',
+						baseURL: 'https://openai.inference.de-txl.ionos.com',
 					},
 				},
 			},
