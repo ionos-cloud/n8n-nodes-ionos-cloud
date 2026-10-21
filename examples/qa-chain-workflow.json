@@ -65,7 +65,7 @@
 		},
 		{
 			"parameters": {
-				"model": "BAAI/bge-large-en-v1.5",
+				"model": "BAAI/bge-m3",
 				"options": {}
 			},
 			"type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudEmbeddings",
