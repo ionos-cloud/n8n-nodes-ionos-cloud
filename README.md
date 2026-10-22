@@ -255,7 +255,7 @@ Use OpenAI-compatible API endpoints for standardized AI interactions.
 
 **Create Embeddings** - Generate vector embeddings from text
 
-- Parameters: model (default: BAAI/bge-large-en-v1.5), input (single text or comma-separated multiple texts)
+- Parameters: model (e.g. BAAI/bge-m3), input (single text or comma-separated multiple texts)
 - Returns embedding vectors for semantic search and similarity
 
 **Create Response** - Generate a model response with the Responses API
